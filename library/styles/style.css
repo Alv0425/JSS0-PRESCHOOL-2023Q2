@@ -40,3 +40,129 @@ body {
 a {
   text-decoration: none;
 }
+
+.wrapper {
+  margin: 0 auto;
+  width: 1440px;
+}
+
+.main {
+  background-color: #ffffff;
+}
+
+/*Buttons*/
+.button {
+  display: block;
+  padding: 8px 26px;
+  color: #0C0C0E;
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  border: 1px #0C0C0E solid;
+  border-radius: 2px;
+  background-color: #ffffff;
+  transition: all 0.3s;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #BB945F;
+  border-color: #BB945F;
+}
+
+.button:disabled {
+  color: #BB945F;
+  border-color: #BB945F;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  color: #BB945F;
+  background-color: #ffffff;
+}
+
+.button-hidden {
+  display: none;
+}
+
+/*Header*/
+.header {
+  background-color: #0C0C0E;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.header__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 42px;
+}
+
+.user-button {
+  position: relative;
+  width: 28px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  background-size: 28px 28px;
+  background-repeat: no-repeat;
+  background-image: url("../assets/icon_profile.svg");
+  background-position: center;
+  cursor: pointer;
+}
+
+.user-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  background-size: 28px 28px;
+  background-repeat: no-repeat;
+  background-image: url("../assets/icon_profile-hover.svg");
+  background-position: center;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.user-button:hover::before {
+  opacity: 1;
+}
+
+.navbar {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.navbar__link {
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+}
+
+.header a {
+  color: #ffffff;
+  transition: all 0.5s;
+}
+
+.header a:hover {
+  color: #BB945F;
+  text-shadow: 0px 0px 2px #BB945F;
+}
