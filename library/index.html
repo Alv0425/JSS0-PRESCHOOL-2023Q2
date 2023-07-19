@@ -295,6 +295,30 @@
           <img src="./images/contacts/map.jpg" alt="location: " class="contacts-map">
       </div>
     </section>
+    <section class="main-section wrapper" id="library_cards">
+      <h2 class="main-section__title">Digital library cards</h2>
+      <div class="two-columns-layout library-cards">
+          <div class="library-cards__searching-form check-form">
+              <h3 class="check-form__title">Find your Library card</h3>
+              <form class="check-form__body" action="https://www.w3schools.com/action_page.php" method="POST" target="_blank">
+                  <fieldset class="check-form__fieldset">
+                      <p class="check-form__label">Brooklyn Public Library</p>
+                      <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="[a-zA-Z\-\s]+" autocomplete="name" required>
+                      <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[a-zA-Z0-9\-]+" required>
+                  </fieldset>
+                  <button type="submit" class="button check-form__button">Check the card</button>
+              </form>
+          </div>
+          <div class="library-cards__get-form get-form">
+              <h3 class="get-form__title">Get a reader card</h3>
+              <p class="get-form__description">You will be able to see a reader card after logging into account or you can register a new account</p>
+              <div class="get-form__buttons">
+                  <button class="button get-form__button">Sign Up</button>
+                  <button class="button get-form__button">Log In</button>
+              </div>
+          </div>
+      </div>
+    </section>
   </main>
 </body>
 </html>

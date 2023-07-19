@@ -690,3 +690,119 @@ a {
 p.contacts__item {
   margin-top: 20px;
 }
+
+/* Library Digital Cards */
+.check-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.check-form__title {
+  margin-bottom: 30px;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.6px;
+  text-align: center;
+}
+
+.check-form__body {
+  padding: 17px 17px 27px 17px;
+  border: 3px solid #BB945F;
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+.check-form__fieldset {
+  padding: 0px 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: Forum;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: 0.6px;
+  background-color: #BB945F;
+  border: none;
+}
+
+.check-form__label {
+  margin: 20px 0;
+  font-family: Forum;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: 0.6px;
+}
+
+.check-form__field {
+  display: block;
+  min-width: 520px;
+  padding: 8px 20px;
+  margin-bottom: 25px;
+  font-family: Forum;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: 0.6px;
+  color: #8E8E8E;
+  border-radius: 10px;
+  border: none;
+}
+
+.check-form__field:focus {
+  outline: 3px solid #A67D44;
+  color: #0C0C0E;
+}
+
+.check-form__button {
+  padding: 10px 39px;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  margin: 20px auto 0px auto;
+}
+
+.get-form {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  gap: 35px;
+}
+
+.get-form__title {
+  font-family: Forum;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.6px;
+}
+
+.get-form__description {
+  max-width: 456px;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 0.4px;
+}
+
+.get-form__buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+}
+
+.get-form__button {
+  padding: 9px;
+  min-width: 75px;
+}
