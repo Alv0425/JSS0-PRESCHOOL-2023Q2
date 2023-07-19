@@ -166,3 +166,109 @@ a {
   color: #BB945F;
   text-shadow: 0px 0px 2px #BB945F;
 }
+
+/* main */
+.main-section {
+  padding: 20px 20px 40px 20px;
+  color: #0C0C0E;
+  background-color: #ffffff;
+}
+
+.main-section__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
+  font-size: 40px;
+  font-style: normal;
+  line-height: 1em;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.main-section__title::after {
+  content: "";
+  width: 50px;
+  height: 21px;
+  border-bottom: 1px #0C0C0E solid;
+}
+
+.main-section__paragraph {
+  text-align: center;
+  font-size: 20px;
+  line-height: 2em;
+}
+
+.main-section__paragraph-spaced {
+  letter-spacing: 2px;
+}
+
+.two-columns-layout {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.two-columns-layout__item {
+  width: 48%;
+}
+
+.two-columns-layout__item:nth-child(even) {
+  align-items: end;
+  text-align: right;
+}
+
+.two-columns-layout__item:nth-child(odd) {
+  align-items: start;
+}
+
+.three-columns-layout {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.three-columns-layout__item {
+  width: 30%;
+}
+
+.three-columns-layout__item:nth-child(1) {
+  text-align: left;
+}
+
+.three-columns-layout__item:nth-child(2) {
+  text-align: center;
+}
+
+.three-columns-layout__item:nth-child(3) {
+  text-align: right;
+}
+
+/* Welcome section */
+.welcome-section__background {
+  background-size: cover !important;
+  background-position-x: center !important;
+  background-repeat: no-repeat !important;
+  background: linear-gradient(#0C0C0E 0%, #0C0C0E 0.1%, rgba(18, 18, 21, 0.1) 50%, transparent 100%), url("../images/welcome/Welcome.jpg");
+}
+
+.welcome-section__container {
+  display: flex;
+  padding: 220px 0 160px 0;
+}
+
+.welcome-section_title {
+  margin-right: auto;
+  max-width: 600px;
+  padding: 35px 40px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-family: Forum, sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  letter-spacing: 3px;
+  line-height: 3.125rem;
+  text-align: center;
+  background-color: #0C0C0E;
+}
