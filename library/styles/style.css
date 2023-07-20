@@ -43,7 +43,7 @@ a {
 
 .wrapper {
   margin: 0 auto;
-  width: 1440px;
+  max-width: 1440px;
 }
 
 .main {
@@ -253,7 +253,7 @@ a {
   padding: 220px 0 160px 0;
 }
 
-.welcome-section_title {
+.welcome-section__title {
   margin-right: auto;
   max-width: 600px;
   padding: 35px 40px;
