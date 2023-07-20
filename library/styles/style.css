@@ -259,7 +259,7 @@ a {
 .welcome-section__background {
   background: linear-gradient(#0C0C0E 0%, #0C0C0E 0.1%, rgba(18, 18, 21, 0.1) 50%, transparent 100%), url("../images/welcome/Welcome.jpg");
   background-size: cover;
-  background-position-x: center;
+  background-position: center center;
   background-repeat: no-repeat;
 }
 
