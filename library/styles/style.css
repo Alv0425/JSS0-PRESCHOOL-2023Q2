@@ -77,12 +77,7 @@ a {
 .button:disabled {
   color: #BB945F;
   border-color: #BB945F;
-  cursor: default;
-}
-
-.button:disabled:hover {
-  color: #BB945F;
-  background-color: #ffffff;
+  pointer-events: none;
 }
 
 .button-hidden {
@@ -396,47 +391,30 @@ a {
 
 .favorites__item {
   display: flex;
-  gap: 21px;
   min-width: 100px;
 }
 
 .favorites__item:nth-child(1) {
-  min-width: 106px;
+  flex-basis: 106px;
 }
 
 .favorites__item:nth-child(2) {
-  min-width: 101px;
+  flex-basis: 101px;
 }
 
 .favorites__item:nth-child(3) {
-  min-width: 118px;
+  flex-basis: 118px;
 }
 
 .favorites__item:nth-child(4) {
-  min-width: 113px;
+  flex-basis: 113px;
 }
 
 .favorites__radio-button {
   position: relative;
-  width: 17px;
-  height: 17px;
+  width: 0;
+  height: 0;
   opacity: 0;
-}
-
-.favorites__radio-button::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 0;
-  width: 17px;
-  height: 17px;
-  display: block;
-  border-radius: 50%;
-  background-image: url("../assets/unactive-radio.svg");
-}
-
-.favorites__radio-button:checked:before {
-  background-image: url("../assets/checked-radio.svg");
 }
 
 .favorites__label {
@@ -445,28 +423,25 @@ a {
   font-size: 20px;
   font-variation-settings: "wght" 400;
   transition: all 0.5s;
+  padding-left: 37px;
 }
 
 .favorites__label::after {
   content: "";
   position: absolute;
-  top: 2px;
-  left: -40px;
-  display: block;
-  width: calc(100% + 45px);
-  height: 22px;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
 }
 
 .favorites__label::before {
   content: "";
   position: absolute;
   top: 5px;
-  left: -38px;
-  display: block;
+  left: 0px;
   width: 17px;
   height: 17px;
-  display: block;
-  border-radius: 50%;
   background-image: url("../assets/unactive-radio.svg");
 }
 
@@ -805,4 +780,122 @@ p.contacts__item {
 .get-form__button {
   padding: 9px;
   min-width: 75px;
+}
+
+/* Footer */
+.footer {
+  background-color: #0C0C0E;
+}
+
+.footer__container {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  margin-top: auto;
+}
+
+.footer__info {
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  border-bottom: #ffffff 1px solid;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+
+.footer__address {
+  max-width: 230px;
+}
+
+.footer__contacts {
+  display: flex;
+  gap: 15px;
+  margin-top: 18px;
+  list-style: none;
+}
+
+.footer__work-schedule {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__social-link {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.footer__contacts-item:nth-child(1) .footer__social-link {
+  background-image: url("../assets/u_twitter-alt.svg");
+}
+
+.footer__contacts-item:nth-child(2) .footer__social-link {
+  background-image: url("../assets/u_instagram.svg");
+}
+
+.footer__contacts-item:nth-child(3) .footer__social-link {
+  background-image: url("../assets/u_facebook-f.svg");
+}
+
+.footer__contacts-item .footer__social-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: all 0.7s;
+}
+
+.footer__contacts-item:nth-child(1) .footer__social-link::before {
+  background-image: url("../assets/u_twitter-alt-hover.svg");
+}
+
+.footer__contacts-item:nth-child(2) .footer__social-link::before {
+  background-image: url("../assets/u_instagram-hover.svg");
+}
+
+.footer__contacts-item:nth-child(3) .footer__social-link::before {
+  background-image: url("../assets/u_facebook-f-hover.svg");
+}
+
+.footer__contacts-item:nth-child(1) .footer__social-link:hover::before,
+.footer__contacts-item:nth-child(2) .footer__social-link:hover::before,
+.footer__contacts-item:nth-child(3) .footer__social-link:hover::before {
+  opacity: 1;
+}
+
+.footer__signature {
+  padding: 45px 0;
+  color: #FFF;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 2px;
+}
+
+.footer__link {
+  color: #ffffff;
+  transition: all 0.5s;
+}
+
+.footer__link:hover {
+  color: #BB945F;
 }
