@@ -255,6 +255,7 @@ a {
   align-items: center;
   padding: 20px;
   color: #ffffff;
+  background-color: #0C0C0E;
 }
 
 .header__buttons {
@@ -270,9 +271,9 @@ a {
   height: 40px;
   background-color: transparent;
   border: none;
+  background: url("../assets/icon_profile.svg");
   background-size: 28px 28px;
   background-repeat: no-repeat;
-  background-image: url("../assets/icon_profile.svg");
   background-position: center;
   cursor: pointer;
 }
@@ -286,9 +287,9 @@ a {
   height: 40px;
   border: none;
   background-color: transparent;
+  background: url("../assets/icon_profile-hover.svg");
   background-size: 28px 28px;
   background-repeat: no-repeat;
-  background-image: url("../assets/icon_profile-hover.svg");
   background-position: center;
   opacity: 0;
   transition: 0.5s;
