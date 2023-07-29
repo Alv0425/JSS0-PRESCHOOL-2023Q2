@@ -254,25 +254,27 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  padding-right:19px;
   color: #ffffff;
+  background-color: #0C0C0E;
 }
 
 .header__buttons {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 42px;
+  gap: 40px;
 }
 
 .user-button {
   position: relative;
-  width: 28px;
+  width: 30px;
   height: 40px;
   background-color: transparent;
   border: none;
+  background: url("../assets/icon_profile.svg");
   background-size: 28px 28px;
   background-repeat: no-repeat;
-  background-image: url("../assets/icon_profile.svg");
   background-position: center;
   cursor: pointer;
 }
@@ -282,13 +284,13 @@ a {
   position: absolute;
   top: 0;
   left: 0;
-  width: 28px;
+  width: 30px;
   height: 40px;
   border: none;
   background-color: transparent;
+  background: url("../assets/icon_profile-hover.svg");
   background-size: 28px 28px;
   background-repeat: no-repeat;
-  background-image: url("../assets/icon_profile-hover.svg");
   background-position: center;
   opacity: 0;
   transition: 0.5s;
@@ -354,6 +356,7 @@ a {
   font-style: normal;
   font-weight: 400;
   line-height: 50px;
+  padding: 0 0.15px;
 }
 
 .header a {
@@ -916,7 +919,7 @@ p.contacts__item {
 .check-form__body {
   padding: 17px;
   border: 3px solid #BB945F;
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .check-form__fieldset {
