@@ -38,7 +38,7 @@
         </div>
       </div>
     </section>
-    <section class="main-section main-section-about wrapper" id="about_us">
+    <section class="main-section main-section-about" id="about_us">
       <h2 class="main-section__title">About</h2>
       <p class="main-section__paragraph">The Brooklyn Library is a free workspace, a large number of books and a cozy coffee shop inside</p>
       <div class="carousel">
@@ -62,7 +62,7 @@
           </div>
       </div>
     </section>
-    <section class="main-section wrapper" id="favorites">
+    <section class="main-section" id="favorites">
       <h2 class="main-section__title">Favorites</h2>
       <div class="favorites">
           <p class="favorites__title">Pick favorites of season</p>
@@ -219,7 +219,7 @@
           </div>
       </div>
     </section>
-    <section class="main-section wrapper" id="coffee_shop">
+    <section class="main-section" id="coffee_shop">
       <h2 class="main-section__title">Coffee shop</h2>
       <p class="main-section__paragraph main-section__paragraph-spaced">In our library, we have of cozy coffee shop, welcoming in customers with frothy cappuccinos and friendly conversation.&nbsp; You can get a favorite book and read in coffee shop. our barista to cook you best coffee, and also you can try desserts from bakery.</p>
       <div class="cafe-menu two-columns-layout">
@@ -279,7 +279,7 @@
           </ul>
       </div>
     </section>
-    <section class="main-section wrapper" id="our_contacts">
+    <section class="main-section" id="our_contacts">
       <h2 class="main-section__title">Our contacts</h2>
       <div class="two-columns-layout contacts">
           <div class="contacts__container">
@@ -295,7 +295,7 @@
           <img src="./images/contacts/map.jpg" alt="location: " class="contacts__map">
       </div>
     </section>
-    <section class="main-section wrapper" id="library_cards">
+    <section class="main-section" id="library_cards">
       <h2 class="main-section__title">Digital library cards</h2>
       <div class="two-columns-layout library-cards">
           <div class="library-cards__searching-form check-form">
@@ -303,8 +303,8 @@
               <form class="check-form__body" action="https://www.w3schools.com/action_page.php" method="POST" target="_blank">
                   <fieldset class="check-form__fieldset">
                       <p class="check-form__label">Brooklyn Public Library</p>
-                      <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="[a-zA-Z\-\s]+" autocomplete="name" required>
-                      <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[a-zA-Z0-9\-]+" required>
+                      <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="^[a-zA-Z\-\s]+" autocomplete="name" required>
+                      <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[A-Z0-9]{9,}" title="It should contains uppercase letters and numbers only." required>
                   </fieldset>
                   <button type="submit" class="button check-form__button">Check the card</button>
               </form>
