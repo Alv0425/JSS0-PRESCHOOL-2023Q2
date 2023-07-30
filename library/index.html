@@ -38,7 +38,7 @@
         </div>
       </div>
     </section>
-    <section class="main-section main-section-about wrapper" id="about_us">
+    <section class="main-section main-section-about" id="about_us">
       <h2 class="main-section__title">About</h2>
       <p class="main-section__paragraph">The Brooklyn Library is a free workspace, a large number of books and a cozy coffee shop inside</p>
       <div class="carousel">
@@ -303,8 +303,8 @@
               <form class="check-form__body" action="https://www.w3schools.com/action_page.php" method="POST" target="_blank">
                   <fieldset class="check-form__fieldset">
                       <p class="check-form__label">Brooklyn Public Library</p>
-                      <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="[a-zA-Z\-\s]+" autocomplete="name" required>
-                      <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[a-zA-Z0-9\-]+" required>
+                      <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="^[a-zA-Z\-\s]+" autocomplete="name" required>
+                      <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[A-Z0-9]{9,}" title="It should contains uppercase letters and numbers only." required>
                   </fieldset>
                   <button type="submit" class="button check-form__button">Check the card</button>
               </form>
