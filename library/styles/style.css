@@ -351,12 +351,38 @@ a {
 }
 
 .navbar__link {
+  position: relative;
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 50px;
   padding: 0 0.15px;
+  color: #ffffff;
+  transition: all 0.5s;
+}
+
+.navbar__link a:hover{
+  color: #BB945F;
+  text-shadow: 0px 0px 2px #BB945F;
+  cursor: pointer;
+}
+
+.navbar__link a::before{
+  content: "";
+  position: absolute;
+  bottom:7px;
+  left:0;
+  width:0%;
+  height:1.5px;
+  background-color: #A67D44;
+  border-radius: 50%;
+  box-shadow: 0px 0px 1.5px #BB945F;
+  transition: all 0.5s;
+}
+
+.navbar__link a:hover::before{
+  width:100%;
 }
 
 .header a {
