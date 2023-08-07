@@ -15,19 +15,24 @@
 <body>
   <header class="header wrapper">
     <div class="header__container">
-      <h1 class="header__logo"><a href="#">Brooklyn Public Library</a></h1>
-      <div class="header__buttons">
-          <nav class="header__navbar">
-              <ul class="navbar">
-                  <li class="navbar__link"><a href="#about_us">About</a></li>
-                  <li class="navbar__link"><a href="#favorites">Favorites</a></li>
-                  <li class="navbar__link"><a href="#coffee_shop">Coffee shop</a></li>
-                  <li class="navbar__link"><a href="#our_contacts">Contacts</a></li>
-                  <li class="navbar__link"><a href="#library_cards">Library Card</a></li>
-              </ul>
-          </nav>
-          <button class="header__user-button user-button" type="button" title="Profile"></button>
-      </div>
+        <h1 class="header__logo"><a class="header__logo-full" href="#">Brooklyn Public Library</a><a class="header__logo-small" href="#" title="Brooklyn Public Library">BPL</a></h1>
+        <div class="header__buttons">
+            <nav class="header__navbar" id="navcontainer">
+                <ul class="navbar" id="navbar">
+                    <li class="navbar__link"><a href="#about_us">About</a></li>
+                    <li class="navbar__link"><a href="#favorites">Favorites</a></li>
+                    <li class="navbar__link"><a href="#coffee_shop">Coffee shop</a></li>
+                    <li class="navbar__link"><a href="#our_contacts">Contacts</a></li>
+                    <li class="navbar__link"><a href="#library_cards">Library Card</a></li>
+                </ul>
+            </nav>
+            <button class="header__user-button user-button" id="user-button" type="button" title="Profile"></button>
+            <button class="burger-button" id="navbutton">
+                <div class="burger-button__line"></div>
+                <div class="burger-button__line"></div>
+                <div class="burger-button__line"></div>
+            </button>
+        </div>
     </div>
   </header>
   <main class="main wrapper">

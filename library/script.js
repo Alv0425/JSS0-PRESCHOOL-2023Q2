@@ -37,3 +37,65 @@ p4 = p4+p41+p42+p43+p44+p45+p46+p47+p48+p49+p50;
 let review = p1+p2+p3+p4;
 
 console.log(review);
+
+
+
+const navBar = document.getElementById("navbar");
+const navButton = document.getElementById('navbutton');
+const navLinks = document.querySelectorAll('li a');
+const navCont = document.getElementById("navcontainer");
+const userButton = document.getElementById("user-button");
+
+let navBarstatus = 0;
+
+navButton.addEventListener('click', () => {
+    if (navBarstatus == 0){  
+        navBar.classList.remove("navbar-closed");
+        navBar.classList.add("navbar-open");
+        navButton.classList.add("close");
+        navBarstatus = 1;
+        document.body.style.overflow = "hidden";
+    } else {
+        navBar.classList.remove("navbar-open");
+        navBar.classList.add("navbar-closed");
+        navButton.classList.remove("close");
+        navBarstatus = 0;
+        document.body.style.overflow = "auto";
+    }
+});
+
+document.addEventListener('touchend', (event) => {
+    if (navBarstatus == 1){
+        if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
+            navBar.classList.remove("navbar-open");
+            navBar.classList.add("navbar-closed");
+            navButton.classList.remove("close");
+            navBarstatus = 0;
+            document.body.style.overflow = "auto";
+        }
+    }
+    
+});
+
+document.addEventListener('click', (event) => {
+    if (navBarstatus == 1){
+        if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
+            navBar.classList.remove("navbar-open");
+            navBar.classList.add("navbar-closed");
+            navButton.classList.remove("close");
+            navBarstatus = 0;
+            document.body.style.overflow = "auto";
+        }
+    }
+    
+});
+
+navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+        navBar.classList.remove("navbar-open");
+        navBar.classList.add("navbar-closed");
+        navButton.classList.remove("close");
+        navBarstatus = 0;
+        document.body.style.overflow = "auto";
+    });
+});
