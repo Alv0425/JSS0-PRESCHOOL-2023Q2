@@ -15,19 +15,24 @@
 <body>
   <header class="header wrapper">
     <div class="header__container">
-      <h1 class="header__logo"><a href="#">Brooklyn Public Library</a></h1>
-      <div class="header__buttons">
-          <nav class="header__navbar">
-              <ul class="navbar">
-                  <li class="navbar__link"><a href="#about_us">About</a></li>
-                  <li class="navbar__link"><a href="#favorites">Favorites</a></li>
-                  <li class="navbar__link"><a href="#coffee_shop">Coffee shop</a></li>
-                  <li class="navbar__link"><a href="#our_contacts">Contacts</a></li>
-                  <li class="navbar__link"><a href="#library_cards">Library Card</a></li>
-              </ul>
-          </nav>
-          <button class="header__user-button user-button" type="button" title="Profile"></button>
-      </div>
+        <h1 class="header__logo"><a class="header__logo-full" href="#">Brooklyn Public Library</a><a class="header__logo-small" href="#" title="Brooklyn Public Library">BPL</a></h1>
+        <div class="header__buttons">
+            <nav class="header__navbar" id="navcontainer">
+                <ul class="navbar" id="navbar">
+                    <li class="navbar__link"><a href="#about_us">About</a></li>
+                    <li class="navbar__link"><a href="#favorites">Favorites</a></li>
+                    <li class="navbar__link"><a href="#coffee_shop">Coffee shop</a></li>
+                    <li class="navbar__link"><a href="#our_contacts">Contacts</a></li>
+                    <li class="navbar__link"><a href="#library_cards">Library Card</a></li>
+                </ul>
+            </nav>
+            <button class="header__user-button user-button" id="user-button" type="button" title="Profile"></button>
+            <button class="burger-button" id="navbutton">
+                <span class="burger-button__line"></span>
+                <span class="burger-button__line"></span>
+                <span class="burger-button__line"></span>
+            </button>
+        </div>
     </div>
   </header>
   <main class="main wrapper">
@@ -42,25 +47,39 @@
       <h2 class="main-section__title">About</h2>
       <p class="main-section__paragraph">The Brooklyn Library is a free workspace, a large number of books and a cozy coffee shop inside</p>
       <div class="carousel">
-          <div class="carousel__body">
-              <img class="carousel__image" src="./images/about/1.jpg" alt="A reader searching book" id="image1">
-              <img class="carousel__image carousel__image-center" src="./images/about/2.jpg" alt="Sculptures" id="image2">
-              <img class="carousel__image" src="./images/about/3.jpg" alt="Bookshelves" id="image3">
-              <img class="carousel__image carousel__image-hidden" src="./images/about/4.jpg" alt="Ladder" id="image4">
-              <img class="carousel__image carousel__image-hidden" src="./images/about/5.jpg" alt="Pediment" id="image5">
-          </div>
-          <div class="carousel__pagination">
-              <button class="pagination-button pagination-button-active" id="pagination-button-1">
-                  <span class="pagination-button__dot"></span>
-              </button>
-              <button class="pagination-button" id="pagination-button-2">
-                  <span class="pagination-button__dot"></span>
-              </button>
-              <button class="pagination-button" id="pagination-button-3">
-                  <span class="pagination-button__dot"></span>
-              </button>
-          </div>
-      </div>
+        <div class="carousel__arrow" id="arrow-left"></div>
+        <div class="carousel__body">
+            <div class="carousel__container">
+                <div class="carousel__images">
+                    <div class="free-space-left" id="free-space-left"></div>
+                    <img class="carousel__image" src="./images/about/1.jpg" alt="A reader searching book" id="image1">
+                    <img class="carousel__image carousel__image-center" src="./images/about/2.jpg" alt="Sculptures" id="image2">
+                    <img class="carousel__image" src="./images/about/3.jpg" alt="Bookshelves" id="image3">
+                    <img class="carousel__image " src="./images/about/4.jpg" alt="Ladder" id="image4">
+                    <img class="carousel__image " src="./images/about/5.jpg" alt="Pediment" id="image5">
+                    <div class="free-space-right" id="free-space-right"></div>
+                </div>
+            </div> 
+            <div class="carousel__pagination">
+                <button class="pagination-button pagination-button-active" id="pagination-button-1">
+                    <span class="pagination-button__dot"></span>
+                </button>
+                <button class="pagination-button" id="pagination-button-2">
+                    <span class="pagination-button__dot"></span>
+                </button>
+                <button class="pagination-button" id="pagination-button-3">
+                    <span class="pagination-button__dot"></span>
+                </button>
+                <button class="pagination-button" id="pagination-button-4">
+                    <span class="pagination-button__dot"></span>
+                </button>
+                <button class="pagination-button" id="pagination-button-5">
+                    <span class="pagination-button__dot"></span>
+                </button>
+            </div>
+        </div>
+        <div class="carousel__arrow" id="arrow-right"></div>
+    </div>
     </section>
     <section class="main-section" id="favorites">
       <h2 class="main-section__title">Favorites</h2>
