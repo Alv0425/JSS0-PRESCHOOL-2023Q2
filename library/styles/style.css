@@ -521,7 +521,7 @@ a {
   .three-columns-layout__item:nth-child(2),
   .three-columns-layout__item:nth-child(1){
     text-align: center;
-    flex-basis: 40px;
+    flex-basis: 30px;
   }
 }
 
@@ -997,7 +997,7 @@ a {
   height: 100%;
   border: #0C0C0E 1px solid;
 }
-@media (width <= 630px) {
+@media (width <= 600px) {
   .book::before {
     width: 100%;
   }
@@ -1011,7 +1011,7 @@ a {
   width: 200px;
   z-index: 1;
 }
-@media (width <= 630px) {
+@media (width <= 600px) {
   .book__cover {
     bottom: -20px;
     width: 120px;
@@ -1074,6 +1074,11 @@ a {
     margin-bottom: 120px;
     font-size: 14px;
     line-height: 25px;
+  }
+}
+@media (width <= 600px) {
+  .book__abstract {
+    max-width: 100%;
   }
 }
 
@@ -1536,10 +1541,18 @@ p.contacts__item {
   background-image: url("../assets/u_facebook-f-hover.svg");
 }
 
-.footer__contacts-item:nth-child(1) .footer__social-link:hover::before,
-.footer__contacts-item:nth-child(2) .footer__social-link:hover::before,
-.footer__contacts-item:nth-child(3) .footer__social-link:hover::before {
-  opacity: 1;
+@media (pointer:fine) {
+  .footer__contacts-item:nth-child(1) .footer__social-link:hover::before,
+  .footer__contacts-item:nth-child(2) .footer__social-link:hover::before,
+  .footer__contacts-item:nth-child(3) .footer__social-link:hover::before {
+    opacity: 1;
+  }
+}
+
+.footer__contacts-item:nth-child(1) .footer__social-link:active::before,
+.footer__contacts-item:nth-child(2) .footer__social-link:active::before,
+.footer__contacts-item:nth-child(3) .footer__social-link:active::before {
+    opacity: 1;
 }
 
 .footer__signature {
@@ -1559,6 +1572,12 @@ p.contacts__item {
   transition: all 0.5s;
 }
 
-.footer__link:hover {
+@media (pointer:fine){
+  .footer__link:hover {
+    color: #BB945F;
+  }
+}
+
+.footer__link:active {
   color: #BB945F;
 }

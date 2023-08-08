@@ -74,8 +74,6 @@ navButton.addEventListener('click', () => {
     }
 });
 
-
-
 document.addEventListener('touchend', handleClickOutsideMunu);
 
 document.addEventListener('click', handleClickOutsideMunu);
