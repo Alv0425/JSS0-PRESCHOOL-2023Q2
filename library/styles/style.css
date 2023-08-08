@@ -353,6 +353,12 @@ a {
   }
 }
 
+@media (max-width: 548px) {
+  .navbar {
+    margin-right: 0;
+  }  
+}
+
 .navbar__link {
   position: relative;
   font-family: Inter;
@@ -531,7 +537,7 @@ a {
   display: flex;
   padding: 220px 0 160px 0;
 }
-@media (width <= 468px) {
+@media (width < 468px) {
   .welcome-section__container {
     padding: 100px 0 80px 0;
   }
@@ -551,7 +557,7 @@ a {
   text-align: center;
   background-color: #0C0C0E;
 }
-@media (width <= 468px) {
+@media (width < 468px) {
   .welcome-section__title {
     padding: 35px 10px;
     font-size: 2rem;
@@ -581,12 +587,12 @@ a {
     margin: 0 auto;
   }
 }
-@media (width <= 576px) {
+@media (width < 576px) {
   .carousel {
     max-width: 400px;
   }
 }
-@media (width <= 468px) {
+@media (width < 468px) {
   .carousel {
     max-width: 310px;
   }
@@ -599,7 +605,7 @@ a {
   gap: 35px;
   margin-top: 20px;
 }
-@media (width <= 1430px) {
+@media (width < 1430px) {
   .carousel__body {
     gap: 20px;
   }
@@ -609,7 +615,6 @@ a {
   display: flex;
   flex-direction: row;
   max-width: 1400px;
-  overflow: hidden;
   justify-content: center;
 }
 @media (width < 1430px) {
@@ -640,6 +645,7 @@ a {
 }
 
 .free-space-left {
+  display: none;
   width: 950px;
   transition: all 0.5s;
 }
@@ -732,6 +738,7 @@ a {
   }
 }
 .free-space-right {
+  display:none;
   width: 0;
 }
 
@@ -740,6 +747,24 @@ a {
   object-fit: cover;
   transition: all 0.5s;
 }
+
+#image4,
+#image5{
+  display: none;
+}
+
+@media (width < 1430px){
+  #image3{
+    display: none;
+  }
+}
+
+@media (width < 1024px){
+  #image2{
+    display: none;
+  }
+}
+
 @media (width <= 576px) {
   .carousel__image {
     width: 300px;
@@ -775,9 +800,6 @@ a {
     background-position: 100% 51%;
     background-image: url("../assets/Carret_Right.svg");
   }
-}
-.carousel__image-hidden {
-  width: auto;
 }
 
 .carousel__pagination {
