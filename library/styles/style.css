@@ -239,6 +239,10 @@ a {
   }
 }
 
+.burger-button{
+  display: none;
+} 
+
 .user-button {
   position: relative;
   width: 30px;
@@ -501,9 +505,16 @@ a {
   }
 }
 
+
 .three-columns-layout__item:nth-child(1) {
   text-align: left;
-  flex-basis: 56px;
+  flex-basis: 113px;
+}
+
+@media (width < 1024px) {
+  .three-columns-layout__item:nth-child(1) {
+    flex-basis: 56px;
+  }
 }
 
 .three-columns-layout__item:nth-child(2) {
@@ -1273,7 +1284,6 @@ p.contacts__item {
 }
 
 .check-form {
-  flex-grow: 2;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
