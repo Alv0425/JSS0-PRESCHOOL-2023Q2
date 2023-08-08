@@ -484,6 +484,7 @@ a {
 .three-columns-layout {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   flex-wrap: wrap;
 }
 @media (width < 578px) {
@@ -496,20 +497,26 @@ a {
 
 .three-columns-layout__item:nth-child(1) {
   text-align: left;
-  flex-grow: 1;
-  flex-basis: 25%;
+  flex-basis: 56px;
 }
 
 .three-columns-layout__item:nth-child(2) {
   text-align: center;
-  flex-grow: 3;
-  flex-basis: 50%;
+  flex-basis: 301px;
 }
 
 .three-columns-layout__item:nth-child(3) {
   text-align: right;
-  flex-grow: 1;
-  flex-basis: 25%;
+  flex-basis: 113px;
+}
+
+@media (width < 578px) {
+  .three-columns-layout__item:nth-child(3),
+  .three-columns-layout__item:nth-child(2),
+  .three-columns-layout__item:nth-child(1){
+    text-align: center;
+    flex-basis: 40px;
+  }
 }
 
 /* Welcome section */
@@ -1239,6 +1246,7 @@ p.contacts__item {
 }
 
 .check-form {
+  flex-grow: 2;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -1309,7 +1317,7 @@ p.contacts__item {
 
 .check-form__field {
   display: block;
-  min-width: 520px;
+  width: 100%;
   padding: 8px 20px;
   margin-bottom: 26px;
   font-family: Forum;
@@ -1408,6 +1416,11 @@ p.contacts__item {
 .get-form__button {
   padding: 9px;
   min-width: 75px;
+}
+@media (width < 1120px) {
+  .get-form__button {
+    padding: 8px;
+  }
 }
 
 /* Footer */
