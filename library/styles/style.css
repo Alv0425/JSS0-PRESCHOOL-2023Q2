@@ -25,15 +25,6 @@ body {
   background: #BB945F;
 }
 
-p,
-dd,
-dl,
-figure,
-blockquote {
-  margin: 0;
-  padding: 0;
-}
-
 blockquote,
 q {
   quotes: none;
@@ -45,22 +36,13 @@ ol {
   margin: 0;
   list-style-type: none;
 }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-th {
-  font-weight: inherit;
-}
-
 div,
 img {
   padding: 0;
   margin: 0;
 }
 
+p,
 h1,
 h2,
 h3,
@@ -83,14 +65,6 @@ img {
 
 iframe {
   border: none;
-}
-
-pre,
-code,
-kbd,
-samp {
-  font-family: monospace, monospace;
-  font-size: inherit;
 }
 
 button,
@@ -123,12 +97,6 @@ button,
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
-}
-
-textarea {
-  resize: none;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 button::-moz-focus-inner,
@@ -173,12 +141,6 @@ fieldset {
   padding: 0;
   margin: 0;
   border: none;
-}
-
-legend {
-  display: block;
-  padding: 0;
-  white-space: normal;
 }
 
 h1,
@@ -232,6 +194,21 @@ a {
   cursor: pointer;
   background-color: #BB945F;
   border-color: #BB945F;
+}
+
+@media (max-width: 1024px) {
+  .button:hover {
+    background-color: inherit;
+    border-color: #0C0C0E;
+  }
+}
+
+@media (max-width: 1024px) {
+  .button:active {
+    cursor: pointer;
+    background-color: #BB945F;
+    border-color: #BB945F;
+  }
 }
 
 .button:disabled {
@@ -1117,7 +1094,12 @@ a {
 /* Coffee Shop */
 .cafe-menu {
   margin: 40px 0 0 0;
-  gap: 20px;
+  gap: 40px;
+}
+@media (width <= 468px) {
+  .cafe-menu {
+    flex-direction: column;
+  }
 }
 
 .cafe-menu__section {
@@ -1125,6 +1107,11 @@ a {
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+@media (width < 576px) {
+  .cafe-menu__section {
+    gap: 20px;
+  }
 }
 
 .cafe-menu__title {
@@ -1137,6 +1124,12 @@ a {
   letter-spacing: 2px;
   text-transform: capitalize;
 }
+@media (width < 576px) {
+  .cafe-menu__title {
+    font-size: 30px;
+    line-height: 30px;
+  }
+}
 
 .cafe-menu__item {
   font-family: Inter;
@@ -1148,6 +1141,12 @@ a {
   line-height: 40px;
   letter-spacing: 2px;
   text-transform: capitalize;
+}
+@media (width < 576px) {
+  .cafe-menu__item {
+    font-size: 16px;
+    line-height: 30px;
+  }
 }
 
 .cafe-menu__price {
@@ -1162,6 +1161,12 @@ a {
   letter-spacing: 2px;
   text-transform: capitalize;
 }
+@media (width < 576px) {
+  .cafe-menu__price {
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
 
 .cafe-menu__price::before {
   content: "";
@@ -1171,10 +1176,22 @@ a {
   height: 1px;
   background-color: #BB945F;
 }
+@media (width <= 468px) {
+  .cafe-menu__price::before {
+    width: 50px;
+    margin: 0 30px;
+  }
+}
 
 .cafe-menu__section:nth-child(even) {
   align-items: end;
   margin-left: auto;
+}
+@media (width <= 468px) {
+  .cafe-menu__section:nth-child(even) {
+    align-items: stretch;
+    margin-left: 0;
+  }
 }
 
 .cafe-menu__section:nth-child(odd) {
