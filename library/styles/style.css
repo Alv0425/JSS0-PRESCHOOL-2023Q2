@@ -36,6 +36,7 @@ ol {
   margin: 0;
   list-style-type: none;
 }
+
 div,
 img {
   padding: 0;
@@ -53,11 +54,6 @@ h6 {
   padding: 0;
 }
 
-audio,
-video {
-  display: block;
-}
-
 img {
   display: block;
   border: none;
@@ -68,10 +64,7 @@ iframe {
 }
 
 button,
-input,
-optgroup,
-select,
-textarea {
+input{
   padding: 0;
   margin: 0;
   border: none;
@@ -84,15 +77,13 @@ input {
   overflow: visible;
 }
 
-button,
-select {
+button{
   text-align: left;
   text-transform: none;
 }
 
 button,
 [type=button],
-[type=reset],
 [type=submit] {
   cursor: pointer;
   -webkit-appearance: none;
@@ -101,7 +92,6 @@ button,
 
 button::-moz-focus-inner,
 [type=button]::-moz-focus-inner,
-[type=reset]::-moz-focus-inner,
 [type=submit]::-moz-focus-inner {
   border: none;
   padding: 0;
@@ -109,27 +99,8 @@ button::-moz-focus-inner,
 
 button:-moz-focusring,
 [type=button]:-moz-focusring,
-[type=reset]:-moz-focusring,
 [type=submit]:-moz-focusring {
   outline: none;
-}
-
-[type=number]::-webkit-inner-spin-button,
-[type=number]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-[type=search]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-[type=search] {
-  outline: none;
-}
-
-::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  font: inherit;
 }
 
 form {
@@ -1211,6 +1182,12 @@ a {
   letter-spacing: 2px;
   text-transform: capitalize;
 }
+@media (width < 576px) {
+  .contacts__container {
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
 
 .contacts__list {
   display: flex;
@@ -1247,7 +1224,7 @@ p.contacts__item {
 .contacts__map {
   max-width: 100%;
 }
-@media (width <= 1000px) {
+@media (width <= 1024px) {
   .contacts__map {
     margin: 0 auto;
   }
@@ -1276,15 +1253,28 @@ p.contacts__item {
   letter-spacing: 0.6px;
   text-align: center;
 }
+@media (width < 576px) {
+  .check-form__title {
+    font-size: 25px;
+    line-height: 30px;
+  }
+}
 
 .check-form__body {
   padding: 17px;
   border: 3px solid #BB945F;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  min-width: 600px;
+}
+@media (width < 640px) {
+  .check-form__body {
+    min-width: 100%;
+  }
 }
 
 .check-form__fieldset {
   padding: 0px 20px;
+  flex-basis: 650px;
   display: flex;
   flex-direction: column;
   font-family: Forum;
@@ -1295,6 +1285,12 @@ p.contacts__item {
   background-color: #BB945F;
   border: none;
 }
+@media (width < 576px) {
+  .check-form__fieldset {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
 
 .check-form__label {
   margin: 20px 0;
@@ -1303,6 +1299,12 @@ p.contacts__item {
   font-weight: 400;
   line-height: 50px;
   letter-spacing: 0.6px;
+}
+@media (width < 576px) {
+  .check-form__label {
+    font-size: 25px;
+    line-height: 30px;
+  }
 }
 
 .check-form__field {
@@ -1318,6 +1320,13 @@ p.contacts__item {
   color: #8E8E8E;
   border-radius: 10px;
   border: none;
+}
+@media (width < 576px) {
+  .check-form__field {
+    padding: 5px 10px;
+    font-size: 25px;
+    line-height: 30px;
+  }
 }
 
 .check-form__field:focus {
@@ -1337,6 +1346,12 @@ p.contacts__item {
   margin: 20px auto;
   margin-bottom: 12px;
 }
+@media (width < 640px) {
+  .check-form__button {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
 
 .get-form {
   display: flex;
@@ -1344,10 +1359,10 @@ p.contacts__item {
   text-align: right;
   gap: 35px;
 }
-
-@media (width < 1000px) {
+@media (width < 1120px) {
   .get-form {
     text-align: center;
+    gap: 40px;
   }
 }
 
@@ -1366,14 +1381,25 @@ p.contacts__item {
   line-height: 40px;
   letter-spacing: 0.4px;
 }
+@media (width < 1120px) {
+  .get-form__description {
+    max-width: 600px;
+  }
+}
+@media (width < 640px) {
+  .get-form__description {
+    padding: 5px 10px;
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
 
 .get-form__buttons {
   display: flex;
   gap: 20px;
   justify-content: end;
 }
-
-@media (width < 780px) {
+@media (width < 1120px) {
   .get-form__buttons {
     justify-content: center;
   }
