@@ -48,54 +48,45 @@ const userButton = document.getElementById("user-button");
 
 let navBarstatus = 0;
 
+const handleCloseMenu = () => {
+  navBar.classList.remove("navbar-open");
+  navButton.classList.remove("close");
+  navBarstatus = 0;
+  document.body.style.position = "static";
+}
+
+const handleClickOutsideMunu = (event) => {
+  if (navBarstatus == 1){
+    if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
+        handleCloseMenu();
+    }
+  }
+}
+
 navButton.addEventListener('click', () => {
     if (navBarstatus == 0){  
-        navBar.classList.remove("navbar-closed");
         navBar.classList.add("navbar-open");
         navButton.classList.add("close");
         navBarstatus = 1;
-        document.body.style.overflow = "hidden";
+        document.body.style.position = "fixed";
     } else {
-        navBar.classList.remove("navbar-open");
-        navBar.classList.add("navbar-closed");
-        navButton.classList.remove("close");
-        navBarstatus = 0;
-        document.body.style.overflow = "auto";
+      handleCloseMenu();
     }
 });
 
-document.addEventListener('touchend', (event) => {
-    if (navBarstatus == 1){
-        if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
-            navBar.classList.remove("navbar-open");
-            navBar.classList.add("navbar-closed");
-            navButton.classList.remove("close");
-            navBarstatus = 0;
-            document.body.style.overflow = "auto";
-        }
-    }
-    
-});
 
-document.addEventListener('click', (event) => {
-    if (navBarstatus == 1){
-        if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
-            navBar.classList.remove("navbar-open");
-            navBar.classList.add("navbar-closed");
-            navButton.classList.remove("close");
-            navBarstatus = 0;
-            document.body.style.overflow = "auto";
-        }
-    }
-    
-});
+
+document.addEventListener('touchend', handleClickOutsideMunu);
+
+document.addEventListener('click', handleClickOutsideMunu);
 
 navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-        navBar.classList.remove("navbar-open");
-        navBar.classList.add("navbar-closed");
-        navButton.classList.remove("close");
-        navBarstatus = 0;
-        document.body.style.overflow = "auto";
+    link.addEventListener("click", (event) => {
+        event.preventDefault();
+        handleCloseMenu();
+        setTimeout(waitAnimation, 250);
+        function waitAnimation() {
+          window.location = link.href;  
+        }
     });
 });
