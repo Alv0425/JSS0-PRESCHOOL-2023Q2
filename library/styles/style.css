@@ -376,7 +376,6 @@ a {
     background-color: transparent;
     margin-left: 40px;
     transition: 0.4s;
-
   }
 
   .burger-button__line {
@@ -916,32 +915,26 @@ a {
   line-height: normal;
 }
 
-.favorites__filter {
-  display: flex;
+.favorites__filter{
+  display: grid;
+  grid-template-columns: minmax(0, 106px) minmax(0, 101px) minmax(0, 1fr) minmax(0, 1fr);
+  max-width:706px;
+  gap:20px 88px;
+  margin:40px 0;
   list-style: none;
-  gap: 88px;
-  margin: 40px 0;
+  line-height: 24px;
+  @media (width <= 740px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+  }
+  @media (width <= 630px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width:500px;
+  }
 }
 
-.favorites__item {
-  display: flex;
-  min-width: 100px;
-}
-
-.favorites__item:nth-child(1) {
-  flex-basis: 106px;
-}
-
-.favorites__item:nth-child(2) {
-  flex-basis: 101px;
-}
-
-.favorites__item:nth-child(3) {
-  flex-basis: 118px;
-}
-
-.favorites__item:nth-child(4) {
-  flex-basis: 113px;
+.favorites__item{
+  display:flex;
 }
 
 .favorites__radio-button {
@@ -996,6 +989,11 @@ a {
 .favorites__content {
   gap: 40px;
 }
+@media (width < 1260px) {
+  .favorites__content {
+    justify-content: center;
+  }
+}
 
 .book {
   position: relative;
@@ -1004,6 +1002,11 @@ a {
   flex-basis: 590px;
   min-height: 555px;
   padding: 16px 20px;
+}
+@media (width <= 630px) {
+  .book {
+    min-height: 450px;
+  }
 }
 
 .book::before {
@@ -1016,15 +1019,25 @@ a {
   height: 100%;
   border: #0C0C0E 1px solid;
 }
+@media (width <= 630px) {
+  .book::before {
+    width: 100%;
+  }
+}
 
 .book__cover {
   position: absolute;
-  left: calc(100% - 200px);
-  top: calc(100% - 300px);
+  right: 0;
+  bottom: 0;
   display: block;
   width: 200px;
-  height: 300px;
   z-index: 1;
+}
+@media (width <= 630px) {
+  .book__cover {
+    bottom: -20px;
+    width: 120px;
+  }
 }
 
 .book__label {
@@ -1077,6 +1090,13 @@ a {
   line-height: 40px;
   letter-spacing: 2px;
   text-transform: capitalize;
+}
+@media (width <= 630px) {
+  .book__abstract {
+    margin-bottom: 120px;
+    font-size: 14px;
+    line-height: 25px;
+  }
 }
 
 .book__button {
