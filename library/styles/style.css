@@ -340,8 +340,8 @@ a {
     background-color: #BB945F;
   }
   .close {
-    width: 34px;
-    margin-right: 11px;
+    width: 43px;
+    margin-right: 2px;
   }
   .close .burger-button__line:nth-child(1) {
     transform: translate(0, 10px) rotate(-90deg) rotate(-45deg);
@@ -790,11 +790,21 @@ a {
   .carousel__arrow {
     display: block;
     width: 24px;
+    position: relative;
     align-self: stretch;
     background-repeat: no-repeat;
+    background-color: transparent;
   }
   .carousel__arrow:hover {
     cursor: pointer;
+  }
+  .carousel__arrow::before{
+    content: "";
+    position:absolute;
+    top:0;
+    left:-20px;
+    right: -20px;
+    bottom:0;
   }
   #arrow-left {
     background-position: 0 51%;
