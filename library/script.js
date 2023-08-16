@@ -162,6 +162,22 @@ seasonButtons.forEach((rbutton) => {
   })
 });
 
+//open auth menu
+const userButton = document.getElementById('user-button');
+const authMenu = document.getElementById('auth-menu');
+userButton.addEventListener('click', () => {
+  authMenu.classList.toggle('auth-menu-open');
+});
+
+const clickOutsideAuthMenu = (event) => {
+    if (!authMenu.contains(event.target) && !userButton.contains(event.target)) {
+      authMenu.classList.remove('auth-menu-open');
+    }
+}
+
+document.addEventListener('touchend', clickOutsideAuthMenu);
+document.addEventListener('click', clickOutsideAuthMenu);
+
 
 
 
