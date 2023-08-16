@@ -63,6 +63,58 @@ navLinks.forEach((link) => {
     });
 });
 
+//About slider
+const paginationButtons = document.querySelectorAll('.pagination-button');
+const spaceLeft = document.getElementById('free-space-left');
+const spaceRight = document.getElementById('free-space-right');
+const pagArrowLeft = document.getElementById('arrow-left');
+const pagArrowRight = document.getElementById('arrow-right');
+let currentSliderStatus = 1;
+let prevSliderStatus = 1;
+const handleSlider = () => {
+  spaceLeft.classList.remove(`free-space-left-stage${prevSliderStatus}`);
+  spaceRight.classList.remove(`free-space-right-stage${prevSliderStatus}`);
+  spaceLeft.classList.add(`free-space-left-stage${currentSliderStatus}`);
+  spaceRight.classList.add(`free-space-right-stage${currentSliderStatus}`);
+  paginationButtons[currentSliderStatus-1].classList.add('pagination-button-active');
+  paginationButtons[prevSliderStatus-1].classList.remove('pagination-button-active');
+}
+
+paginationButtons.forEach((button) => {button.addEventListener('click', () => {
+  prevSliderStatus = currentSliderStatus;
+  currentSliderStatus = button.id[button.id.length-1]*1;
+  if (currentSliderStatus !== prevSliderStatus) {
+    handleSlider();
+  }
+})
+});
+
+pagArrowLeft.addEventListener('click', () => {
+  if(currentSliderStatus > 1) {
+    prevSliderStatus = currentSliderStatus;
+    currentSliderStatus -= 1;
+    handleSlider();
+  }
+});
+
+pagArrowRight.addEventListener('click', () => {
+  if(currentSliderStatus < 5) {
+    prevSliderStatus = currentSliderStatus;
+    currentSliderStatus += 1;
+    handleSlider();
+  }
+});
+
+
+
+window.addEventListener("resize", () => {
+  prevSliderStatus = currentSliderStatus;
+  currentSliderStatus = 1;
+  handleSlider();
+  paginationButtons[0].classList.add('pagination-button-active');
+});
+
+//Favorites slider
 const seasonButtons = document.getElementsByName('season');
 const seasons = ['winter','spring','summer','autumn'];
 const winter = document.querySelectorAll('.book.winter');
@@ -86,7 +138,6 @@ const radioCheck = () => {
       setTimeout(() => {
         for (let i = 0; i < seasonButtons.length; i++) {
           if(seasonButtons[i].checked){
-            previousSeasonChecked = seasonChecked;
             seasonChecked = seasonButtons[i].value;
           }
         }
@@ -102,7 +153,6 @@ const radioCheck = () => {
         });
       }, 200);           
     });
-    console.log(seasonBooks[seasons.indexOf(seasonChecked)]);
   }
 }
 
@@ -111,5 +161,7 @@ seasonButtons.forEach((rbutton) => {
     radioCheck();
   })
 });
+
+
 
 
