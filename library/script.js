@@ -62,3 +62,54 @@ navLinks.forEach((link) => {
         }
     });
 });
+
+const seasonButtons = document.getElementsByName('season');
+const seasons = ['winter','spring','summer','autumn'];
+const winter = document.querySelectorAll('.book.winter');
+const spring = document.querySelectorAll('.book.spring');
+const summer = document.querySelectorAll('.book.summer');
+const autumn = document.querySelectorAll('.book.autumn');
+const seasonBooks = [winter, spring, summer, autumn];
+let seasonChecked = 'winter';
+let previousSeasonChecked = 'winter';
+const radioCheck = () => {
+  for (let i = 0; i < seasonButtons.length; i++) {
+    if(seasonButtons[i].checked){
+      previousSeasonChecked = seasonChecked;
+      seasonChecked = seasonButtons[i].value;
+    }
+  }
+  if (previousSeasonChecked !== seasonChecked) {
+    seasonBooks[seasons.indexOf(previousSeasonChecked)].forEach(book => {
+      book.classList.remove('favorites-show');
+      book.classList.add('fav-hidden');
+      setTimeout(() => {
+        for (let i = 0; i < seasonButtons.length; i++) {
+          if(seasonButtons[i].checked){
+            previousSeasonChecked = seasonChecked;
+            seasonChecked = seasonButtons[i].value;
+          }
+        }
+        book.classList.remove('fav-hidden');
+        book.classList.add('favorites-hide');
+        seasonBooks[seasons.indexOf(seasonChecked)].forEach(book => {
+          book.classList.remove('favorites-hide');
+          book.classList.add('fav-hidden');
+          book.classList.add('favorites-show');
+          setTimeout(() => {
+            book.classList.remove('fav-hidden');
+          }, 200);
+        });
+      }, 200);           
+    });
+    console.log(seasonBooks[seasons.indexOf(seasonChecked)]);
+  }
+}
+
+seasonButtons.forEach((rbutton) => {
+  rbutton.addEventListener('click', () => {
+    radioCheck();
+  })
+});
+
+
