@@ -162,9 +162,10 @@ seasonButtons.forEach((rbutton) => {
   })
 });
 
-//open auth menu
+//Auth menu
 const userButton = document.getElementById('user-button');
 const authMenu = document.getElementById('auth-menu');
+let modalType = '';
 userButton.addEventListener('click', () => {
   authMenu.classList.toggle('auth-menu-open');
 });
@@ -177,6 +178,96 @@ const clickOutsideAuthMenu = (event) => {
 
 document.addEventListener('touchend', clickOutsideAuthMenu);
 document.addEventListener('click', clickOutsideAuthMenu);
+
+//Register modal
+const authMenuRegister = document.getElementById('auth-reg');
+const overlayModal = document.getElementById('modal-overlay');
+const modalContainer = document.getElementById('modal-container');
+const signupButton = document.getElementById('signup-getform');
+
+function closeModal() {
+  overlayModal.classList.add('modal-hidden');
+}
+
+const openRegisterModal = () => {
+  modalType = 'register';
+  overlayModal.classList.remove('modal-hidden');
+  modalContainer.innerHTML = `
+  <div class="modal-login-reg" id="modal-reg">
+  <div class="modal-login-reg__header">
+      <div class="modal-login-reg__close" onclick="closeModal()" id="close-modal-reg"></div>
+  </div>
+  <form class="modal-login-reg__container modal-form">
+      <div class="modal-login-reg__title">Register</div>
+      <label for="reg-first-name" class="modal-form__label">First name</label>
+      <input type="text" class="modal-form__input" id="reg-first-name">
+      <label for="reg-last-name" class="modal-form__label">Last name</label>
+      <input type="text" class="modal-form__input" id="reg-last-name">
+      <label for="reg-email" class="modal-form__label">E-mail</label>
+      <input type="email" class="modal-form__input" id="reg-email">
+      <label for="reg-password" class="modal-form__label">Password</label>
+      <input type="password" class="modal-form__input" id="reg-password">
+      <button type="button" class="button modal-login-reg__button">Sign Up</button>
+      <p class="modal-login-reg__footnote">Already have an account?<span class="modal-login-reg__link" id="login-link">Login</span></p>
+  </form>
+  </div>
+  `; 
+  document.getElementById('login-link').addEventListener('click', () => {
+    setTimeout(()=>{
+      openLoginModal();
+    }, 200);
+  })
+}
+
+const openLoginModal = () => {
+  modalType = 'login';
+  overlayModal.classList.remove('modal-hidden');
+  modalContainer.innerHTML = `
+  <div class="modal-login-reg" id="modal-login">
+    <div class="modal-login-reg__header">
+      <div class="modal-login-reg__close" onclick="closeModal()"></div>
+    </div>
+    <form class="modal-login-reg__container">
+      <div class="modal-login-reg__title">Login</div>
+      <label for="login-email" class="modal-form__label">E-mail or readers card</label>
+      <input type="text" class="modal-form__input" id="login-email">
+      <label for="login-password" class="modal-form__label">Password</label>
+      <input type="password" class="modal-form__input" id="login-password">
+      <button type="button" class="button modal-login-reg__button">Log In</button>
+      <p class="modal-login-reg__footnote">Dont have an account?<span class="modal-login-reg__link" id="reg-link">Register</span></p>
+    </form>
+  </div>
+  `;
+  document.getElementById('reg-link').addEventListener('click', () => {
+    setTimeout(()=>{
+      openRegisterModal();
+    }, 200);
+  })
+}
+
+function handleClickOutsideModals(event) {
+  if (!document.getElementById('modal-container').contains(event.target)) {
+    closeModal();
+  } 
+}
+
+overlayModal.addEventListener('click', (event) => {
+  handleClickOutsideModals(event);
+})
+
+authMenuRegister.addEventListener('click', () => {
+  openRegisterModal();
+  authMenu.classList.remove('auth-menu-open');
+});
+
+signupButton.addEventListener('click', () => {
+  openRegisterModal();
+});
+
+
+
+
+
 
 
 

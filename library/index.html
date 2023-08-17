@@ -31,8 +31,10 @@
                     <button class="header__user-button user-button" id="user-button" type="button" title="Profile"></button>
                     <div class="auth-menu" id="auth-menu">
                         <p class="auth-menu__title">Profile</p>
-                        <p class="auth-menu__item">Log in</p>
-                        <p class="auth-menu__item">Registrer</p>
+                        <button type="button" class="auth-menu__item" id="auth-login">Log In</button>
+                        <button type="button" class="auth-menu__item" id="auth-reg">Registrer</button>
+                        <button type="button" class="auth-menu__item auth-menu__item-hidden" id="auth-my-profile">My profile</button>
+                        <button type="button" class="auth-menu__item auth-menu__item-hidden" id="auth-logout">Log Out</button>
                     </div>
                 </div>
                 <button class="burger-button" id="navbutton">
@@ -327,20 +329,20 @@
           <div class="two-columns-layout library-cards">
               <div class="library-cards__searching-form check-form">
                   <h3 class="check-form__title">Find your Library card</h3>
-                  <form class="check-form__body" action="https://www.w3schools.com/action_page.php" method="POST" target="_blank">
+                  <form class="check-form__body">
                       <fieldset class="check-form__fieldset">
                           <p class="check-form__label">Brooklyn Public Library</p>
                           <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="^[a-zA-Z\-\s]+" autocomplete="name" required>
                           <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[A-Z0-9]{9,}" title="It should contains uppercase letters and numbers only." required>
                       </fieldset>
-                      <button type="submit" class="button check-form__button">Check the card</button>
+                      <button type="button" class="button check-form__button">Check the card</button>
                   </form>
               </div>
               <div class="library-cards__get-form get-form">
                   <h3 class="get-form__title">Get a reader card</h3>
                   <p class="get-form__description">You will be able to see a reader card after logging into account or you can register a new account</p>
                   <div class="get-form__buttons">
-                      <button class="button get-form__button">Sign Up</button>
+                      <button class="button get-form__button" id="signup-getform">Sign Up</button>
                       <button class="button get-form__button">Log In</button>
                   </div>
               </div>
@@ -378,6 +380,9 @@
             </div>
         </div>
       </footer>
+      <div class="modal-overlay modal-hidden" id="modal-overlay">
+        <div class="modal-container" id="modal-container"></div>
+      </div>
   </div>
   <script src="./script.js"></script>  
 </body>

@@ -270,11 +270,14 @@ a {
 
 .auth-menu{
   position: absolute;
-  bottom:-115px;
+  bottom:0px;
   right:0;
-  height: 115px;
+  height: 0px;
+  overflow: hidden;
   width:80px;
-  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 5px;
   background-color: #FFF;
   color: #000;
@@ -283,12 +286,16 @@ a {
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+  transition: 0.3s;
+  opacity:0;
 }
 
+
 .auth-menu-open{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 115px;
+  opacity: 1;
+  bottom:-115px;
+  z-index: 10;
 }
 
 .auth-menu__title{
@@ -309,6 +316,11 @@ a {
 
 .auth-menu__item{
   margin-bottom: 10px;
+  background-color: transparent;
+}
+
+.auth-menu__item-hidden{
+  display: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1792,3 +1804,121 @@ p.contacts__item {
 .footer__link:active {
   color: #BB945F;
 }
+
+
+/* Modals */
+/* REGISTER -- LOGIN */
+.modal-overlay {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(12, 12, 14, 0.5);
+  width: 100%;
+}
+
+.modal-container{
+  margin: auto auto;
+  display: flex;
+}
+
+.modal-login-reg {
+  position: relative;
+  display: flex;
+  background-color: #ffffff;
+  max-width: 250px;
+  animation: fade-in 0.5s ease;
+  opacity: 1;
+}
+
+.modal-login-reg__container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 20px 25px;
+}
+
+.modal-login-reg__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background-image: url("../assets/close_btn.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+}
+
+.modal-login-reg__close:hover {
+  cursor: pointer;
+}
+
+.modal-login-reg__title {
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: Forum;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.modal-form__label {
+  margin: 10px 0;
+}
+
+.modal-form__label,
+.modal-form__input {
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+}
+
+.modal-form__input {
+  border: 1px solid #BB945F;
+}
+
+.modal-form__input-small {
+  width: 45px;
+}
+
+.modal-login-reg__button {
+  max-width: 75px;
+  padding: 8px;
+  margin-top: 20px;
+}
+
+.modal-login-reg__footnote {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.modal-login-reg__link {
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-decoration-line: underline;
+  transition: all 0.3s;
+}
+
+.modal-login-reg__link:hover {
+  cursor: pointer;
+  color: #BB945F;
+}
+
+.modal-hidden{
+  display: none;
+} 
