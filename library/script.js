@@ -105,7 +105,44 @@ pagArrowRight.addEventListener('click', () => {
   }
 });
 
+let touchstart = 0;
+let touchend = 0;
 
+const carouselContainer = document.getElementById('carousel-container');
+
+carouselContainer.addEventListener('touchstart', function(event) {
+    touchstart = event.changedTouches[0].screenX;
+}, false);
+
+carouselContainer.addEventListener('touchend', function(event) {
+    touchend = event.changedTouches[0].screenX;
+    touchesType();
+}, false); 
+
+function touchesType() {
+    if (touchstart - touchend > 100) {
+        let maxStageNum = 5;
+        if (screen.width > 1024) {
+          maxStageNum = 4;
+        }
+        if (screen.width > 1430) {
+          maxStageNum = 3;
+        }
+        if(currentSliderStatus < maxStageNum) {
+          prevSliderStatus = currentSliderStatus;
+          currentSliderStatus += 1;
+          handleSlider();
+        }
+    }
+    
+    if (touchend - touchstart > 100) {
+        if(currentSliderStatus > 1) {
+          prevSliderStatus = currentSliderStatus;
+          currentSliderStatus -= 1;
+          handleSlider();
+        }
+    }
+}
 
 window.addEventListener("resize", () => {
   prevSliderStatus = currentSliderStatus;
@@ -179,11 +216,13 @@ const clickOutsideAuthMenu = (event) => {
 document.addEventListener('touchend', clickOutsideAuthMenu);
 document.addEventListener('click', clickOutsideAuthMenu);
 
-//Register modal
+//Register and login modals
 const authMenuRegister = document.getElementById('auth-reg');
+const authMenuLogin = document.getElementById('auth-login');
 const overlayModal = document.getElementById('modal-overlay');
 const modalContainer = document.getElementById('modal-container');
 const signupButton = document.getElementById('signup-getform');
+const loginButton = document.getElementById('login-getform');
 
 function closeModal() {
   overlayModal.classList.add('modal-hidden');
@@ -260,8 +299,17 @@ authMenuRegister.addEventListener('click', () => {
   authMenu.classList.remove('auth-menu-open');
 });
 
+authMenuLogin.addEventListener('click', () => {
+  openLoginModal();
+  authMenu.classList.remove('auth-menu-open');
+})
+
 signupButton.addEventListener('click', () => {
   openRegisterModal();
+});
+
+loginButton.addEventListener('click', () => {
+  openLoginModal();
 });
 
 
