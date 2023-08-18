@@ -243,15 +243,17 @@ a {
   width: 30px;
   height: 40px;
   border: none;
-  background: url("../assets/icon_profile.svg");
+  background: url("../assets/icon_profile-hover.svg");
+  filter:grayscale(100%) brightness(150%);
 	background-color: transparent;
   background-size: 28px 28px;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-.user-button::before {
+/*.user-button::before {
   content: "";
   position: absolute;
   top: 0;
@@ -266,6 +268,41 @@ a {
   background-position: center;
   opacity: 0;
   transition: 0.5s;
+}*/
+
+.header__user-button-container{
+  height: 40px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-button-logged-in {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+	background-color: white;
+  color: #BB945F;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; 
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .user-button-logged-in:hover{
+    background-color: #BB945F;
+    color: #0C0C0E;
+  }
 }
 
 .auth-menu{
@@ -274,10 +311,11 @@ a {
   right:0;
   height: 0px;
   overflow: hidden;
-  width:80px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 5px;
+  min-width: 80px;
   padding-top: 5px;
   background-color: #FFF;
   color: #000;
@@ -326,6 +364,10 @@ a {
 @media (hover: hover) and (pointer: fine) {
   .user-button:hover::before {
     opacity: 1;
+  }
+
+  .user-button:hover{
+    filter:none;
   }
 }
 
@@ -1921,18 +1963,6 @@ p.contacts__item {
 
 .modal-container-showhint{
   position: relative;
-}
-
-.modal-container-showhint::after{
-  content: 'Error: invalid login or password';
-  position: absolute;
-  bottom: 0;
-  right:0;
-  height: 50px;
-  width:100%;
-  color:red;
-  background-color: #FFF;
-
 }
 
 

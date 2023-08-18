@@ -18,6 +18,17 @@ const navLinks = document.querySelectorAll('li a');
 //const mainCont = document.getElementById('main');
 let navBarstatus = 0;
 
+const bPLBooks = [
+  {title: 'The Book Eaters', author: 'By Sunyi Dean'},{title: 'Cackle', author: 'By Rachel Harrison'},
+  {title:'Dante: Poet of the Secular World', author:'By Erich Auerbach'},{title:'The Last Queen', author: 'By Clive Irving'},
+  {title: 'The Body', author:'By Stephen King'},{title: 'Carry: A Memoir of Survival on Stolen Land',author:'By Toni Jenson'},
+  {title:'Days of Distraction',author:'By Alexandra Chang'},{title:'Dominicana',author:'By Angie Cruz'},
+  {title:'Crude: A Memoir',author:'By Pablo Fajardo &amp; Sophie Tardy-Joubert'},{title:'Let My People Go Surfing',author:'By Yvon Chouinard'},
+  {title:'The Octopus Museum: Poems',author:'By Brenda Shaughnessy'},{title:'Shark Dialogues: A Novel',author:'By Kiana Davenport'},
+  {title:'Casual Conversation',author:'By Renia White'},{title:'The Great Fire',author:'By Lou Ureneck'},
+  {title:'Rickey: The Life and Legend',author:'By Howard Bryant'},{title:'Slug: And Other Stories',author: 'By Megan Milks'}
+]
+
 function bodyLock() {
   body.classList.add("body-locked");
 }
@@ -231,6 +242,9 @@ document.addEventListener('click', clickOutsideAuthMenu);
 //Register and login modals
 const authMenuRegister = document.getElementById('auth-reg');
 const authMenuLogin = document.getElementById('auth-login');
+const authMenuMyProfile = document.getElementById('auth-my-profile');
+const authMenuLogout = document.getElementById('auth-logout');
+const authMenuTitle = document.getElementById('auth-menu-title');
 const overlayModal = document.getElementById('modal-overlay');
 const modalContainer = document.getElementById('modal-container');
 const signupButton = document.getElementById('signup-getform');
@@ -241,7 +255,6 @@ function closeModal() {
   bodyUnlock();
 }
 
-const readersList = [];
 class LoginStat {
   constructor() {
     this.loginUserStatus = 0;
@@ -281,8 +294,38 @@ class Reader {
     this.readerPassword = 'readerPassword';
     this.readerVisits = 1;
     this.readerBooks = [];
-    this.readerStatus = 'readerStatus';
+    this.readerBonuses = 0;
     this.libraryCardNumber = 'libraryCardNumber';
+  }
+}
+
+function updateContentWhenStetusChanged() {
+  let currentUser = JSON.parse(localStorage.loginstat);
+  switch (currentUser.loginUserStatus) {
+    case 1:
+      console.log("logined");
+      userButton.classList.remove('user-button');
+      userButton.classList.add('user-button-logged-in');
+      userButton.innerHTML = (currentUser.userFirstName[0] + currentUser.userLastName[0]).toUpperCase();
+      userButton.title = currentUser.userFirstName + ' ' + currentUser.userLastName;
+      authMenuLogin.classList.add('auth-menu__item-hidden');
+      authMenuRegister.classList.add('auth-menu__item-hidden');
+      authMenuLogout.classList.remove('auth-menu__item-hidden');
+      authMenuMyProfile.classList.remove('auth-menu__item-hidden');
+      authMenuTitle.innerHTML = currentUser.userCard;
+      break;
+    case 0:
+      console.log("not logined");
+      userButton.classList.remove('user-button-logged-in');
+      userButton.classList.add('user-button');
+      userButton.innerHTML = '';
+      userButton.title = 'Profile';
+      authMenuLogin.classList.remove('auth-menu__item-hidden');
+      authMenuRegister.classList.remove('auth-menu__item-hidden');
+      authMenuLogout.classList.add('auth-menu__item-hidden');
+      authMenuMyProfile.classList.add('auth-menu__item-hidden');
+      authMenuTitle.innerHTML = 'Profile';
+      break;  
   }
 }
 
@@ -293,6 +336,12 @@ window.addEventListener('load', () => {
   } else {
     localStorage.readers = JSON.stringify([]);
   }
+  if(localStorage.hasOwnProperty('loginstat')) {
+    console.log(localStorage.loginstat);
+  } else {
+    localStorage.loginstat = JSON.stringify(loginStatDefault);
+  }
+  updateContentWhenStetusChanged();
 });
 
 const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
@@ -345,16 +394,17 @@ const openRegisterModal = () => {
     newReader.readerLastName = regLastName.value;
     newReader.readerEmail = regEmail.value;
     newReader.readerPassword = regPassword.value;
-    newReader.readerVisits = 1;
-    newReader.readerStatus = 0;
     newReader.libraryCardNumber = generateCardNumber();
+    let readersList = JSON.parse(localStorage.readers);
     readersList.push(newReader);
+    let indexOfNewReader = readersList.length-1;
+    let curLoginStat = loginStatDefault;
     console.log(JSON.stringify(readersList));
     localStorage.readers = JSON.stringify(readersList);
-    localStorage.loginstat = JSON.stringify(loginStatDefault);
+    loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
     setTimeout(()=>{
-      openLoginModal();
-    }, 200);
+       closeModal();
+     }, 200);
   });
 
   document.getElementById('login-link').addEventListener('click', () => {
@@ -362,6 +412,20 @@ const openRegisterModal = () => {
       openLoginModal();
     }, 200);
   })
+}
+
+
+function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
+  loginStatus.loginUserStatus = 1;
+  loginStatus.userBonuses = cReadersList[indexOfReader].readerBonuses;
+  loginStatus.userFirstName = cReadersList[indexOfReader].readerFirstName;
+  loginStatus.userLastName = cReadersList[indexOfReader].readerLastName;
+  loginStatus.userVisits = cReadersList[indexOfReader].readerVisits;
+  loginStatus.userCard = cReadersList[indexOfReader].libraryCardNumber;
+  loginStatus.userEmail = cReadersList[indexOfReader].readerEmail;
+  loginStatus.userBooks = cReadersList[indexOfReader].readerBooks;
+  localStorage.readers = JSON.stringify(cReadersList);
+  localStorage.loginstat = JSON.stringify(loginStatus);
 }
 
 const openLoginModal = () => {
@@ -409,6 +473,22 @@ const openLoginModal = () => {
         break;
       default:
         console.log('modalclose',indexOfLoginReader);
+        let currentReadersList = JSON.parse(localStorage.readers);
+        let currentLoginStatus = JSON.parse(localStorage.loginstat);
+        currentReadersList[indexOfLoginReader].readerVisits += 1;
+        currentLoginStatus.loginUserStatus = 1;
+        currentLoginStatus.userBonuses = currentReadersList[indexOfLoginReader].readerBonuses;
+        currentLoginStatus.userFirstName = currentReadersList[indexOfLoginReader].readerFirstName;
+        currentLoginStatus.userLastName = currentReadersList[indexOfLoginReader].readerLastName;
+        currentLoginStatus.userVisits = currentReadersList[indexOfLoginReader].readerVisits;
+        currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
+        currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
+        currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
+        console.log(currentReadersList[indexOfLoginReader].readerVisits);
+        localStorage.readers = JSON.stringify(currentReadersList);
+        localStorage.loginstat = JSON.stringify(currentLoginStatus);
+        console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
+        updateContentWhenStetusChanged();
         closeModal();
         break;
     }    
@@ -444,6 +524,16 @@ authMenuRegister.addEventListener('click', () => {
 authMenuLogin.addEventListener('click', () => {
   openLoginModal();
   authMenu.classList.remove('auth-menu-open');
+});
+
+function logOut(){
+  localStorage.loginstat = JSON.stringify(loginStatDefault);
+  updateContentWhenStetusChanged();
+  authMenu.classList.remove('auth-menu-open');
+}
+
+authMenuLogout.addEventListener('click', () => {
+  logOut();
 });
 
 //handle click event on button Sign Up in Digital Library Cards section
