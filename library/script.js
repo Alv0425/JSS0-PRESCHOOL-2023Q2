@@ -28,7 +28,7 @@ const bPLBooks = [
   {title:'The Octopus Museum: Poems',author:'By Brenda Shaughnessy'},{title:'Shark Dialogues: A Novel',author:'By Kiana Davenport'},
   {title:'Casual Conversation',author:'By Renia White'},{title:'The Great Fire',author:'By Lou Ureneck'},
   {title:'Rickey: The Life and Legend',author:'By Howard Bryant'},{title:'Slug: And Other Stories',author: 'By Megan Milks'}
-]
+];
 
 function bodyLock() {
   body.classList.add("body-locked");
@@ -190,31 +190,42 @@ let previousSeasonChecked = 'winter';
 function hideShowBooks(event){
   previousSeasonChecked = seasonChecked;
   seasonChecked = event.target.value;
+  function switchSeasons(){
+    booksAll[seasonChecked].forEach((book)=>{
+      book.classList.remove('favorites-hide');
+      book.classList.add('favorites-show');
+    });
+    for (let season in booksAll) {
+      if (season !== seasonChecked){
+        booksAll[season].forEach((book)=>{
+          book.classList.add('favorites-hide');
+          book.classList.remove('favorites-show');
+        });
+      }
+    }
+  }
   function hideAll(){
     return new Promise((resolve)=>{
       if (previousSeasonChecked !== seasonChecked){
         if(!favcontent.classList.contains('favorites__content-hidden')){
           favcontent.classList.add('favorites__content-hidden');
+          favcontent.classList.remove('favorites__content-show');
+          favcontent.addEventListener('animationend', ()=> {resolve(switchSeasons());},{once:true});
+          favcontent.addEventListener('animationcancel', (event)=> {
+            if (event.animationName == 'fade-in') {
+              favcontent.classList.add('favorites__content-hidden');
+              favcontent.classList.remove('favorites__content-show');
+              favcontent.addEventListener('animationend', ()=> {resolve(switchSeasons());},{once:true});
+            } else {resolve(switchSeasons());}            
+          },{once:true});
         }
-        setTimeout(()=>{
-          booksAll[seasonChecked].forEach((book)=>{
-            book.classList.remove('favorites-hide');
-            resolve(book.classList.add('favorites-show'));
-          });
-          for (let season in booksAll) {
-            if (season !== seasonChecked){
-              booksAll[season].forEach((book)=>{
-                book.classList.add('favorites-hide');
-                book.classList.remove('favorites-show');
-              });
-            }
-          }
-          resolve(console.log('ended'));
-        },800)
-    }
+      }
     })
   }
-  hideAll().then(()=>{favcontent.classList.remove('favorites__content-hidden')});
+  hideAll().then(()=>{
+    favcontent.classList.remove('favorites__content-hidden');
+    favcontent.classList.add('favorites__content-show');
+});
 }
 
 seasonButtons.forEach((rbutton) => {
@@ -645,7 +656,6 @@ const openBuyModal = () => {
     let currLoginStat = JSON.parse(localStorage.loginstat);
     let currReadersList = JSON.parse(localStorage.readers);
     let indexOfCurrentUser = findIndexOfUserByEmail(currLoginStat.userEmail);
-    console.log(`index is ${indexOfCurrentUser}`);
     currReadersList[indexOfCurrentUser].readerSubscription = 1;
     currLoginStat.userSubscription = 1;
     localStorage.readers = JSON.stringify(currReadersList);
@@ -654,10 +664,9 @@ const openBuyModal = () => {
   });
 }
 
-
 function handleClickOutsideModals(event) {
   if (!document.getElementById('modal-container').contains(event.target)) {
-    event.preventDefault();
+ //   event.preventDefault();
     closeModal();
   } 
 }

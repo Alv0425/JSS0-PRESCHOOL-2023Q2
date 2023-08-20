@@ -1050,13 +1050,13 @@ a {
     opacity: 0;
   }
   100% {
-    opacity: 1;
+    opacity: 100%;
   }
 }
 
 @keyframes fade-out {
   0% {
-    opacity: 1;
+    opacity: 100%;
   }
   100% {
     opacity: 0;
@@ -1075,10 +1075,11 @@ a {
   z-index: 4;
   display: grid;
   grid-template-columns: minmax(0, 106px) minmax(0, 101px) minmax(0, 1fr) minmax(0, 1fr);
-  max-width:706px;
+  max-width:711px;
   gap:20px 88px;
   margin:35px 0;
   padding: 10px 0;
+  padding-right: 5px;
   list-style: none;
   line-height: 24px;
   border-radius: 3px;
@@ -1159,17 +1160,22 @@ a {
 
 .favorites__content {
   gap: 40px;
-  transition: 0.8s;
+  transition: 0.5s;
+}
+
+.favorites__content-show {
+  animation: fade-in 0.5s ease-in-out;
+  opacity: 1;
 }
 
 .favorites__content-hidden {
   opacity: 0;
+  animation: fade-out 0.5s ease-in-out;
 }
 
 @media (width < 1260px) {
   .favorites__content {
     justify-content: center;
-    
   }
 }
 
@@ -1303,9 +1309,9 @@ a {
 }
 
 
- /*.book {
- animation: fade-in 0.8s ease-in-out;
-}*/
+ .book {
+ animation: fade-in 0.3s ease-in-out;
+}
 
 .favorites-show{
   transition: 0.5s;
