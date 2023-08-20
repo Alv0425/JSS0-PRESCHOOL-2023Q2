@@ -362,10 +362,6 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .user-button:hover::before {
-    opacity: 1;
-  }
-
   .user-button:hover{
     filter:none;
   }
@@ -1051,7 +1047,7 @@ a {
 
 @keyframes fade-in {
   0% {
-    opacity: 0.2;
+    opacity: 0;
   }
   100% {
     opacity: 1;
@@ -1063,7 +1059,7 @@ a {
     opacity: 1;
   }
   100% {
-    opacity: 0.2;
+    opacity: 0;
   }
 }
 
@@ -1088,7 +1084,7 @@ a {
   border-radius: 3px;
 }
 
-@media (width <= 1024px) {
+@media (width <= 1258px) {
   .favorites__filter{
     position: sticky;
     top:-1px;
@@ -1163,11 +1159,17 @@ a {
 
 .favorites__content {
   gap: 40px;
+  transition: 0.8s;
+}
+
+.favorites__content-hidden {
+  opacity: 0;
 }
 
 @media (width < 1260px) {
   .favorites__content {
     justify-content: center;
+    
   }
 }
 
@@ -1178,7 +1180,7 @@ a {
   flex-basis: 590px;
   min-height: 555px;
   padding: 16px 20px;
-  transition: all 0.8s;
+  transition: all 0.5s;
 }
 
 @media (width <= 630px) {
@@ -1301,20 +1303,20 @@ a {
 }
 
 
-.book {
-  animation: fade-in 0.8s ease-in-out;
-}
+ /*.book {
+ animation: fade-in 0.8s ease-in-out;
+}*/
 
 .favorites-show{
-  transition: 1s;
+  transition: 0.5s;
   display: flex;
   opacity: 1;
 }
 
 .fav-hidden{
-  opacity: 0.1;
+  opacity: 0;
   display: flex;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .favorites-hide{
@@ -1693,6 +1695,10 @@ p.contacts__item {
   min-width: 75px;
 }
 
+.get-form__button-hidden{
+  display: none;
+}
+
 @media (width < 1120px) {
   .get-form__button {
     padding: 8px;
@@ -1961,10 +1967,288 @@ p.contacts__item {
   display: none;
 }
 
-.modal-container-showhint{
-  position: relative;
+/* My Profile modal*/
+
+.modal-profile {
+  margin: auto auto;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: stretch;
+  max-width: 600px;
 }
 
+.modal-profile__sidebar {
+  background-color: #0C0C0E;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 25px;
+}
+
+.modal-profile__container {
+  flex-grow: 1;
+  position: relative;
+  z-index: 8;
+  background-color: #ffffff;
+  color: #0C0C0E;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 60px 38px 20px;
+  font-family: Inter;
+}
+
+.modal-profile__close {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background-image: url("../assets/close_btn.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+}
+
+.modal-profile__close:hover {
+  cursor: pointer;
+}
+
+.modal-profile__photo {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #BB945F;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: capitalize;
+  background-color: #ffffff;
+}
+
+.modal-profile__name {
+  padding: 5px 15px;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  max-width: 120px;
+  font-weight: 400;
+  line-height: 20px;
+  background-color: #ffffff;
+}
+
+.modal-profile__title {
+  margin-bottom: 40px;
+  font-family: Forum;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.modal-profile__stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stats-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.stats-icon__label {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  text-transform: capitalize;
+}
+
+.stats-icon__icon {
+  width: 20px;
+  height: 21px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-visits {
+  background-image: url("../assets/Union.svg");
+}
+
+.icon-bonuses {
+  background-image: url("../assets/star.svg");
+}
+
+.icon-books {
+  background-image: url("../assets/book.svg");
+}
+
+.stats-icon__value {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  text-transform: capitalize;
+}
+
+.modal-profile__label-rented {
+  margin: 20px 0 30px 0;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.modal-profile__book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 25px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+.modal-profile__card-number {
+  margin-top: 40px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.modal-profile__footnote,
+.modal-profile__nubmer {
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.modal-profile__nubmer {
+  color: #BB945F;
+}
+
+.modal-profile__copy-button {
+  width: 14px;
+  height: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../assets/copy.svg");
+}
+
+.modal-profile__copy-button:hover {
+  cursor: pointer;
+}
+
+/*Modal Buy card*/
+
+
+.modal-buy-card {
+  margin: auto auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  max-width: 640px;
+}
+
+.modal-buy-card__header {
+  position: relative;
+  padding: 20px 0;
+  background-color: #0C0C0E;
+}
+
+.modal-buy-card__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55px;
+  height: 100%;
+  background-image: url("../assets/close_btn-white.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+}
+
+.modal-buy-card__close:hover {
+  cursor: pointer;
+}
+
+.modal-buy-card__title {
+  color: #FFF;
+  text-align: center;
+  font-family: Forum;
+  font-size: 40px;
+  line-height: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.modal-buy-card__container {
+  padding: 35px 33px 40px 33px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: 37px;
+}
+
+.modal-buy-card__info {
+  max-width: 329px;
+  color: #8E8E8E;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 2px;
+}
+
+.modal-buy-card__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.exp-code-field {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-buy-card__submit {
+  display: flex;
+  align-items: end;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.modal-buy-card__button {
+  padding: 8px;
+  width: 75px;
+}
+
+.modal-buy-card__price {
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 2px;
+}
 
 .modal-hidden{
   display: none;

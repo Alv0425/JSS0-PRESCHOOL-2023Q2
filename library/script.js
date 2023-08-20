@@ -1,3 +1,4 @@
+"use strict";
 console.log('%cLibrary #2, Адаптивная вёрстка', 'font-weight:700; color:blue;');
 console.log('Оценка 50/50. ')
 
@@ -176,50 +177,50 @@ window.addEventListener("resize", () => {
 
 //Favorites slider
 const seasonButtons = document.getElementsByName('season');
-const seasons = ['winter','spring','summer','autumn'];
-const winter = document.querySelectorAll('.book.winter');
-const spring = document.querySelectorAll('.book.spring');
-const summer = document.querySelectorAll('.book.summer');
-const autumn = document.querySelectorAll('.book.autumn');
-const seasonBooks = [winter, spring, summer, autumn];
+const favcontent = document.getElementById("fav-content");
+const booksAll = {
+  'winter': document.querySelectorAll('.book.winter'),
+  'spring': document.querySelectorAll('.book.spring'),
+  'summer': document.querySelectorAll('.book.summer'),
+  'autumn': document.querySelectorAll('.book.autumn')
+}
 let seasonChecked = 'winter';
 let previousSeasonChecked = 'winter';
-const radioCheck = () => {
-  for (let i = 0; i < seasonButtons.length; i++) {
-    if (seasonButtons[i].checked) {
-      previousSeasonChecked = seasonChecked;
-      seasonChecked = seasonButtons[i].value;
-    }
-  }
-  if (previousSeasonChecked !== seasonChecked) {
-    seasonBooks[seasons.indexOf(previousSeasonChecked)].forEach(book => {
-      book.classList.remove('favorites-show');
-      book.classList.add('fav-hidden');
-      setTimeout(() => {
-        for (let i = 0; i < seasonButtons.length; i++) {
-          if (seasonButtons[i].checked) {
-            seasonChecked = seasonButtons[i].value;
-          }
+  
+function hideShowBooks(event){
+  previousSeasonChecked = seasonChecked;
+  seasonChecked = event.target.value;
+  function hideAll(){
+    return new Promise((resolve)=>{
+      if (previousSeasonChecked !== seasonChecked){
+        if(!favcontent.classList.contains('favorites__content-hidden')){
+          favcontent.classList.add('favorites__content-hidden');
         }
-        book.classList.remove('fav-hidden');
-        book.classList.add('favorites-hide');
-        seasonBooks[seasons.indexOf(seasonChecked)].forEach(book => {
-          book.classList.remove('favorites-hide');
-          book.classList.add('fav-hidden');
-          book.classList.add('favorites-show');
-          setTimeout(() => {
-            book.classList.remove('fav-hidden');
-          }, 200);
-        });
-      }, 200);           
-    });
+        setTimeout(()=>{
+          booksAll[seasonChecked].forEach((book)=>{
+            book.classList.remove('favorites-hide');
+            resolve(book.classList.add('favorites-show'));
+          });
+          for (let season in booksAll) {
+            if (season !== seasonChecked){
+              booksAll[season].forEach((book)=>{
+                book.classList.add('favorites-hide');
+                book.classList.remove('favorites-show');
+              });
+            }
+          }
+          resolve(console.log('ended'));
+        },800)
+    }
+    })
   }
+  hideAll().then(()=>{favcontent.classList.remove('favorites__content-hidden')});
 }
 
 seasonButtons.forEach((rbutton) => {
-  rbutton.addEventListener('click', () => {
-    radioCheck();
-  })
+  rbutton.addEventListener('click', (event) => {
+    hideShowBooks(event);
+  });
 });
 
 //Auth menu
@@ -247,8 +248,16 @@ const authMenuLogout = document.getElementById('auth-logout');
 const authMenuTitle = document.getElementById('auth-menu-title');
 const overlayModal = document.getElementById('modal-overlay');
 const modalContainer = document.getElementById('modal-container');
+//Favorites content
+const bookButtons = document.querySelectorAll('.book__button');
+
+//Digital library cards elements
 const signupButton = document.getElementById('signup-getform');
 const loginButton = document.getElementById('login-getform');
+const getformTitle = document.getElementById('get-form-title');
+const getformDescription = document.getElementById('get-form-description');
+const profileButton = document.getElementById('profile-getform');
+
 
 function closeModal() {
   overlayModal.classList.add('modal-hidden');
@@ -265,9 +274,9 @@ class LoginStat {
     this.userBonuses = 0;
     this.userVisits = 0;
     this.userBooks = [];
+    this.userSubscription = 0;
   }
 }
-const loginStatDefault = new LoginStat();
 
 function checkLoginAttempt(login, password) {
   let readersList = JSON.parse(localStorage.readers);
@@ -296,6 +305,7 @@ class Reader {
     this.readerBooks = [];
     this.readerBonuses = 0;
     this.libraryCardNumber = 'libraryCardNumber';
+    this.readerSubscription = 0;
   }
 }
 
@@ -313,6 +323,21 @@ function updateContentWhenStetusChanged() {
       authMenuLogout.classList.remove('auth-menu__item-hidden');
       authMenuMyProfile.classList.remove('auth-menu__item-hidden');
       authMenuTitle.innerHTML = currentUser.userCard;
+      //Digital Library Cards section
+      getformTitle.innerHTML = 'Visit your profile';
+      getformDescription.innerHTML = 'With a digital library card you get free access to the Library’s wide array of digital resources including e-books, databases, educational resources, and more.';
+      loginButton.classList.add('get-form__button-hidden');
+      signupButton.classList.add('get-form__button-hidden');
+      profileButton.classList.remove('get-form__button-hidden');
+      //Modal Profile
+      authMenuMyProfile.addEventListener('click',()=>{
+        console.log('modal profile is opened');
+        openProfileModal();
+        authMenu.classList.remove('auth-menu-open');
+      });
+      profileButton.addEventListener('click', ()=>{
+        openProfileModal();
+      });
       break;
     case 0:
       console.log("not logined");
@@ -325,10 +350,20 @@ function updateContentWhenStetusChanged() {
       authMenuLogout.classList.add('auth-menu__item-hidden');
       authMenuMyProfile.classList.add('auth-menu__item-hidden');
       authMenuTitle.innerHTML = 'Profile';
+
+      bookButtons.forEach((button) => {
+        button.disabled = false;
+        button.innerHTML = 'Buy';
+      });
+
+      getformTitle.innerHTML = 'Get a reader card';
+      getformDescription.innerHTML = 'You will be able to see a reader card after logging into account or you can register a new account';
+      loginButton.classList.remove('get-form__button-hidden');
+      signupButton.classList.remove('get-form__button-hidden');
+      profileButton.classList.add('get-form__button-hidden');
       break;  
   }
 }
-
 
 window.addEventListener('load', () => {
   if(localStorage.hasOwnProperty('readers')) {
@@ -339,7 +374,7 @@ window.addEventListener('load', () => {
   if(localStorage.hasOwnProperty('loginstat')) {
     console.log(localStorage.loginstat);
   } else {
-    localStorage.loginstat = JSON.stringify(loginStatDefault);
+    localStorage.loginstat = JSON.stringify(new LoginStat);
   }
   updateContentWhenStetusChanged();
 });
@@ -353,6 +388,31 @@ function generateCardNumber() {
     cardNum += randomDigits[i];
   }
   return cardNum;
+}
+
+function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
+  loginStatus.loginUserStatus = 1;
+  loginStatus.userBonuses = cReadersList[indexOfReader].readerBonuses;
+  loginStatus.userFirstName = cReadersList[indexOfReader].readerFirstName;
+  loginStatus.userLastName = cReadersList[indexOfReader].readerLastName;
+  loginStatus.userVisits = cReadersList[indexOfReader].readerVisits;
+  loginStatus.userCard = cReadersList[indexOfReader].libraryCardNumber;
+  loginStatus.userEmail = cReadersList[indexOfReader].readerEmail;
+  loginStatus.userBooks = cReadersList[indexOfReader].readerBooks;
+  loginStatus.userSubscription = cReadersList[indexOfReader].readerSubscription;
+  localStorage.readers = JSON.stringify(cReadersList);
+  localStorage.loginstat = JSON.stringify(loginStatus);
+}
+
+function findIndexOfUserByEmail(email) {
+  let readersList = JSON.parse(localStorage.readers);
+  let index = -1;
+  for (let i = 0; i<readersList.length; i++) {
+    if (readersList[i].readerEmail == email){
+      index = i;
+    }
+  }
+  return index;
 }
 
 const openRegisterModal = () => {
@@ -375,6 +435,7 @@ const openRegisterModal = () => {
       <label for="reg-password" class="modal-form__label">Password</label>
       <input type="password" class="modal-form__input" pattern="[a-zA-Z1-9]{8,}" id="reg-password" required>
       <button type="submit" class="button modal-login-reg__button" id="reg-form-button">Sign Up</button>
+      <p class="modal-login-reg__hint modal-login-reg__hint-hidden" id="reg-error-hint">Error: user with same email have already exists.</p>
       <p class="modal-login-reg__footnote">Already have an account?<span class="modal-login-reg__link" id="login-link">Login</span></p>
   </form>
   </div>
@@ -394,17 +455,24 @@ const openRegisterModal = () => {
     newReader.readerLastName = regLastName.value;
     newReader.readerEmail = regEmail.value;
     newReader.readerPassword = regPassword.value;
-    newReader.libraryCardNumber = generateCardNumber();
-    let readersList = JSON.parse(localStorage.readers);
-    readersList.push(newReader);
-    let indexOfNewReader = readersList.length-1;
-    let curLoginStat = loginStatDefault;
-    console.log(JSON.stringify(readersList));
-    localStorage.readers = JSON.stringify(readersList);
-    loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
-    setTimeout(()=>{
+    if (findIndexOfUserByEmail(regEmail.value) == -1) {
+      newReader.libraryCardNumber = generateCardNumber();
+      let readersList = JSON.parse(localStorage.readers);
+      readersList.push(newReader);
+      let indexOfNewReader = readersList.length-1;
+      let curLoginStat = new LoginStat;
+      console.log(JSON.stringify(readersList));
+      loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
+      console.log(JSON.parse(localStorage.loginstat).loginStatus);
+      updateContentWhenStetusChanged();
+      setTimeout(()=>{
        closeModal();
      }, 200);
+    } else {
+      document.getElementById('reg-error-hint').classList.remove('modal-login-reg__hint-hidden');
+      console.log('user with same email have already exists');
+    }
+    
   });
 
   document.getElementById('login-link').addEventListener('click', () => {
@@ -412,20 +480,6 @@ const openRegisterModal = () => {
       openLoginModal();
     }, 200);
   })
-}
-
-
-function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
-  loginStatus.loginUserStatus = 1;
-  loginStatus.userBonuses = cReadersList[indexOfReader].readerBonuses;
-  loginStatus.userFirstName = cReadersList[indexOfReader].readerFirstName;
-  loginStatus.userLastName = cReadersList[indexOfReader].readerLastName;
-  loginStatus.userVisits = cReadersList[indexOfReader].readerVisits;
-  loginStatus.userCard = cReadersList[indexOfReader].libraryCardNumber;
-  loginStatus.userEmail = cReadersList[indexOfReader].readerEmail;
-  loginStatus.userBooks = cReadersList[indexOfReader].readerBooks;
-  localStorage.readers = JSON.stringify(cReadersList);
-  localStorage.loginstat = JSON.stringify(loginStatus);
 }
 
 const openLoginModal = () => {
@@ -484,6 +538,7 @@ const openLoginModal = () => {
         currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
         currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
         currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
+        currentLoginStatus.userSubscription = currentReadersList[indexOfLoginReader].readerSubscription;
         console.log(currentReadersList[indexOfLoginReader].readerVisits);
         localStorage.readers = JSON.stringify(currentReadersList);
         localStorage.loginstat = JSON.stringify(currentLoginStatus);
@@ -501,6 +556,104 @@ const openLoginModal = () => {
     }, 200);
   });
 }
+
+const openProfileModal = () => {
+  modalType = 'profile';
+  bodyLock();
+  overlayModal.classList.remove('modal-hidden');
+  let currentUser = JSON.parse(localStorage.loginstat);
+  modalContainer.innerHTML = `
+  <div class="modal-profile">
+    <div class="modal-profile__sidebar">
+      <div class="modal-profile__photo">${(currentUser.userFirstName[0]+currentUser.userLastName[0]).toUpperCase()}</div>
+      <div class="modal-profile__name">${currentUser.userFirstName+" "+currentUser.userLastName}</div>
+    </div>
+    <div class="modal-profile__container">
+      <div class="modal-profile__close" onclick="closeModal()"></div>
+      <div class="modal-profile__title">My profile</div>
+      <div class="modal-profile__stats">
+        <div class="stats-icon">
+          <div class="stats-icon__label">Visits</div>
+          <div class="stats-icon__icon icon-visits"></div>
+          <div class="stats-icon__value">${currentUser.userVisits}</div>
+        </div>
+        <div class="stats-icon">
+          <div class="stats-icon__label">Bonuses</div>
+          <div class="stats-icon__icon icon-bonuses"></div>
+          <div class="stats-icon__value">${currentUser.userBonuses}</div>
+        </div>
+        <div class="stats-icon">
+          <div class="stats-icon__label">Books</div>
+          <div class="stats-icon__icon icon-books"></div>
+          <div class="stats-icon__value">${currentUser.userBooks.length}</div>
+        </div>
+      </div>
+      <div class="modal-profile__rented">
+        <p class="modal-profile__label-rented">Rented books</p>
+        <ul class="modal-profile__book-list">
+          
+        </ul>
+      </div>
+      <div class="modal-profile__card-number">
+        <p class="modal-profile__footnote">Card number</p>
+        <p class="modal-profile__nubmer">${currentUser.userCard}</p>
+        <button class="modal-profile__copy-button" id="copy-number-button"></button>
+      </div>
+    </div>
+  </div>
+  `;
+  document.getElementById("copy-number-button").addEventListener('click', ()=>{navigator.clipboard.writeText(currentUser.userCard);})
+}
+
+const openBuyModal = () => {
+  modalType = 'login';
+  bodyLock();
+  overlayModal.classList.remove('modal-hidden');
+  modalContainer.innerHTML = `
+  <div class="modal-buy-card">
+  <div class="modal-buy-card__header">
+      <div class="modal-buy-card__title">Buy a library card</div>
+      <div class="modal-buy-card__close" onclick="closeModal()"></div>
+  </div>
+  <div class="modal-buy-card__container">
+      <form class="modal-buy-card__form">
+          <label for="buy-card-number" class="modal-form__label">Card number</label>
+          <input type="text" class="modal-form__input" id="buy-card-number" pattern="^(\\d{16}|\\d{4}\\s\\d{4}\\s\\d{4}\\s\\d{4})$" required>
+          <label for="buy-card-exp-code-1" class="modal-form__label">Expiration code</label>
+          <div class="exp-code-field">
+              <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-exp-code-1" pattern="^\\d{2}$" required>
+              <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-exp-code-2" pattern="^\\d{2}$" required>
+          </div>
+          <label for="buy-card-cvc" class="modal-form__label">CVC</label>
+          <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-cvc"  pattern="^\\d{3}$" required>
+          <label for="buy-card-name" class="modal-form__label">Cardholder name</label>
+          <input type="text" class="modal-form__input" id="buy-card-name" required>
+          <label for="buy-card-postal-code" class="modal-form__label">Postal code</label>
+          <input type="text" class="modal-form__input" id="buy-card-postal-code" required>
+          <label for="buy-card-city" class="modal-form__label">City / Town</label>
+          <input type="text" class="modal-form__input" id="buy-card-city" required>
+          <div class="modal-buy-card__submit"><button type="submit" class="button modal-buy-card__button" id="buy-subscription-button">Buy</button>
+              <div class="modal-buy-card__price">&dollar;25.00</div>
+          </div>
+      </form>
+      <div class="modal-buy-card__info">If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.</div>
+    </div>
+  </div>
+  `;
+  document.getElementById('buy-subscription-button').addEventListener('click', (event)=>{
+    event.preventDefault();
+    let currLoginStat = JSON.parse(localStorage.loginstat);
+    let currReadersList = JSON.parse(localStorage.readers);
+    let indexOfCurrentUser = findIndexOfUserByEmail(currLoginStat.userEmail);
+    console.log(`index is ${indexOfCurrentUser}`);
+    currReadersList[indexOfCurrentUser].readerSubscription = 1;
+    currLoginStat.userSubscription = 1;
+    localStorage.readers = JSON.stringify(currReadersList);
+    localStorage.loginstat = JSON.stringify(currLoginStat);
+    closeModal();
+  });
+}
+
 
 function handleClickOutsideModals(event) {
   if (!document.getElementById('modal-container').contains(event.target)) {
@@ -527,7 +680,7 @@ authMenuLogin.addEventListener('click', () => {
 });
 
 function logOut(){
-  localStorage.loginstat = JSON.stringify(loginStatDefault);
+  localStorage.loginstat = JSON.stringify(new LoginStat);
   updateContentWhenStetusChanged();
   authMenu.classList.remove('auth-menu-open');
 }
@@ -546,6 +699,30 @@ loginButton.addEventListener('click', () => {
   openLoginModal();
 });
 
+
+//handle click on book buttons
+bookButtons.forEach((book) => {
+  book.addEventListener('click',() => {
+    let currStatus = JSON.parse(localStorage.loginstat);
+    let currReadersList = JSON.parse(localStorage.readers);
+    switch (currStatus.loginUserStatus) {
+      case 1:
+        switch(currStatus.userSubscription) {
+          case 1:
+            console.log('user have subscription');
+            break;
+          case 0:
+            openBuyModal();
+            console.log('user havent subscription');
+            break;
+        }
+        break;
+      case 0:
+        openLoginModal();
+        break;
+    }
+  });
+});
 
 
 

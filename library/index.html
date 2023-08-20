@@ -115,7 +115,7 @@
                       <label class="favorites__label" for="radio-autumn">Autumn</label>
                   </li>
               </ul>
-              <div class="favorites__content two-columns-layout">
+              <div class="favorites__content two-columns-layout" id="fav-content">
                   <div class="book winter favorites-show">
                       <p class="book__label">Staff picks</p>
                       <p class="book__title">The Book Eaters</p>
@@ -341,11 +341,12 @@
                   </form>
               </div>
               <div class="library-cards__get-form get-form">
-                  <h3 class="get-form__title">Get a reader card</h3>
-                  <p class="get-form__description">You will be able to see a reader card after logging into account or you can register a new account</p>
+                  <h3 class="get-form__title" id="get-form-title">Get a reader card</h3>
+                  <p class="get-form__description" id="get-form-description">You will be able to see a reader card after logging into account or you can register a new account</p>
                   <div class="get-form__buttons">
                       <button class="button get-form__button" id="signup-getform">Sign Up</button>
                       <button class="button get-form__button" id="login-getform">Log In</button>
+                      <button class="button get-form__button get-form__button-hidden" id="profile-getform">Profile</button>
                   </div>
               </div>
           </div>
