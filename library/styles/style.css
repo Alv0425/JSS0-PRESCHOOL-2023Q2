@@ -2030,6 +2030,7 @@ p.contacts__item {
   justify-content: stretch;
   max-width: 600px;
   min-height: 400px;
+  animation: fade-in 0.5s ease;
 }
 
 @media (width < 630px){
@@ -2150,7 +2151,7 @@ p.contacts__item {
 }
 
 .icon-bonuses {
-  background-image: url("../assets/star.svg");
+  background-image: url("../assets/Star.svg");
 }
 
 .icon-books {
@@ -2235,6 +2236,7 @@ p.contacts__item {
   flex-direction: column;
   background-color: #ffffff;
   max-width: 640px;
+  animation: fade-in 0.5s ease;
 }
 
 .modal-buy-card__header {
@@ -2273,8 +2275,16 @@ p.contacts__item {
 .modal-buy-card__container {
   padding: 20px 35px 40px 35px;
   display: flex;
-  
   gap: 40px;
+}
+@media (width < 630px) {
+  .modal-buy-card__container{
+    flex-wrap: wrap-reverse;
+  }
+  .modal-buy-card__title{
+    font-size: 30px;
+  } 
+
 }
 
 .modal-buy-card__info {
