@@ -35,7 +35,6 @@ ul,
 ol {
   padding: 0;
   margin: 0;
-  list-style-type: none;
 }
 
 div,
@@ -377,11 +376,11 @@ a {
   list-style: none;
 }
 
-@media (width <= 1024px) {
-  .body-locked{
-    overflow: hidden;
-  }
+.body-locked{
+  overflow: hidden;
+}
 
+@media (width <= 1024px) {
   .header__navbar{
     position: absolute;
     top:0;
@@ -391,11 +390,6 @@ a {
     background-color: transparent;
     transition: 0.5s;
   }
-
-  /* .blur-overlay{
-    filter: grayscale(50%) opacity(0.95) ;
-    transition: 0.5s;
-  } */
 
   .navbar {
     position: fixed;
@@ -464,15 +458,6 @@ a {
     transform: translate(0, -10px) rotate(90deg) rotate(45deg);
   }
 }
-
-/*
-@media (height < 570px) and (width < 1024px) {
-  .navbar-open {
-    position:absolute;
-    transform: translateX(-332px);
-    opacity: 1;  
-  }
-} */
 
 .navbar__link {
   position: relative;
@@ -764,9 +749,12 @@ a {
   gap: 25px;
 }
 
+.free-space{
+  transition: all 0.7s ease-in-out;
+}
+
 .free-space-left {
   width: 950px;
-  transition: all 0.5s;
 }
 @media (width < 1430px) {
   .free-space-left {
@@ -792,82 +780,79 @@ a {
 .free-space-left-stage1,
 .free-space-right-stage3 {
   width: 950px;
-  transition: all 0.5s;
+  
 }
 
 .free-space-left-stage2,
 .free-space-right-stage2 {
   width: 475px;
-  transition: all 0.5s;
+  
 }
 
 .free-space-right-stage1,
 .free-space-left-stage3 {
   width: 0;
-  transition: all 0.5s;
+  
 }
 
 @media (width < 1430px) {
   .free-space-left-stage1,
   .free-space-right-stage4 {
     width: 1425px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage2,
   .free-space-right-stage3 {
     width: 950px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage3,
   .free-space-right-stage2 {
     width: 475px;
-    transition: all 0.5s;
+    
   }
   .free-space-right-stage1,
   .free-space-left-stage4 {
     width: 0;
-    transition: all 0.5s;
+    
   }
 }
 @media (width < 1024px) {
   .free-space-left-stage1,
   .free-space-right-stage5 {
     width: 1900px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage2,
   .free-space-right-stage4 {
     width: 1425px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage3,
   .free-space-right-stage3 {
     width: 950px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage4,
   .free-space-right-stage2 {
     width: 475px;
-    transition: all 0.5s;
+    
   }
   .free-space-right-stage1,
   .free-space-left-stage5 {
     width: 0;
-    transition: all 0.5s;
+    
   }
 }
 .free-space-right {
   width: 0;
 }
 
-
-
 .carousel__image {
   display: block;
   object-fit: cover;
   transition: all 0.5s;
 }
-
 
 @media (width <= 576px) {
   .carousel__image {
@@ -880,27 +865,27 @@ a {
   .free-space-left-stage1,
   .free-space-right-stage5 {
     width: 1300px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage2,
   .free-space-right-stage4 {
     width: 975px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage3,
   .free-space-right-stage3 {
     width: 650px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage4,
   .free-space-right-stage2 {
     width: 325px;
-    transition: all 0.5s;
+    
   }
   .free-space-right-stage1,
   .free-space-left-stage5 {
     width: 0;
-    transition: all 0.5s;
+    
   }
 }
 
@@ -912,27 +897,27 @@ a {
   .free-space-left-stage1,
   .free-space-right-stage5 {
     width: 1100px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage2,
   .free-space-right-stage4 {
     width: 825px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage3,
   .free-space-right-stage3 {
     width: 550px;
-    transition: all 0.5s;
+    
   }
   .free-space-left-stage4,
   .free-space-right-stage2 {
     width: 275px;
-    transition: all 0.5s;
+    
   }
   .free-space-right-stage1,
   .free-space-left-stage5 {
     width: 0;
-    transition: all 0.5s;
+    
   }
 }
 
@@ -1310,7 +1295,7 @@ a {
 
 
  .book {
- animation: fade-in 0.3s ease-in-out;
+ animation: fade-in 0.5s ease-in-out;
 }
 
 .favorites-show{
@@ -1620,6 +1605,64 @@ p.contacts__item {
   color: #0C0C0E;
 }
 
+.check-form__field:read-only {
+  color:#A67D44;
+}
+
+.check-form__button-container{
+  position: relative;
+  display:flex;
+  justify-content: center;
+  gap:35px;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 200% */
+  letter-spacing: 0.2px;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+.check-form__error-hint{
+  padding: 27px 0;
+  color: #ff0202;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; 
+  letter-spacing: 0.2px;
+}
+
+.check-form-hide{
+  opacity: 0;
+  animation: fade-out 0.3s ease;
+}
+
+.check-form-show{
+  opacity: 1;
+  animation: fade-in 0.3s ease;
+}
+
+.check-form-overlay{
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 0 0;
+  background-color: rgba(255, 255, 255, 0.90);
+}
+
+.check-form__stats-icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  animation: fade-in 0.3s ease;
+}
+
 .check-form__button {
   padding: 8px 38px 9px 40px;
   text-align: center;
@@ -1890,10 +1933,11 @@ p.contacts__item {
   right: 0;
   width: 45px;
   height: 45px;
+  background-color: transparent;
   background-image: url("../assets/close_btn.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 15px 15px;
+  background-size: 18px 18px;
 }
 
 .modal-login-reg__close:hover {
@@ -1916,6 +1960,10 @@ p.contacts__item {
   margin: 10px 0;
 }
 
+.modal-form__label-spaced{
+  margin: 20px 0 10px 0;
+}
+
 .modal-form__label,
 .modal-form__input {
   font-family: Inter;
@@ -1928,6 +1976,7 @@ p.contacts__item {
 
 .modal-form__input {
   border: 1px solid #BB945F;
+  line-height: 16px;
 }
 
 .modal-form__input-small {
@@ -1936,8 +1985,8 @@ p.contacts__item {
 
 .modal-login-reg__button {
   max-width: 75px;
-  padding: 8px;
-  margin-top: 20px;
+  padding: 7px;
+  margin-top: 19px;
 }
 
 .modal-login-reg__footnote {
@@ -1978,9 +2027,15 @@ p.contacts__item {
 .modal-profile {
   margin: auto auto;
   display: flex;
-  flex-wrap: wrap-reverse;
   justify-content: stretch;
   max-width: 600px;
+  min-height: 400px;
+}
+
+@media (width < 630px){
+  .modal-profile{
+    flex-wrap: wrap-reverse;
+  }
 }
 
 .modal-profile__sidebar {
@@ -2011,12 +2066,13 @@ p.contacts__item {
   z-index: 4;
   top: 0;
   right: 0;
-  width: 45px;
-  height: 45px;
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
   background-image: url("../assets/close_btn.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 15px 15px;
+  background-size: 18px 18px;
 }
 
 .modal-profile__close:hover {
@@ -2121,14 +2177,19 @@ p.contacts__item {
 .modal-profile__book-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-left: 25px;
+  gap: 10px;  
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 2px;
   text-transform: capitalize;
+  max-height: 150px;
+  width:350px;
+  overflow-y: scroll;
+  list-style-position: outside;
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
 .modal-profile__card-number {
@@ -2154,6 +2215,7 @@ p.contacts__item {
 .modal-profile__copy-button {
   width: 14px;
   height: 14px;
+  background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -2185,12 +2247,13 @@ p.contacts__item {
   position: absolute;
   top: 0;
   right: 0;
-  width: 55px;
-  height: 100%;
+  width: 54px;
+  height: 60px;
+  background-color: transparent;
   background-image: url("../assets/close_btn-white.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 15px 15px;
+  background-size: 18px 18px;
 }
 
 .modal-buy-card__close:hover {
@@ -2208,10 +2271,10 @@ p.contacts__item {
 }
 
 .modal-buy-card__container {
-  padding: 35px 33px 40px 33px;
+  padding: 20px 35px 40px 35px;
   display: flex;
-  flex-wrap: wrap-reverse;
-  gap: 37px;
+  
+  gap: 40px;
 }
 
 .modal-buy-card__info {
@@ -2223,11 +2286,13 @@ p.contacts__item {
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 2px;
+  padding-top:10px;
 }
 
 .modal-buy-card__form {
   display: flex;
   flex-direction: column;
+  max-width: 200px;
 }
 
 .exp-code-field {
