@@ -295,7 +295,7 @@ function checkLoginAttempt(login, password) {
   let readersList = JSON.parse(localStorage.readers);
   let indexOfReader = -1;
   for (let i=0; i<readersList.length; i++){
-    if (login == readersList[i].libraryCardNumber || login == readersList[i].readerEmail) {
+    if (login == readersList[i].libraryCardNumber || login.toLowerCase() == readersList[i].readerEmail.toLowerCase()) {
       indexOfReader = i;
     }
   }
