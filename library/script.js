@@ -13,10 +13,8 @@ console.log(review);
 
 const navBar = document.getElementById("navbar");
 const navButton = document.getElementById('navbutton');
-//const navCont = document.getElementById('navcontainer');
 const body = document.getElementById('body');
 const navLinks = document.querySelectorAll('li a');
-//const mainCont = document.getElementById('main');
 let navBarstatus = 0;
 
 const bPLBooks = [
@@ -41,10 +39,7 @@ function bodyUnlock() {
 const handleCloseMenu = () => {
   navBar.classList.remove("navbar-open");
   navButton.classList.remove("close");
-  //navCont.classList.remove("header__navbar-open");
- // body.classList.remove("body-locked");
   bodyUnlock();
-  //mainCont.classList.remove("blur-overlay");
   navBarstatus = 0;
 }
 
@@ -60,10 +55,7 @@ navButton.addEventListener('click', () => {
     if (navBarstatus == 0){  
         navBar.classList.add("navbar-open");
         navButton.classList.add("close");
-        //navCont.classList.add("header__navbar-open");
-        //body.classList.add("body-locked");
         bodyLock();
-      //mainCont.classList.add("blur-overlay");
         navBarstatus = 1;
     } else {
       handleCloseMenu();
@@ -71,7 +63,6 @@ navButton.addEventListener('click', () => {
 });
 
 document.addEventListener('touchend', handleClickOutsideMunu);
-
 document.addEventListener('click', handleClickOutsideMunu);
 
 navLinks.forEach((link) => {
@@ -101,14 +92,14 @@ const handleSlider = () => {
   paginationButtons[currentSliderStatus-1].classList.add('pagination-button-active');
   paginationButtons[prevSliderStatus-1].classList.remove('pagination-button-active');
 }
-
-paginationButtons.forEach((button) => {button.addEventListener('click', () => {
-  prevSliderStatus = currentSliderStatus;
-  currentSliderStatus = button.id[button.id.length-1]*1;
-  if (currentSliderStatus !== prevSliderStatus) {
-    handleSlider();
-  }
-});
+paginationButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    prevSliderStatus = currentSliderStatus;
+    currentSliderStatus = button.id[button.id.length-1]*1;
+    if (currentSliderStatus !== prevSliderStatus) {
+      handleSlider();
+    }
+  });
 });
 
 pagArrowLeft.addEventListener('click', () => {
@@ -134,37 +125,36 @@ let touchstart = 0;
 let touchend = 0;
 
 carouselContainer.addEventListener('touchstart', function(event) {
-    touchstart = event.changedTouches[0].screenX;
+  touchstart = event.changedTouches[0].screenX;
 }, false);
 
 carouselContainer.addEventListener('touchend', function(event) {
-    touchend = event.changedTouches[0].screenX;
-    touchesType();
+  touchend = event.changedTouches[0].screenX;
+  touchesType();
 }, false); 
 
 function touchesType() {
-    if (touchstart - touchend > 100) {
-        let maxStageNum = 5;
-        if (screen.width > 1024) {
-          maxStageNum = 4;
-        }
-        if (screen.width > 1430) {
-          maxStageNum = 3;
-        }
-        if (currentSliderStatus < maxStageNum) {
-          prevSliderStatus = currentSliderStatus;
-          currentSliderStatus += 1;
-          handleSlider();
-        }
+  if (touchstart - touchend > 70) {
+    let maxStageNum = 5;
+    if (screen.width > 1024) {
+      maxStageNum = 4;
     }
-    
-    if (touchend - touchstart > 100) {
-        if (currentSliderStatus > 1) {
-          prevSliderStatus = currentSliderStatus;
-          currentSliderStatus -= 1;
-          handleSlider();
-        }
+    if (screen.width > 1430) {
+      maxStageNum = 3;
     }
+    if (currentSliderStatus < maxStageNum) {
+      prevSliderStatus = currentSliderStatus;
+      currentSliderStatus += 1;
+      handleSlider();
+    }
+  }  
+  if (touchend - touchstart > 70) {
+    if (currentSliderStatus > 1) {
+      prevSliderStatus = currentSliderStatus;
+      currentSliderStatus -= 1;
+      handleSlider();
+    }
+  }
 }
 
 //Handle onresize: move slider on initial stage
@@ -205,26 +195,18 @@ function hideShowBooks(event){
     }
   }
   function hideAll(){
-    return new Promise((resolve)=>{
-      if (previousSeasonChecked !== seasonChecked){
-        if(!favcontent.classList.contains('favorites__content-hidden')){
-          favcontent.classList.add('favorites__content-hidden');
-          favcontent.classList.remove('favorites__content-show');
-          favcontent.addEventListener('animationend', ()=> {resolve(switchSeasons());},{once:true});
-          favcontent.addEventListener('animationcancel', (event)=> {
+      return new Promise((resolve)=>{
+        if (previousSeasonChecked !== seasonChecked){
+          if(!favcontent.classList.contains('favorites__content-hidden')){
             favcontent.classList.add('favorites__content-hidden');
             favcontent.classList.remove('favorites__content-show');
-            favcontent.addEventListener('animationend', ()=>{resolve(switchSeasons());},{once:true});
-            if (event.animationName == 'fade-in') {
-              
-            } else {resolve(switchSeasons());}            
-          },{once:true});
-        } else {
-          favcontent.addEventListener('animationend', ()=>{resolve(switchSeasons());},{once:true});
+            setTimeout(()=>{resolve(switchSeasons());},500);
+          } else {
+            setTimeout(()=>{resolve(switchSeasons());},500);
+          }
         }
-      }
-    })
-  }
+      });
+    }
   hideAll().then(()=>{
     favcontent.classList.remove('favorites__content-hidden');
     favcontent.classList.add('favorites__content-show');
@@ -450,7 +432,6 @@ let registerModal = document.createElement('div');
 registerModal.className = 'modal-login-reg';
 let loginRegHeader = document.createElement('div');
 loginRegHeader.className = 'modal-login-reg__header';
-//loginRegHeader.innerHTML = '<div class="modal-login-reg__close" onclick="closeModal()" id="close-modal-reg"></div>';
 let closeRegModalButton = document.createElement('button');
 closeRegModalButton.className = 'modal-login-reg__close';
 closeRegModalButton.setAttribute('onclick', 'closeModal()');
@@ -505,36 +486,7 @@ const openRegisterModal = () => {
   });
   regModalForm.append(regSubmitButton, regErrorHint, regFootnote);
   regErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
-  // modalContainer.innerHTML = `
-  // <div class="modal-login-reg" id="modal-reg">
-  // <div class="modal-login-reg__header">
-  //     <div class="modal-login-reg__close" onclick="closeModal()" id="close-modal-reg"></div>
-  // </div>
-  // <form class="modal-login-reg__container modal-form" id="reg-form">
-  //     <div class="modal-login-reg__title">Register</div>
-  //     <label for="reg-first-name" class="modal-form__label">First name</label>
-  //     <input type="text" class="modal-form__input" id="reg-first-name" required>
-  //     <label for="reg-last-name" class="modal-form__label">Last name</label>
-  //     <input type="text" class="modal-form__input" id="reg-last-name" required>
-  //     <label for="reg-email" class="modal-form__label">E-mail</label>
-  //     <input type="email" class="modal-form__input" id="reg-email" required>
-  //     <label for="reg-password" class="modal-form__label">Password</label>
-  //     <input type="password" class="modal-form__input" pattern="[a-zA-Z1-9]{8,}" id="reg-password" required>
-  //     <button type="submit" class="button modal-login-reg__button" id="reg-form-button">Sign Up</button>
-  //     <p class="modal-login-reg__hint modal-login-reg__hint-hidden" id="reg-error-hint">Error: user with same email have already exists.</p>
-  //     <p class="modal-login-reg__footnote">Already have an account?<span class="modal-login-reg__link" id="login-link">Login</span></p>
-  // </form>
-  // </div>
-  // `; 
-
-// Registration of new reader
-  // const regForm = document.getElementById('reg-form');
-  // const regFirstName = document.getElementById('reg-first-name');
-  // const regLastName = document.getElementById('reg-last-name');
-  // const regEmail = document.getElementById('reg-email');
-  // const regPassword = document.getElementById('reg-password');
-
-  regModalForm.addEventListener("submit", (event) => {
+    regModalForm.addEventListener("submit", (event) => {
     event.preventDefault();
     let newReader = new Reader();
     newReader.readerFirstName = regFormFields[0][1].value;
@@ -616,6 +568,46 @@ loginErrorHint.setAttribute('id','login-error-hint');
 console.log(loginModalForm);
 
 
+loginModalForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let login = loginEmailInput.value;
+  let password = loginPasswordInput.value;
+  let indexOfLoginReader = checkLoginAttempt(login, password);
+  switch(indexOfLoginReader){
+    case -1:
+      console.log('modalopen',indexOfLoginReader);
+      loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
+      loginErrorHint.textContent="Error: invalid login";
+      break;
+    case -2:
+      console.log('modalopen',indexOfLoginReader);
+      loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
+      loginErrorHint.textContent="Error: invalid password";
+      break;
+    default:
+      console.log('modalclose',indexOfLoginReader);
+      let currentReadersList = JSON.parse(localStorage.readers);
+      let currentLoginStatus = JSON.parse(localStorage.loginstat);
+      currentReadersList[indexOfLoginReader].readerVisits = currentReadersList[indexOfLoginReader].readerVisits + 1;
+      console.log(currentReadersList[indexOfLoginReader].readerVisits);
+      currentLoginStatus.loginUserStatus = 1;
+      currentLoginStatus.userBonuses = currentReadersList[indexOfLoginReader].readerBonuses;
+      currentLoginStatus.userFirstName = currentReadersList[indexOfLoginReader].readerFirstName;
+      currentLoginStatus.userLastName = currentReadersList[indexOfLoginReader].readerLastName;
+      currentLoginStatus.userVisits = currentReadersList[indexOfLoginReader].readerVisits;
+      currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
+      currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
+      currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
+      currentLoginStatus.userSubscription = currentReadersList[indexOfLoginReader].readerSubscription;
+      localStorage.readers = JSON.stringify(currentReadersList);
+      localStorage.loginstat = JSON.stringify(currentLoginStatus);
+      console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
+      updateContentWhenStetusChanged();
+      closeModal();
+      break;
+  }    
+});
+
 const openLoginModal = () => {
   bodyLock();
   overlayModal.classList.remove('modal-hidden');
@@ -624,70 +616,10 @@ const openLoginModal = () => {
   loginModal.append(loginRegHeader,loginModalForm);
   loginRegHeader.append(closeRegModalButton);
   loginModalForm.append(loginFormTitle, loginEmailLabel, loginEmailInput, loginPasswordLabel, loginPasswordInput, loginSubmitButton, loginErrorHint, loginFootnote);
+  loginPasswordInput.value = '';
+  loginEmailInput.value = '';
   loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
-  
-  // modalContainer.innerHTML = `
-  // <div class="modal-login-reg" id="modal-login">
-  //   <div class="modal-login-reg__header">
-  //     <div class="modal-login-reg__close" onclick="closeModal()"></div>
-  //   </div>
-  //   <form class="modal-login-reg__container" id="login-form">
-  //     <div class="modal-login-reg__title">Login</div>
-  //     <label for="login-email" class="modal-form__label">E-mail or readers card</label>
-  //     <input type="text" class="modal-form__input" id="login-email" required>
-  //     <label for="login-password" class="modal-form__label">Password</label>
-  //     <input type="password" class="modal-form__input" id="login-password" required>
-  //     <button type="submit" class="button modal-login-reg__button">Log In</button>
-  //     <p class="modal-login-reg__hint modal-login-reg__hint-hidden" id="login-error-hint">Error: Invalid login or password.</p>
-  //     <p class="modal-login-reg__footnote">Dont have an account?<span class="modal-login-reg__link" id="reg-link">Register</span></p>
-  //   </form>
-  // </div>
-  // `;
-
-  //log-in process
-  // const loginForm = document.getElementById('login-form');
-  // const loginLogin = document.getElementById('login-email');
-  // const loginPassword = document.getElementById('login-password');
-
-  loginModalForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    let login = loginEmailInput.value;
-    let password = loginPasswordInput.value;
-    let indexOfLoginReader = checkLoginAttempt(login, password);
-    switch(indexOfLoginReader){
-      case -1:
-        console.log('modalopen',indexOfLoginReader);
-        loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
-        loginErrorHint.textContent="Error: invalid login";
-        break;
-      case -2:
-        console.log('modalopen',indexOfLoginReader);
-        loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
-        loginErrorHint.textContent="Error: invalid password";
-        break;
-      default:
-        console.log('modalclose',indexOfLoginReader);
-        let currentReadersList = JSON.parse(localStorage.readers);
-        let currentLoginStatus = JSON.parse(localStorage.loginstat);
-        currentReadersList[indexOfLoginReader].readerVisits += 1;
-        currentLoginStatus.loginUserStatus = 1;
-        currentLoginStatus.userBonuses = currentReadersList[indexOfLoginReader].readerBonuses;
-        currentLoginStatus.userFirstName = currentReadersList[indexOfLoginReader].readerFirstName;
-        currentLoginStatus.userLastName = currentReadersList[indexOfLoginReader].readerLastName;
-        currentLoginStatus.userVisits = currentReadersList[indexOfLoginReader].readerVisits;
-        currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
-        currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
-        currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
-        currentLoginStatus.userSubscription = currentReadersList[indexOfLoginReader].readerSubscription;
-        console.log(currentReadersList[indexOfLoginReader].readerVisits);
-        localStorage.readers = JSON.stringify(currentReadersList);
-        localStorage.loginstat = JSON.stringify(currentLoginStatus);
-        console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
-        updateContentWhenStetusChanged();
-        closeModal();
-        break;
-    }    
-  });
+ 
 
 
   loginFooterLink.addEventListener('click', () => {
@@ -768,51 +700,8 @@ const openProfileModal = () => {
   `;
   profileModalCardNumberCont.append(profileModalFootnote,profileModalNumber,profileModalCopyButton);
   profileModalNumber.textContent = currentUser.userCard;
-  // modalContainer.innerHTML = `
-  // <div class="modal-profile">
-  //   <div class="modal-profile__sidebar">
-  //     <div class="modal-profile__photo">${(currentUser.userFirstName[0]+currentUser.userLastName[0]).toUpperCase()}</div>
-  //     <div class="modal-profile__name">${currentUser.userFirstName+" "+currentUser.userLastName}</div>
-  //   </div>
-  //   <div class="modal-profile__container">
-  //     <div class="modal-profile__close" onclick="closeModal()"></div>
-  //     <div class="modal-profile__title">My profile</div>
-  //     <div class="modal-profile__stats">
-  //       <div class="stats-icon">
-  //         <div class="stats-icon__label">Visits</div>
-  //         <div class="stats-icon__icon icon-visits"></div>
-  //         <div class="stats-icon__value">${currentUser.userVisits}</div>
-  //       </div>
-  //       <div class="stats-icon">
-  //         <div class="stats-icon__label">Bonuses</div>
-  //         <div class="stats-icon__icon icon-bonuses"></div>
-  //         <div class="stats-icon__value">${currentUser.userBonuses}</div>
-  //       </div>
-  //       <div class="stats-icon">
-  //         <div class="stats-icon__label">Books</div>
-  //         <div class="stats-icon__icon icon-books"></div>
-  //         <div class="stats-icon__value">${currentUser.userBooks.length}</div>
-  //       </div>
-  //     </div>
-  //     <div class="modal-profile__rented">
-  //       <p class="modal-profile__label-rented">Rented books</p>
-  //       <ul class="modal-profile__book-list">
-  //         ${booksList}
-  //       </ul>
-  //     </div>
-  //     <div class="modal-profile__card-number">
-  //       <p class="modal-profile__footnote">Card number</p>
-  //       <p class="modal-profile__nubmer">${currentUser.userCard}</p>
-  //       <button class="modal-profile__copy-button" id="copy-number-button"></button>
-  //     </div>
-  //   </div>
-  // </div>
-  // `;
   profileModalCopyButton.addEventListener('click', ()=>{navigator.clipboard.writeText(currentUser.userCard);});
 }
-
-
-
 
 //Byu Modal elements
 let buyModal = document.createElement('div');
@@ -896,38 +785,6 @@ const openBuyModal = () => {
     input.addEventListener('keyup', ()=>{checkFields()});
   });
   
-
-  // modalContainer.innerHTML = `
-  // <div class="modal-buy-card">
-  // <div class="modal-buy-card__header">
-  //     <div class="modal-buy-card__title">Buy a library card</div>
-  //     <div class="modal-buy-card__close" onclick="closeModal()"></div>
-  // </div>
-  // <div class="modal-buy-card__container">
-  //     <form class="modal-buy-card__form">
-  //         <label for="buy-card-number" class="modal-form__label">Bank card number</label>
-  //         <input type="text" class="modal-form__input modal-form__input-buy" id="buy-card-number" pattern="^(\\d{16}|\\d{4}\\s\\d{4}\\s\\d{4}\\s\\d{4})$" required>
-  //         <label for="buy-card-exp-code-1" class="modal-form__label">Expiration code</label>
-  //         <div class="exp-code-field">
-  //             <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-exp-code-1" pattern="^\\d{2}$" required>
-  //             <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-exp-code-2" pattern="^\\d{2}$" required>
-  //         </div>
-  //         <label for="buy-card-cvc" class="modal-form__label">CVC</label>
-  //         <input type="text" class="modal-form__input modal-form__input-small" id="buy-card-cvc"  pattern="^\\d{3}$" required>
-  //         <label for="buy-card-name" class="modal-form__label modal-form__label-spaced">Cardholder name</label>
-  //         <input type="text" class="modal-form__input" id="buy-card-name" required>
-  //         <label for="buy-card-postal-code" class="modal-form__label">Postal code</label>
-  //         <input type="text" class="modal-form__input" id="buy-card-postal-code" required>
-  //         <label for="buy-card-city" class="modal-form__label">City / Town</label>
-  //         <input type="text" class="modal-form__input" id="buy-card-city" required>
-  //         <div class="modal-buy-card__submit"><button type="submit" class="button modal-buy-card__button" id="buy-subscription-button">Buy</button>
-  //             <div class="modal-buy-card__price">&dollar; 25.00</div>
-  //         </div>
-  //     </form>
-  //     <div class="modal-buy-card__info">If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.</div>
-  //   </div>
-  // </div>
-  // `;
   buyModalForm.addEventListener('submit', (event)=>{
     event.preventDefault();
     let currLoginStat = JSON.parse(localStorage.loginstat);
