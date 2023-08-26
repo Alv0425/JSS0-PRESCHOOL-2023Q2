@@ -1,10 +1,10 @@
 "use strict";
-console.log('%cLibrary #2, Адаптивная вёрстка', 'font-weight:700; color:blue;');
-console.log('Оценка 50/50. ')
+console.log('%cLibrary #3, Добавление функционала при помощи JavaScript', 'font-weight:700; color:blue;');
+console.log('Оценка 200/200. ')
 
-let p1 = '1. Вёрстка соответствует макету. Ширина экрана 768px +26\n';
-let p2 = '2. Ни на одном из разрешений до 640px включительно не появляется горизонтальная полоса прокрутки. Весь контент страницы при этом сохраняется: не обрезается и не удаляется +12 \n';
-let p3 = '3. На ширине экрана 768px реализовано адаптивное меню +12  \n'; 
+let p1 = '1. Реализован слайдер в блоке about и в блоке favorites. Верстка и функционал соответствует ТЗ.\n';
+let p2 = '2. Реализована возможность регистрации. Данные всех зарегистрированных пользователей хранятся в localstorage в виде JSON массива объектов (readers). Текущее состояние сессии хранится в поле loginstat как JSON объект.\n';
+let p3 = '3. Зарегистрированные пользователи могут проматтривать статистику своих посещений, купить абонемент и взять книги из блока favorites.\n'; 
 
 
 let review = p1+p2+p3;
@@ -426,7 +426,6 @@ function findIndexOfUserByEmail(email) {
   return index;
 }
 
-
 // Registration form modal elements
 let registerModal = document.createElement('div');
 registerModal.className = 'modal-login-reg';
@@ -619,9 +618,6 @@ const openLoginModal = () => {
   loginPasswordInput.value = '';
   loginEmailInput.value = '';
   loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
- 
-
-
   loginFooterLink.addEventListener('click', () => {
     setTimeout(()=>{
       openRegisterModal();
@@ -727,9 +723,18 @@ let buyModalInputsAttrs = [
   {id: 'buy-card-postal-code', pattern: '^[\\d]{2,}$'},
   {id: 'buy-card-city', pattern: '^[a-zA-Z]{2,}$'}
 ];
+let buyModalHints = ['Card number should be 16 digits long, XXXXXXXXXXXXXXXX or XXXX XXXX XXXX XXXX',
+'Expiration date should be in format MM / YY.','Expiration date should be in format MM / YY.',
+'CVV should have 3 digits.','','',''];
 let buyInputs = [];
 let buyLabels = [];
 let buyModalLabels = ['Bank card number', 'Expiration code', '', 'CVC', 'Cardholder name', 'Postal code', 'City / Town'];
+let buyModalHint = document.createElement('p');
+buyModalHint.className = 'modal-buy-card__hint modal-buy-card__hint-hidden';
+function showHint(){
+  buyModalHint.classList.remove('modal-buy-card__hint-hidden');
+  setTimeout(()=>{buyModalHint.classList.add('modal-buy-card__hint-hidden');},200);
+}
 buyModalInputsAttrs.forEach((inputField, index) => {
   let newInput = document.createElement('INPUT');
   let newLabel = document.createElement('LABEL');
