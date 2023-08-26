@@ -939,6 +939,11 @@ a {
     cursor: pointer;
   }
 
+  .carousel__arrow:disabled{
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
   .carousel__arrow::before{
     content: "";
     position:absolute;
@@ -960,8 +965,7 @@ a {
   display: flex;
 }
 
-.pagination-button,
-.pagination-button-active {
+.pagination-button {
   display: block;
   padding: 5px;
   transition: all 0.5s;
@@ -1000,8 +1004,12 @@ a {
   border: none;
 }
 
-.pagination-button-active .pagination-button__dot {
+.pagination-button:disabled .pagination-button__dot {
   background-color: #BB945F;
+}
+
+.pagination-button:disabled{
+  pointer-events: none;
 }
 
 .pagination-button:hover {
@@ -1009,15 +1017,13 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine){
-  .pagination-button:hover .pagination-button__dot,
-  .pagination-button-active:hover .pagination-button__dot {
+  .pagination-button:hover .pagination-button__dot{
     background-color: #8E8E8E;
     opacity: 0.5;
   }
 }
 
-.pagination-button:active .pagination-button__dot,
-  .pagination-button-active:active .pagination-button__dot {
+.pagination-button:active .pagination-button__dot {
     background-color: #8E8E8E;
     opacity: 0.5;
   }
@@ -2284,7 +2290,6 @@ p.contacts__item {
   .modal-buy-card__title{
     font-size: 30px;
   } 
-
 }
 
 .modal-buy-card__info {

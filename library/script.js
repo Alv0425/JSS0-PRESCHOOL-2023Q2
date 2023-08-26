@@ -1,6 +1,6 @@
 "use strict";
 console.log('%cLibrary #3, Добавление функционала при помощи JavaScript', 'font-weight:700; color:blue;');
-console.log('Оценка 200/200. ')
+console.log('Оценка 200/200.');
 
 let p1 = '1. Реализован слайдер в блоке about и в блоке favorites. Верстка и функционал соответствует ТЗ.\n';
 let p2 = '2. Реализована возможность регистрации. Данные всех зарегистрированных пользователей хранятся в localstorage в виде JSON массива объектов (readers). Текущее состояние сессии хранится в поле loginstat как JSON объект.\n';
@@ -8,7 +8,6 @@ let p3 = '3. Зарегистрированные пользователи мо�
 
 
 let review = p1+p2+p3;
-
 console.log(review);
 
 const navBar = document.getElementById("navbar");
@@ -16,17 +15,6 @@ const navButton = document.getElementById('navbutton');
 const body = document.getElementById('body');
 const navLinks = document.querySelectorAll('li a');
 let navBarstatus = 0;
-
-const bPLBooks = [
-  {title: 'The Book Eaters', author: 'By Sunyi Dean'},{title: 'Cackle', author: 'By Rachel Harrison'},
-  {title:'Dante: Poet of the Secular World', author:'By Erich Auerbach'},{title:'The Last Queen', author: 'By Clive Irving'},
-  {title: 'The Body', author:'By Stephen King'},{title: 'Carry: A Memoir of Survival on Stolen Land',author:'By Toni Jenson'},
-  {title:'Days of Distraction',author:'By Alexandra Chang'},{title:'Dominicana',author:'By Angie Cruz'},
-  {title:'Crude: A Memoir',author:'By Pablo Fajardo &amp; Sophie Tardy-Joubert'},{title:'Let My People Go Surfing',author:'By Yvon Chouinard'},
-  {title:'The Octopus Museum: Poems',author:'By Brenda Shaughnessy'},{title:'Shark Dialogues: A Novel',author:'By Kiana Davenport'},
-  {title:'Casual Conversation',author:'By Renia White'},{title:'The Great Fire',author:'By Lou Ureneck'},
-  {title:'Rickey: The Life and Legend',author:'By Howard Bryant'},{title:'Slug: And Other Stories',author: 'By Megan Milks'}
-];
 
 function bodyLock() {
   body.classList.add("body-locked");
@@ -89,8 +77,10 @@ const handleSlider = () => {
   spaceRight.classList.remove(`free-space-right-stage${prevSliderStatus}`);
   spaceLeft.classList.add(`free-space-left-stage${currentSliderStatus}`);
   spaceRight.classList.add(`free-space-right-stage${currentSliderStatus}`);
-  paginationButtons[currentSliderStatus-1].classList.add('pagination-button-active');
-  paginationButtons[prevSliderStatus-1].classList.remove('pagination-button-active');
+  paginationButtons[currentSliderStatus-1].disabled = true;
+  paginationButtons[prevSliderStatus-1].disabled = false;
+  pagArrowRight.disabled = (currentSliderStatus == 5);
+  pagArrowLeft.disabled = (currentSliderStatus == 1);
 }
 paginationButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -117,7 +107,6 @@ pagArrowRight.addEventListener('click', () => {
     handleSlider();
   }
 });
-
 
 //touches handler
 const carouselContainer = document.getElementById('carousel-container');
@@ -325,7 +314,6 @@ function updateContentWhenStetusChanged() {
       signupButton.classList.add('get-form__button-hidden');
       profileButton.classList.remove('get-form__button-hidden');
       showUserStats(currentUser.userVisits,currentUser.userBonuses,currentUser.userBooks.length,`${currentUser.userFirstName} ${currentUser.userLastName}`, currentUser.userCard);
-
       //Modal Profile
       authMenuMyProfile.addEventListener('click',()=>{
         console.log('modal profile is opened');
@@ -367,7 +355,6 @@ function updateContentWhenStetusChanged() {
         button.disabled = false;
         button.textContent = 'Buy';
       });
-
       getformTitle.textContent = 'Get a reader card';
       getformDescription.textContent = 'You will be able to see a reader card after logging into account or you can register a new account';
       loginButton.classList.remove('get-form__button-hidden');
@@ -516,7 +503,6 @@ const openRegisterModal = () => {
       regErrorHint.textContent = 'Password should be at least 8 characters long.';
     }
   });
-
   regFooterLink.addEventListener('click', () => {
     setTimeout(()=>{
       openLoginModal();
@@ -565,7 +551,6 @@ let loginErrorHint = document.createElement('p');
 loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
 loginErrorHint.setAttribute('id','login-error-hint');
 console.log(loginModalForm);
-
 
 loginModalForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -652,7 +637,6 @@ let profileModalNumber = document.createElement('p');
 profileModalNumber.className = 'modal-profile__nubmer';
 let profileModalCopyButton = document.createElement('button');
 profileModalCopyButton.className = 'modal-profile__copy-button';
-
 
 const openProfileModal = () => {
   modalType = 'profile';
@@ -771,8 +755,6 @@ buyModalForm.append(modalBuyCardContainer);
 modalBuyCardInfo.className = 'modal-buy-card__info';
 modalBuyCardInfo.textContent = 'If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.';
 
-
-
 const openBuyModal = () => {
   bodyLock();
   overlayModal.classList.remove('modal-hidden');
@@ -821,7 +803,6 @@ function showUserStats(visits, bonuses, books, name, number) {
     <div class="stats-icon__value">${books}</div>
   </div>
   `;
-
   document.getElementById('readers-name').value = name;
   document.getElementById('card-number').value = number;
   document.getElementById('readers-name').readOnly = true;
@@ -918,7 +899,6 @@ function addBook(bookdata, currentStatus, currentreaders){
   localStorage.loginstat = JSON.stringify(currentStatus);
   localStorage.readers = JSON.stringify(currentreaders);
 }
-
 
 //handle click on book buttons
 bookButtons.forEach((book) => {
