@@ -151,7 +151,7 @@ window.addEventListener("resize", () => {
   prevSliderStatus = currentSliderStatus;
   currentSliderStatus = 1;
   handleSlider();
-  paginationButtons[0].classList.add('pagination-button-active');
+  paginationButtons[0].disabled = true;
 });
 
 //Favorites slider
@@ -184,18 +184,18 @@ function hideShowBooks(event){
     }
   }
   function hideAll(){
-      return new Promise((resolve)=>{
-        if (previousSeasonChecked !== seasonChecked){
-          if(!favcontent.classList.contains('favorites__content-hidden')){
-            favcontent.classList.add('favorites__content-hidden');
-            favcontent.classList.remove('favorites__content-show');
-            setTimeout(()=>{resolve(switchSeasons());},500);
-          } else {
-            setTimeout(()=>{resolve(switchSeasons());},500);
-          }
+    return new Promise((resolve)=>{
+      if (previousSeasonChecked !== seasonChecked){
+        if(!favcontent.classList.contains('favorites__content-hidden')){
+          favcontent.classList.add('favorites__content-hidden');
+          favcontent.classList.remove('favorites__content-show');
+          setTimeout(()=>{resolve(switchSeasons());},500);
+        } else {
+          setTimeout(()=>{resolve(switchSeasons());},500);
         }
-      });
-    }
+      }
+    });
+  }
   hideAll().then(()=>{
     favcontent.classList.remove('favorites__content-hidden');
     favcontent.classList.add('favorites__content-show');
@@ -211,7 +211,7 @@ seasonButtons.forEach((rbutton) => {
 //Auth menu
 const userButton = document.getElementById('user-button');
 const authMenu = document.getElementById('auth-menu');
-let modalType = '';
+
 userButton.addEventListener('click', () => {
   authMenu.classList.toggle('auth-menu-open');
 });
@@ -235,7 +235,6 @@ const overlayModal = document.getElementById('modal-overlay');
 const modalContainer = document.getElementById('modal-container');
 //Favorites content
 const bookButtons = document.querySelectorAll('.book__button');
-
 //Digital library cards elements
 const signupButton = document.getElementById('signup-getform');
 const loginButton = document.getElementById('login-getform');
@@ -259,6 +258,18 @@ class LoginStat {
     this.userVisits = 0;
     this.userBooks = [];
     this.userSubscription = 0;
+  }
+
+  pullStat(obj) {
+    this.loginUserStatus = 1;
+    this.userCard = obj.libraryCardNumber;
+    this.userEmail = obj.readerEmail;
+    this.userFirstName = obj.userFirstName;
+    this.userLastName = obj.readerLastName;
+    this.userBonuses = obj.readerBonuses;
+    this.userVisits = obj.readerVisits;
+    this.userBooks = obj.readerBooks;
+    this.userSubscription = obj.readerSubscription;
   }
 }
 
@@ -284,16 +295,44 @@ class Reader {
     this.readerFirstName = 'readerFirstName';
     this.readerLastName = 'readerLastName';
     this.readerEmail = 'readerEmail';
-    this.readerPassword = 'readerPassword';
+    this.readerPassword = '';
     this.readerVisits = 1;
     this.readerBooks = [];
     this.readerBonuses = 0;
     this.libraryCardNumber = 'libraryCardNumber';
     this.readerSubscription = 0;
   }
+
+  rewriteFields(obj) {
+    for(let keys in obj) {
+      this[keys] = obj[keys];
+    }
+  }
+
+  getFullName() {
+    return `${this.readerFirstName} ${this.readerLastName}`;
+  }
+  setFullName(fullname) {
+    [this.readerFirstName, this.readerLastName] = fullname.split(" ");
+  }
+
+  increaseVisits(){
+    this.readerVisits += 1;
+  }
+
+  generateReaderNumber(){
+    this.readerPassword = generateCardNumber();
+  }
+
 }
 
-function updateContentWhenStetusChanged() {
+let usersList1 = JSON.parse(localStorage.readers);
+let user1 = new Reader;
+user1.rewriteFields(usersList1[0]);
+user1.setFullName('sss sss');
+console.log(user1.readerFirstName);
+
+function updateContentWhenStatusChanged() {
   let currentUser = JSON.parse(localStorage.loginstat);
   switch (currentUser.loginUserStatus) {
     case 1:
@@ -339,13 +378,13 @@ function updateContentWhenStetusChanged() {
       console.log("not logined");
       userButton.classList.remove('user-button-logged-in');
       userButton.classList.add('user-button');
-      userButton.innerHTML = '';
+      userButton.textContent = '';
       userButton.title = 'Profile';
       authMenuLogin.classList.remove('auth-menu__item-hidden');
       authMenuRegister.classList.remove('auth-menu__item-hidden');
       authMenuLogout.classList.add('auth-menu__item-hidden');
       authMenuMyProfile.classList.add('auth-menu__item-hidden');
-      authMenuTitle.innerHTML = 'Profile';
+      authMenuTitle.textContent = 'Profile';
       showCheckCardButton();
       document.getElementById('readers-name').value = '';
       document.getElementById('card-number').value = '';
@@ -375,15 +414,14 @@ window.addEventListener('load', () => {
   } else {
     localStorage.loginstat = JSON.stringify(new LoginStat);
   }
-  updateContentWhenStetusChanged();
+  updateContentWhenStatusChanged();
 });
 
-const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
 function generateCardNumber() {
-  let cardNum = '';
-  let randomDigits = cardNumberDigits.sort(()=>0.5-Math.random());
-  for (let i = 0; i < 9; i++) {
-    cardNum += randomDigits[i];
+  const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
+  let cardNum = '' + cardNumberDigits[Math.floor(Math.random()*14+1)];
+  for (let i = 0; i < 8; i++) {
+    cardNum += cardNumberDigits[Math.floor(Math.random()*15)];
   }
   return cardNum;
 }
@@ -457,7 +495,6 @@ regFooterLink.textContent = 'Login';
 regFooterLink.className = 'modal-login-reg__link';
 regFootnote.append(regFooterLink);
 
-
 const openRegisterModal = () => {
   overlayModal.classList.remove('modal-hidden');
   removeChilds(modalContainer);
@@ -489,7 +526,7 @@ const openRegisterModal = () => {
         console.log(JSON.stringify(readersList));
         loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
         console.log(JSON.parse(localStorage.loginstat).loginStatus);
-        updateContentWhenStetusChanged();
+        updateContentWhenStatusChanged();
         setTimeout(()=>{
           closeModal();
         }, 200);
@@ -586,7 +623,7 @@ loginModalForm.addEventListener("submit", (event) => {
       localStorage.readers = JSON.stringify(currentReadersList);
       localStorage.loginstat = JSON.stringify(currentLoginStatus);
       console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
-      updateContentWhenStetusChanged();
+      updateContentWhenStatusChanged();
       closeModal();
       break;
   }    
@@ -639,7 +676,6 @@ let profileModalCopyButton = document.createElement('button');
 profileModalCopyButton.className = 'modal-profile__copy-button';
 
 const openProfileModal = () => {
-  modalType = 'profile';
   bodyLock();
   overlayModal.classList.remove('modal-hidden');
   let currentUser = JSON.parse(localStorage.loginstat);
@@ -874,7 +910,7 @@ authMenuLogin.addEventListener('click', () => {
 
 function logOut(){
   localStorage.loginstat = JSON.stringify(new LoginStat);
-  updateContentWhenStetusChanged();
+  updateContentWhenStatusChanged();
   authMenu.classList.remove('auth-menu-open');
 }
 
@@ -912,7 +948,7 @@ bookButtons.forEach((book) => {
             console.log('user have subscription');
             console.log(book.dataset.book);
             addBook(book.dataset.book, currStatus, currReadersList);
-            updateContentWhenStetusChanged();
+            updateContentWhenStatusChanged();
             break;
           case 0:
             openBuyModal();

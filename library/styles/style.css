@@ -1076,7 +1076,7 @@ a {
   border-radius: 3px;
 }
 
-@media (width <= 1258px) {
+@media (width < 1260px) {
   .favorites__filter{
     position: sticky;
     top:-1px;
