@@ -410,6 +410,7 @@ window.addEventListener('load', () => {
   updateContentWhenStatusChanged();
 });
 
+//Функция, генерирующая Library Card Number
 function generateCardNumber() {
   const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
   let cardNum = '' + cardNumberDigits[Math.floor(Math.random()*15+1)];
@@ -419,6 +420,7 @@ function generateCardNumber() {
   return cardNum;
 }
 
+//Функция, обновляющяя текущий статус (поле loginstat в localstorage)
 function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
   loginStatus.loginUserStatus = 1;
   loginStatus.userBonuses = cReadersList[indexOfReader].readerBonuses;
@@ -433,6 +435,7 @@ function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
   localStorage.loginstat = JSON.stringify(loginStatus);
 }
 
+//Функция для поиска индекса читателя по email в массиве зарегистрированных пользователей (поле readers в localstorage)
 function findIndexOfUserByEmail(email) {
   let readersList = JSON.parse(localStorage.readers);
   let index = -1;
@@ -444,7 +447,7 @@ function findIndexOfUserByEmail(email) {
   return index;
 }
 
-// Registration form modal elements
+// Элементы модального окна регистрации
 let registerModal = document.createElement('div');
 registerModal.className = 'modal-login-reg';
 let loginRegHeader = document.createElement('div');
@@ -540,7 +543,7 @@ const openRegisterModal = () => {
   });
 }
 
-//Elements for Login modal
+// Элементы модального окна входа в личный кабинет
 let loginModal = document.createElement('div');
 loginModal.className = 'modal-login-reg';
 let loginModalForm = document.createElement('FORM');
@@ -630,7 +633,7 @@ const openLoginModal = () => {
   });
 }
 
-//Profile Modal elements
+// Элементы модального окна профиля
 let profileModal = document.createElement('div');
 profileModal.className = 'modal-profile';
 let profileModalSidebar = document.createElement('div');
@@ -702,7 +705,7 @@ const openProfileModal = () => {
   profileModalCopyButton.addEventListener('click', ()=>{navigator.clipboard.writeText(currentUser.userCard);});
 }
 
-//Byu Modal elements
+// Элементы модального окна buy library card
 let buyModal = document.createElement('div');
 buyModal.className = 'modal-buy-card';
 let buyModalHeader = document.createElement('div');
@@ -804,6 +807,7 @@ const openBuyModal = () => {
   });
 }
 
+//Функция показывающая статистику пользователя в секции Digital Library Cards
 function showUserStats(visits, bonuses, books, name, number) {
   checkCardButtonContainer.innerHTML = `
   <div class="check-form__stats-icon">
@@ -828,6 +832,7 @@ function showUserStats(visits, bonuses, books, name, number) {
   document.getElementById('card-number').readOnly = true;
 }
 
+//Функция показывающая кнопку Check the card в секции Digital Library Cards
 function showCheckCardButton(){
   checkCardButtonContainer.innerHTML = `<button type="submit" class="button check-form__button" id='check-form__button'>Check the card</button>`;
 }
@@ -837,6 +842,7 @@ document.getElementById('check-form').addEventListener("submit", (event)=>{
   handleClickOnCheckCard();
 })
 
+//Функция для обработки формы Find your card в секции Digital Library Cards
 function handleClickOnCheckCard(){
   let currList = JSON.parse(localStorage.readers);
   let testResult = 0;
@@ -868,6 +874,7 @@ function handleClickOnCheckCard(){
     });
 }
 
+//Функция для обработки события - клика вне модального окна
 function handleClickOutsideModals(event) {
   if (!document.getElementById('modal-container').contains(event.target)) {
     closeModal();
@@ -891,6 +898,7 @@ authMenuLogin.addEventListener('click', () => {
   authMenu.classList.remove('auth-menu-open');
 });
 
+//Функция для выхода из аккаунта
 function logOut(){
   localStorage.loginstat = JSON.stringify(new LoginStat);
   updateContentWhenStatusChanged();
@@ -911,6 +919,7 @@ loginButton.addEventListener('click', () => {
   openLoginModal();
 });
 
+//Функция -- добавление новой книги
 function addBook(bookdata, currentStatus, currentreaders){
   currentStatus.userBooks.push(bookdata);
   let indexOfCurrentUser = findIndexOfUserByEmail(currentStatus.userEmail);
@@ -946,12 +955,14 @@ bookButtons.forEach((book) => {
   });
 });
 
+//Функция очистки родительского элемента
 function removeChilds(element) {
   while (element.firstChild) {
       element.removeChild(element.firstChild);   
   }
 }
 
+//Функция для обработки события -- закрытие модального окна
 function closeModal() {
   overlayModal.classList.add('modal-hidden');
   bodyUnlock();
