@@ -10,6 +10,8 @@ let p3 = '3. Зарегистрированные пользователи мо�
 let review = p1+p2+p3;
 console.log(review);
 
+
+/* Меню навигации */
 const navBar = document.getElementById("navbar");
 const navButton = document.getElementById('navbutton');
 const body = document.getElementById('body');
@@ -64,7 +66,11 @@ navLinks.forEach((link) => {
     });
 });
 
-//About slider
+/*Слайдер в секции About. Изображения позиционированы 
+в flex контейнере, со свойством justify-content:center. 
+Первый и последний элемент этого контейнера free-space-left, free-space-right 
+имеют переменную ширину, через которую обеспечивается нужное смещение блока с картинками.
+Код ниже меняет классы этих блоков в зависимости от состояния слайдера.*/
 const paginationButtons = document.querySelectorAll('.pagination-button');
 const spaceLeft = document.getElementById('free-space-left');
 const spaceRight = document.getElementById('free-space-right');
@@ -108,7 +114,7 @@ pagArrowRight.addEventListener('click', () => {
   }
 });
 
-//touches handler
+//Обработка жестов (вправо-влево)
 const carouselContainer = document.getElementById('carousel-container');
 let touchstart = 0;
 let touchend = 0;
@@ -146,7 +152,7 @@ function touchesType() {
   }
 }
 
-//Handle onresize: move slider on initial stage
+//Handle onresize: move slider to initial stage
 window.addEventListener("resize", () => {
   prevSliderStatus = currentSliderStatus;
   currentSliderStatus = 1;
@@ -154,7 +160,9 @@ window.addEventListener("resize", () => {
   paginationButtons[0].disabled = true;
 });
 
-//Favorites slider
+/*Слайдер в секции Favorites. Все карточки книг сверстаны, ненужные прячутся через display:none (функция hideShowBooks()). 
+Для обеспечения анимации fade-in / fade-out контейнеру favoritescontent, содержащему карточки книг, 
+подключается/удаляется класс favorites__content-hidden/show (функция hideAll()).*/
 const seasonButtons = document.getElementsByName('season');
 const favcontent = document.getElementById("fav-content");
 const booksAll = {
@@ -196,32 +204,33 @@ function hideShowBooks(event){
       }
     });
   }
+  //После того как анимация затухания закончилась, карточки заменились, класс контейнера с opacity = 0 удаляется.
   hideAll().then(()=>{
     favcontent.classList.remove('favorites__content-hidden');
     favcontent.classList.add('favorites__content-show');
   });
 }
 
+//Обработчик событий по клику на радиокнопку
 seasonButtons.forEach((rbutton) => {
   rbutton.addEventListener('click', (event) => {
     hideShowBooks(event);
   });
 });
 
-//Auth menu
+//Меню авторизации.
 const userButton = document.getElementById('user-button');
 const authMenu = document.getElementById('auth-menu');
 
 userButton.addEventListener('click', () => {
   authMenu.classList.toggle('auth-menu-open');
 });
-
+//Клик вне меню авторизации
 const clickOutsideAuthMenu = (event) => {
     if (!authMenu.contains(event.target) && !userButton.contains(event.target)) {
       authMenu.classList.remove('auth-menu-open');
     }
 }
-
 document.addEventListener('touchend', clickOutsideAuthMenu);
 document.addEventListener('click', clickOutsideAuthMenu);
 
@@ -246,7 +255,7 @@ const checkCardButton = document.getElementById('check-form__button');
 const checkReaderNameInput = document.getElementById('readers-name');
 const checkReaderNumberInput = document.getElementById('card-number');
 
-
+//Класс для объекта текущего состояния. Содержит информацию для управления содержимым страницы.
 class LoginStat {
   constructor() {
     this.loginUserStatus = 0;
@@ -259,35 +268,6 @@ class LoginStat {
     this.userBooks = [];
     this.userSubscription = 0;
   }
-
-  pullStat(obj) {
-    this.loginUserStatus = 1;
-    this.userCard = obj.libraryCardNumber;
-    this.userEmail = obj.readerEmail;
-    this.userFirstName = obj.userFirstName;
-    this.userLastName = obj.readerLastName;
-    this.userBonuses = obj.readerBonuses;
-    this.userVisits = obj.readerVisits;
-    this.userBooks = obj.readerBooks;
-    this.userSubscription = obj.readerSubscription;
-  }
-}
-
-function checkLoginAttempt(login, password) {
-  let readersList = JSON.parse(localStorage.readers);
-  let indexOfReader = -1;
-  for (let i=0; i<readersList.length; i++){
-    if (login == readersList[i].libraryCardNumber || login.toLowerCase() == readersList[i].readerEmail.toLowerCase()) {
-      indexOfReader = i;
-    }
-  }
-  if (indexOfReader == -1) {
-    return -1;
-  }
-  if (readersList[indexOfReader].readerPassword == password){
-    return indexOfReader;
-  }
-  return -2;
 }
 
 class Reader {
@@ -326,12 +306,24 @@ class Reader {
 
 }
 
-let usersList1 = JSON.parse(localStorage.readers);
-let user1 = new Reader;
-user1.rewriteFields(usersList1[0]);
-user1.setFullName('sss sss');
-console.log(user1.readerFirstName);
+function checkLoginAttempt(login, password) {
+  let readersList = JSON.parse(localStorage.readers);
+  let indexOfReader = -1;
+  for (let i=0; i<readersList.length; i++){
+    if (login == readersList[i].libraryCardNumber || login.toLowerCase() == readersList[i].readerEmail.toLowerCase()) {
+      indexOfReader = i;
+    }
+  }
+  if (indexOfReader == -1) {
+    return -1;
+  }
+  if (readersList[indexOfReader].readerPassword == password){
+    return indexOfReader;
+  }
+  return -2;
+}
 
+//Функция обновляющая содержимое страницы на основе текущего состояния (loginstat). loginUserStatus = 1 -- читатель залогинен, если 0 -- никто не зазогинен.
 function updateContentWhenStatusChanged() {
   let currentUser = JSON.parse(localStorage.loginstat);
   switch (currentUser.loginUserStatus) {
@@ -403,6 +395,7 @@ function updateContentWhenStatusChanged() {
   }
 }
 
+//Обработчик события при загрузке страницы(если полей readers и loginstat в localstorage нет, то они создаются).
 window.addEventListener('load', () => {
   if(localStorage.hasOwnProperty('readers')) {
     console.log(localStorage.readers);
@@ -419,9 +412,9 @@ window.addEventListener('load', () => {
 
 function generateCardNumber() {
   const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
-  let cardNum = '' + cardNumberDigits[Math.floor(Math.random()*14+1)];
+  let cardNum = '' + cardNumberDigits[Math.floor(Math.random()*15+1)];
   for (let i = 0; i < 8; i++) {
-    cardNum += cardNumberDigits[Math.floor(Math.random()*15)];
+    cardNum += cardNumberDigits[Math.floor(Math.random()*16)];
   }
   return cardNum;
 }
@@ -511,7 +504,7 @@ const openRegisterModal = () => {
   regErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
     regModalForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    let newReader = new Reader();
+    let newReader = new Reader;
     newReader.readerFirstName = regFormFields[0][1].value;
     newReader.readerLastName = regFormFields[1][1].value;
     newReader.readerEmail = regFormFields[2][1].value;
@@ -576,7 +569,7 @@ loginPasswordLabel.setAttribute('for', 'login-password');
 let loginSubmitButton = document.createElement('button');
 loginSubmitButton.setAttribute('type', 'submit');
 loginSubmitButton.className = 'button modal-login-reg__button';
-loginSubmitButton.textContent = 'Login';
+loginSubmitButton.textContent = 'Log in';
 let loginFootnote = document.createElement('p');
 loginFootnote.className = 'modal-login-reg__footnote';
 loginFootnote.innerHTML = 'Dont have an account?';
@@ -611,17 +604,7 @@ loginModalForm.addEventListener("submit", (event) => {
       let currentLoginStatus = JSON.parse(localStorage.loginstat);
       currentReadersList[indexOfLoginReader].readerVisits = currentReadersList[indexOfLoginReader].readerVisits + 1;
       console.log(currentReadersList[indexOfLoginReader].readerVisits);
-      currentLoginStatus.loginUserStatus = 1;
-      currentLoginStatus.userBonuses = currentReadersList[indexOfLoginReader].readerBonuses;
-      currentLoginStatus.userFirstName = currentReadersList[indexOfLoginReader].readerFirstName;
-      currentLoginStatus.userLastName = currentReadersList[indexOfLoginReader].readerLastName;
-      currentLoginStatus.userVisits = currentReadersList[indexOfLoginReader].readerVisits;
-      currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
-      currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
-      currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
-      currentLoginStatus.userSubscription = currentReadersList[indexOfLoginReader].readerSubscription;
-      localStorage.readers = JSON.stringify(currentReadersList);
-      localStorage.loginstat = JSON.stringify(currentLoginStatus);
+      loginStatusUpdate(currentLoginStatus,currentReadersList,indexOfLoginReader);
       console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
       updateContentWhenStatusChanged();
       closeModal();

@@ -1096,7 +1096,6 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width:500px;
   }
- 
 }
 
 .favorites__item{
@@ -1982,7 +1981,7 @@ p.contacts__item {
 
 .modal-form__input {
   border: 1px solid #BB945F;
-  line-height: 16px;
+  line-height: 14px;
 }
 
 .modal-form__input-small {
@@ -1991,7 +1990,7 @@ p.contacts__item {
 
 .modal-login-reg__button {
   max-width: 75px;
-  padding: 7px;
+  padding: 9px;
   margin-top: 19px;
 }
 
@@ -2227,6 +2226,11 @@ p.contacts__item {
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url("../assets/copy.svg");
+  transition: 0.5s;
+}
+
+.modal-profile__copy-button:active{
+  transform: scale(0.7);
 }
 
 .modal-profile__copy-button:hover {
