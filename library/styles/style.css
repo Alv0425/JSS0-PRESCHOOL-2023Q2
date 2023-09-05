@@ -1150,17 +1150,17 @@ a {
 
 .favorites__content {
   gap: 40px;
-  transition: 0.5s;
+  transition: 0.7s;
 }
 
 .favorites__content-show {
-  animation: fade-in 0.5s ease-in-out;
+  animation: fade-in 0.7s ease-in-out;
   opacity: 1;
 }
 
 .favorites__content-hidden {
   opacity: 0;
-  animation: fade-out 0.5s ease-in-out;
+  animation: fade-out 0.7s ease-in-out;
 }
 
 @media (width < 1260px) {
@@ -1176,7 +1176,7 @@ a {
   flex-basis: 590px;
   min-height: 555px;
   padding: 16px 20px;
-  transition: all 0.5s;
+  transition: all 0.7s;
 }
 
 @media (width <= 630px) {
