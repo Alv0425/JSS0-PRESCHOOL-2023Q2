@@ -1,32 +1,4 @@
 "use strict";
-console.log('%cLibrary #2, Адаптивная вёрстка', 'font-weight:700; color:blue;');
-console.log('Оценка 50/50. ')
-
-let p1 = '1. Вёрстка соответствует макету. Ширина экрана 768px +26\n';
-let p2 = '2. Ни на одном из разрешений до 640px включительно не появляется горизонтальная полоса прокрутки. Весь контент страницы при этом сохраняется: не обрезается и не удаляется +12 \n';
-let p3 = '3. На ширине экрана 768px реализовано адаптивное меню +12  \n'; 
-
-
-let review = p1+p2+p3;
-
-console.log(review);
-
-const navBar = document.getElementById("navbar");
-const navButton = document.getElementById('navbutton');
-const body = document.getElementById('body');
-const navLinks = document.querySelectorAll('li a');
-let navBarstatus = 0;
-
-const bPLBooks = [
-  {title: 'The Book Eaters', author: 'By Sunyi Dean'},{title: 'Cackle', author: 'By Rachel Harrison'},
-  {title:'Dante: Poet of the Secular World', author:'By Erich Auerbach'},{title:'The Last Queen', author: 'By Clive Irving'},
-  {title: 'The Body', author:'By Stephen King'},{title: 'Carry: A Memoir of Survival on Stolen Land',author:'By Toni Jenson'},
-  {title:'Days of Distraction',author:'By Alexandra Chang'},{title:'Dominicana',author:'By Angie Cruz'},
-  {title:'Crude: A Memoir',author:'By Pablo Fajardo &amp; Sophie Tardy-Joubert'},{title:'Let My People Go Surfing',author:'By Yvon Chouinard'},
-  {title:'The Octopus Museum: Poems',author:'By Brenda Shaughnessy'},{title:'Shark Dialogues: A Novel',author:'By Kiana Davenport'},
-  {title:'Casual Conversation',author:'By Renia White'},{title:'The Great Fire',author:'By Lou Ureneck'},
-  {title:'Rickey: The Life and Legend',author:'By Howard Bryant'},{title:'Slug: And Other Stories',author: 'By Megan Milks'}
-];
 
 function bodyLock() {
   body.classList.add("body-locked");
@@ -36,203 +8,19 @@ function bodyUnlock() {
   body.classList.remove("body-locked");
 }
 
-const handleCloseMenu = () => {
-  navBar.classList.remove("navbar-open");
-  navButton.classList.remove("close");
-  bodyUnlock();
-  navBarstatus = 0;
-}
-
-const handleClickOutsideMunu = (event) => {
-  if (navBarstatus == 1){
-    if (!navBar.contains(event.target) && !navButton.contains(event.target)) {
-        handleCloseMenu();
-    }
-  }
-}
-
-navButton.addEventListener('click', () => {
-    if (navBarstatus == 0){  
-        navBar.classList.add("navbar-open");
-        navButton.classList.add("close");
-        bodyLock();
-        navBarstatus = 1;
-    } else {
-      handleCloseMenu();
-    }
-});
-
-document.addEventListener('touchend', handleClickOutsideMunu);
-document.addEventListener('click', handleClickOutsideMunu);
-
-navLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-        event.preventDefault();
-        handleCloseMenu();
-        setTimeout(waitAnimation, 300);
-        function waitAnimation() {
-          window.location = link.href;  
-        }
-    });
-});
-
-//About slider
-const paginationButtons = document.querySelectorAll('.pagination-button');
-const spaceLeft = document.getElementById('free-space-left');
-const spaceRight = document.getElementById('free-space-right');
-const pagArrowLeft = document.getElementById('arrow-left');
-const pagArrowRight = document.getElementById('arrow-right');
-let currentSliderStatus = 1;
-let prevSliderStatus = 1;
-const handleSlider = () => {
-  spaceLeft.classList.remove(`free-space-left-stage${prevSliderStatus}`);
-  spaceRight.classList.remove(`free-space-right-stage${prevSliderStatus}`);
-  spaceLeft.classList.add(`free-space-left-stage${currentSliderStatus}`);
-  spaceRight.classList.add(`free-space-right-stage${currentSliderStatus}`);
-  paginationButtons[currentSliderStatus-1].classList.add('pagination-button-active');
-  paginationButtons[prevSliderStatus-1].classList.remove('pagination-button-active');
-}
-paginationButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    prevSliderStatus = currentSliderStatus;
-    currentSliderStatus = button.id[button.id.length-1]*1;
-    if (currentSliderStatus !== prevSliderStatus) {
-      handleSlider();
-    }
-  });
-});
-
-pagArrowLeft.addEventListener('click', () => {
-  if (currentSliderStatus > 1) {
-    prevSliderStatus = currentSliderStatus;
-    currentSliderStatus -= 1;
-    handleSlider();
-  }
-});
-
-pagArrowRight.addEventListener('click', () => {
-  if (currentSliderStatus < 5) {
-    prevSliderStatus = currentSliderStatus;
-    currentSliderStatus += 1;
-    handleSlider();
-  }
-});
-
-
-//touches handler
-const carouselContainer = document.getElementById('carousel-container');
-let touchstart = 0;
-let touchend = 0;
-
-carouselContainer.addEventListener('touchstart', function(event) {
-  touchstart = event.changedTouches[0].screenX;
-}, false);
-
-carouselContainer.addEventListener('touchend', function(event) {
-  touchend = event.changedTouches[0].screenX;
-  touchesType();
-}, false); 
-
-function touchesType() {
-  if (touchstart - touchend > 70) {
-    let maxStageNum = 5;
-    if (screen.width > 1024) {
-      maxStageNum = 4;
-    }
-    if (screen.width > 1430) {
-      maxStageNum = 3;
-    }
-    if (currentSliderStatus < maxStageNum) {
-      prevSliderStatus = currentSliderStatus;
-      currentSliderStatus += 1;
-      handleSlider();
-    }
-  }  
-  if (touchend - touchstart > 70) {
-    if (currentSliderStatus > 1) {
-      prevSliderStatus = currentSliderStatus;
-      currentSliderStatus -= 1;
-      handleSlider();
-    }
-  }
-}
-
-//Handle onresize: move slider on initial stage
-window.addEventListener("resize", () => {
-  prevSliderStatus = currentSliderStatus;
-  currentSliderStatus = 1;
-  handleSlider();
-  paginationButtons[0].classList.add('pagination-button-active');
-});
-
-//Favorites slider
-const seasonButtons = document.getElementsByName('season');
-const favcontent = document.getElementById("fav-content");
-const booksAll = {
-  'winter': document.querySelectorAll('.book.winter'),
-  'spring': document.querySelectorAll('.book.spring'),
-  'summer': document.querySelectorAll('.book.summer'),
-  'autumn': document.querySelectorAll('.book.autumn')
-}
-let seasonChecked = 'winter';
-let previousSeasonChecked = 'winter';
-  
-function hideShowBooks(event){
-  previousSeasonChecked = seasonChecked;
-  seasonChecked = event.target.value;
-  function switchSeasons(){
-    booksAll[seasonChecked].forEach((book)=>{
-      book.classList.remove('favorites-hide');
-      book.classList.add('favorites-show');
-    });
-    for (let season in booksAll) {
-      if (season !== seasonChecked){
-        booksAll[season].forEach((book)=>{
-          book.classList.add('favorites-hide');
-          book.classList.remove('favorites-show');
-        });
-      }
-    }
-  }
-  function hideAll(){
-      return new Promise((resolve)=>{
-        if (previousSeasonChecked !== seasonChecked){
-          if(!favcontent.classList.contains('favorites__content-hidden')){
-            favcontent.classList.add('favorites__content-hidden');
-            favcontent.classList.remove('favorites__content-show');
-            setTimeout(()=>{resolve(switchSeasons());},500);
-          } else {
-            setTimeout(()=>{resolve(switchSeasons());},500);
-          }
-        }
-      });
-    }
-  hideAll().then(()=>{
-    favcontent.classList.remove('favorites__content-hidden');
-    favcontent.classList.add('favorites__content-show');
-  });
-}
-
-seasonButtons.forEach((rbutton) => {
-  rbutton.addEventListener('click', (event) => {
-    hideShowBooks(event);
-  });
-});
-
-//Auth menu
+//Меню авторизации.
 const userButton = document.getElementById('user-button');
 const authMenu = document.getElementById('auth-menu');
-let modalType = '';
+
 userButton.addEventListener('click', () => {
   authMenu.classList.toggle('auth-menu-open');
 });
-
+//Клик вне меню авторизации
 const clickOutsideAuthMenu = (event) => {
     if (!authMenu.contains(event.target) && !userButton.contains(event.target)) {
       authMenu.classList.remove('auth-menu-open');
     }
 }
-
 document.addEventListener('touchend', clickOutsideAuthMenu);
 document.addEventListener('click', clickOutsideAuthMenu);
 
@@ -246,7 +34,6 @@ const overlayModal = document.getElementById('modal-overlay');
 const modalContainer = document.getElementById('modal-container');
 //Favorites content
 const bookButtons = document.querySelectorAll('.book__button');
-
 //Digital library cards elements
 const signupButton = document.getElementById('signup-getform');
 const loginButton = document.getElementById('login-getform');
@@ -258,7 +45,7 @@ const checkCardButton = document.getElementById('check-form__button');
 const checkReaderNameInput = document.getElementById('readers-name');
 const checkReaderNumberInput = document.getElementById('card-number');
 
-
+//Класс для объекта текущего состояния. Содержит информацию для управления содержимым страницы.
 class LoginStat {
   constructor() {
     this.loginUserStatus = 0;
@@ -271,6 +58,42 @@ class LoginStat {
     this.userBooks = [];
     this.userSubscription = 0;
   }
+}
+
+class Reader {
+  constructor() {
+    this.readerFirstName = 'readerFirstName';
+    this.readerLastName = 'readerLastName';
+    this.readerEmail = 'readerEmail';
+    this.readerPassword = '';
+    this.readerVisits = 1;
+    this.readerBooks = [];
+    this.readerBonuses = 0;
+    this.libraryCardNumber = 'libraryCardNumber';
+    this.readerSubscription = 0;
+  }
+
+  rewriteFields(obj) {
+    for(let keys in obj) {
+      this[keys] = obj[keys];
+    }
+  }
+
+  getFullName() {
+    return `${this.readerFirstName} ${this.readerLastName}`;
+  }
+  setFullName(fullname) {
+    [this.readerFirstName, this.readerLastName] = fullname.split(" ");
+  }
+
+  increaseVisits(){
+    this.readerVisits += 1;
+  }
+
+  generateReaderNumber(){
+    this.readerPassword = generateCardNumber();
+  }
+
 }
 
 function checkLoginAttempt(login, password) {
@@ -290,21 +113,8 @@ function checkLoginAttempt(login, password) {
   return -2;
 }
 
-class Reader {
-  constructor() {
-    this.readerFirstName = 'readerFirstName';
-    this.readerLastName = 'readerLastName';
-    this.readerEmail = 'readerEmail';
-    this.readerPassword = 'readerPassword';
-    this.readerVisits = 1;
-    this.readerBooks = [];
-    this.readerBonuses = 0;
-    this.libraryCardNumber = 'libraryCardNumber';
-    this.readerSubscription = 0;
-  }
-}
-
-function updateContentWhenStetusChanged() {
+//Функция обновляющая содержимое страницы на основе текущего состояния (loginstat). loginUserStatus = 1 -- читатель залогинен, если 0 -- никто не зазогинен.
+function updateContentWhenStatusChanged() {
   let currentUser = JSON.parse(localStorage.loginstat);
   switch (currentUser.loginUserStatus) {
     case 1:
@@ -325,7 +135,6 @@ function updateContentWhenStetusChanged() {
       signupButton.classList.add('get-form__button-hidden');
       profileButton.classList.remove('get-form__button-hidden');
       showUserStats(currentUser.userVisits,currentUser.userBonuses,currentUser.userBooks.length,`${currentUser.userFirstName} ${currentUser.userLastName}`, currentUser.userCard);
-
       //Modal Profile
       authMenuMyProfile.addEventListener('click',()=>{
         console.log('modal profile is opened');
@@ -351,13 +160,13 @@ function updateContentWhenStetusChanged() {
       console.log("not logined");
       userButton.classList.remove('user-button-logged-in');
       userButton.classList.add('user-button');
-      userButton.innerHTML = '';
+      userButton.textContent = '';
       userButton.title = 'Profile';
       authMenuLogin.classList.remove('auth-menu__item-hidden');
       authMenuRegister.classList.remove('auth-menu__item-hidden');
       authMenuLogout.classList.add('auth-menu__item-hidden');
       authMenuMyProfile.classList.add('auth-menu__item-hidden');
-      authMenuTitle.innerHTML = 'Profile';
+      authMenuTitle.textContent = 'Profile';
       showCheckCardButton();
       document.getElementById('readers-name').value = '';
       document.getElementById('card-number').value = '';
@@ -367,7 +176,6 @@ function updateContentWhenStetusChanged() {
         button.disabled = false;
         button.textContent = 'Buy';
       });
-
       getformTitle.textContent = 'Get a reader card';
       getformDescription.textContent = 'You will be able to see a reader card after logging into account or you can register a new account';
       loginButton.classList.remove('get-form__button-hidden');
@@ -377,6 +185,7 @@ function updateContentWhenStetusChanged() {
   }
 }
 
+//Обработчик события при загрузке страницы(если полей readers и loginstat в localstorage нет, то они создаются).
 window.addEventListener('load', () => {
   if(localStorage.hasOwnProperty('readers')) {
     console.log(localStorage.readers);
@@ -388,19 +197,20 @@ window.addEventListener('load', () => {
   } else {
     localStorage.loginstat = JSON.stringify(new LoginStat);
   }
-  updateContentWhenStetusChanged();
+  updateContentWhenStatusChanged();
 });
 
-const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
+//Функция, генерирующая Library Card Number
 function generateCardNumber() {
-  let cardNum = '';
-  let randomDigits = cardNumberDigits.sort(()=>0.5-Math.random());
-  for (let i = 0; i < 9; i++) {
-    cardNum += randomDigits[i];
+  const cardNumberDigits = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
+  let cardNum = '' + cardNumberDigits[Math.floor(Math.random()*15+1)];
+  for (let i = 0; i < 8; i++) {
+    cardNum += cardNumberDigits[Math.floor(Math.random()*16)];
   }
   return cardNum;
 }
 
+//Функция, обновляющяя текущий статус (поле loginstat в localstorage)
 function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
   loginStatus.loginUserStatus = 1;
   loginStatus.userBonuses = cReadersList[indexOfReader].readerBonuses;
@@ -415,6 +225,7 @@ function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
   localStorage.loginstat = JSON.stringify(loginStatus);
 }
 
+//Функция для поиска индекса читателя по email в массиве зарегистрированных пользователей (поле readers в localstorage)
 function findIndexOfUserByEmail(email) {
   let readersList = JSON.parse(localStorage.readers);
   let index = -1;
@@ -426,8 +237,7 @@ function findIndexOfUserByEmail(email) {
   return index;
 }
 
-
-// Registration form modal elements
+// Элементы модального окна регистрации
 let registerModal = document.createElement('div');
 registerModal.className = 'modal-login-reg';
 let loginRegHeader = document.createElement('div');
@@ -471,7 +281,6 @@ regFooterLink.textContent = 'Login';
 regFooterLink.className = 'modal-login-reg__link';
 regFootnote.append(regFooterLink);
 
-
 const openRegisterModal = () => {
   overlayModal.classList.remove('modal-hidden');
   removeChilds(modalContainer);
@@ -488,7 +297,7 @@ const openRegisterModal = () => {
   regErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
     regModalForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    let newReader = new Reader();
+    let newReader = new Reader;
     newReader.readerFirstName = regFormFields[0][1].value;
     newReader.readerLastName = regFormFields[1][1].value;
     newReader.readerEmail = regFormFields[2][1].value;
@@ -503,7 +312,7 @@ const openRegisterModal = () => {
         console.log(JSON.stringify(readersList));
         loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
         console.log(JSON.parse(localStorage.loginstat).loginStatus);
-        updateContentWhenStetusChanged();
+        updateContentWhenStatusChanged();
         setTimeout(()=>{
           closeModal();
         }, 200);
@@ -517,7 +326,6 @@ const openRegisterModal = () => {
       regErrorHint.textContent = 'Password should be at least 8 characters long.';
     }
   });
-
   regFooterLink.addEventListener('click', () => {
     setTimeout(()=>{
       openLoginModal();
@@ -525,7 +333,7 @@ const openRegisterModal = () => {
   });
 }
 
-//Elements for Login modal
+// Элементы модального окна входа в личный кабинет
 let loginModal = document.createElement('div');
 loginModal.className = 'modal-login-reg';
 let loginModalForm = document.createElement('FORM');
@@ -554,7 +362,7 @@ loginPasswordLabel.setAttribute('for', 'login-password');
 let loginSubmitButton = document.createElement('button');
 loginSubmitButton.setAttribute('type', 'submit');
 loginSubmitButton.className = 'button modal-login-reg__button';
-loginSubmitButton.textContent = 'Login';
+loginSubmitButton.textContent = 'Log in';
 let loginFootnote = document.createElement('p');
 loginFootnote.className = 'modal-login-reg__footnote';
 loginFootnote.innerHTML = 'Dont have an account?';
@@ -566,7 +374,6 @@ let loginErrorHint = document.createElement('p');
 loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
 loginErrorHint.setAttribute('id','login-error-hint');
 console.log(loginModalForm);
-
 
 loginModalForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -590,19 +397,9 @@ loginModalForm.addEventListener("submit", (event) => {
       let currentLoginStatus = JSON.parse(localStorage.loginstat);
       currentReadersList[indexOfLoginReader].readerVisits = currentReadersList[indexOfLoginReader].readerVisits + 1;
       console.log(currentReadersList[indexOfLoginReader].readerVisits);
-      currentLoginStatus.loginUserStatus = 1;
-      currentLoginStatus.userBonuses = currentReadersList[indexOfLoginReader].readerBonuses;
-      currentLoginStatus.userFirstName = currentReadersList[indexOfLoginReader].readerFirstName;
-      currentLoginStatus.userLastName = currentReadersList[indexOfLoginReader].readerLastName;
-      currentLoginStatus.userVisits = currentReadersList[indexOfLoginReader].readerVisits;
-      currentLoginStatus.userCard = currentReadersList[indexOfLoginReader].libraryCardNumber;
-      currentLoginStatus.userEmail = currentReadersList[indexOfLoginReader].readerEmail;
-      currentLoginStatus.userBooks = currentReadersList[indexOfLoginReader].readerBooks;
-      currentLoginStatus.userSubscription = currentReadersList[indexOfLoginReader].readerSubscription;
-      localStorage.readers = JSON.stringify(currentReadersList);
-      localStorage.loginstat = JSON.stringify(currentLoginStatus);
+      loginStatusUpdate(currentLoginStatus,currentReadersList,indexOfLoginReader);
       console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
-      updateContentWhenStetusChanged();
+      updateContentWhenStatusChanged();
       closeModal();
       break;
   }    
@@ -619,9 +416,6 @@ const openLoginModal = () => {
   loginPasswordInput.value = '';
   loginEmailInput.value = '';
   loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
- 
-
-
   loginFooterLink.addEventListener('click', () => {
     setTimeout(()=>{
       openRegisterModal();
@@ -629,7 +423,7 @@ const openLoginModal = () => {
   });
 }
 
-//Profile Modal elements
+// Элементы модального окна профиля
 let profileModal = document.createElement('div');
 profileModal.className = 'modal-profile';
 let profileModalSidebar = document.createElement('div');
@@ -657,9 +451,7 @@ profileModalNumber.className = 'modal-profile__nubmer';
 let profileModalCopyButton = document.createElement('button');
 profileModalCopyButton.className = 'modal-profile__copy-button';
 
-
 const openProfileModal = () => {
-  modalType = 'profile';
   bodyLock();
   overlayModal.classList.remove('modal-hidden');
   let currentUser = JSON.parse(localStorage.loginstat);
@@ -703,7 +495,7 @@ const openProfileModal = () => {
   profileModalCopyButton.addEventListener('click', ()=>{navigator.clipboard.writeText(currentUser.userCard);});
 }
 
-//Byu Modal elements
+// Элементы модального окна buy library card
 let buyModal = document.createElement('div');
 buyModal.className = 'modal-buy-card';
 let buyModalHeader = document.createElement('div');
@@ -727,9 +519,20 @@ let buyModalInputsAttrs = [
   {id: 'buy-card-postal-code', pattern: '^[\\d]{2,}$'},
   {id: 'buy-card-city', pattern: '^[a-zA-Z]{2,}$'}
 ];
+let buyModalHints = ['Card number should be 16 digits long.',
+'Expiration date should be in format MM / YY.','Expiration date should be in format MM / YY.',
+'CVV should have 3 digits.','Name should be at least 2 letters long.','Postal code should be at least 2 digits long.','City should be at least 2 letters long.'];
 let buyInputs = [];
 let buyLabels = [];
 let buyModalLabels = ['Bank card number', 'Expiration code', '', 'CVC', 'Cardholder name', 'Postal code', 'City / Town'];
+let buyModalHint = document.createElement('p');
+buyModalHint.className = 'modal-buy-card__hint modal-buy-card__hint-hidden';
+function showHint(){
+  buyModalHint.classList.remove('modal-buy-card__hint-hidden');
+}
+function hideHint(){
+  buyModalHint.classList.add('modal-buy-card__hint-hidden');
+}
 buyModalInputsAttrs.forEach((inputField, index) => {
   let newInput = document.createElement('INPUT');
   let newLabel = document.createElement('LABEL');
@@ -764,9 +567,9 @@ let modalBuyCardInfo = document.createElement('div');
 modalBuyCardContainer.append(modalBuyCardButton,modalBuyCardPrice);
 buyModalForm.append(modalBuyCardContainer);
 modalBuyCardInfo.className = 'modal-buy-card__info';
-modalBuyCardInfo.textContent = 'If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.';
-
-
+let modalBuyCardInfoParagraph = document.createElement('p');
+modalBuyCardInfo.append(modalBuyCardInfoParagraph,buyModalHint);
+modalBuyCardInfoParagraph.textContent = 'If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.';
 
 const openBuyModal = () => {
   bodyLock();
@@ -777,14 +580,54 @@ const openBuyModal = () => {
   buyModalContainer.append(buyModalForm,modalBuyCardInfo);
   modalBuyCardButton.disabled=true;
   const checkFields = () => {
-    if (!buyInputs.map(input => input.value).includes(''))
-    modalBuyCardButton.disabled=false;
+    modalBuyCardButton.disabled = buyInputs.map(input => input.value).includes('');
+    modalBuyCardButton.disabled = buyInputs.map((input, index) => (new RegExp(buyModalInputsAttrs[index].pattern)).test(input.value)).includes(false);
   }
-  buyInputs.forEach((input) => {
+  buyInputs.forEach((input, index) => {
     input.value = '';
-    input.addEventListener('keyup', ()=>{checkFields()});
+    input.addEventListener('keyup', ()=>{
+      checkFields();
+      if (!input.value.match(new RegExp(buyModalInputsAttrs[index].pattern))){
+        showHint();
+        buyModalHint.textContent = buyModalHints[index];
+      } else {
+        hideHint();
+      }
+      let curValue = input.value.replace(/\s/g, '').split('');
+      switch(index) {
+        case 0:
+          if (curValue.length == 16){
+            let newValueArr = [];
+            let fourDigits = '';
+            for (let i = 0; i < curValue.length; i++) {
+              if ((i+1) % 4 == 0) {
+                fourDigits += curValue[i];
+                newValueArr.push(fourDigits);
+                fourDigits = '';
+              } else {
+                fourDigits += curValue[i];
+              }
+            }
+            input.value = newValueArr.join(' ');
+          }
+          break;
+        case 1:
+        case 2:
+          if (buyInputs[1].value > 12 || buyInputs[1].value == 0){
+            showHint();
+            buyModalHint.textContent = 'Incorrect value for month. ' + buyModalHints[index];
+            modalBuyCardButton.disabled = true;
+          } else if (buyInputs[2].value < 23 && buyInputs[2].value > 0) {
+            showHint();
+            buyModalHint.textContent = 'Card have already expriced. ' + buyModalHints[index];
+            modalBuyCardButton.disabled = true;
+          } else {
+            modalBuyCardButton.disabled = false;
+          }
+          break;
+      }
+    });
   });
-  
   buyModalForm.addEventListener('submit', (event)=>{
     event.preventDefault();
     let currLoginStat = JSON.parse(localStorage.loginstat);
@@ -798,6 +641,7 @@ const openBuyModal = () => {
   });
 }
 
+//Функция показывающая статистику пользователя в секции Digital Library Cards
 function showUserStats(visits, bonuses, books, name, number) {
   checkCardButtonContainer.innerHTML = `
   <div class="check-form__stats-icon">
@@ -816,13 +660,13 @@ function showUserStats(visits, bonuses, books, name, number) {
     <div class="stats-icon__value">${books}</div>
   </div>
   `;
-
   document.getElementById('readers-name').value = name;
   document.getElementById('card-number').value = number;
   document.getElementById('readers-name').readOnly = true;
   document.getElementById('card-number').readOnly = true;
 }
 
+//Функция показывающая кнопку Check the card в секции Digital Library Cards
 function showCheckCardButton(){
   checkCardButtonContainer.innerHTML = `<button type="submit" class="button check-form__button" id='check-form__button'>Check the card</button>`;
 }
@@ -832,6 +676,7 @@ document.getElementById('check-form').addEventListener("submit", (event)=>{
   handleClickOnCheckCard();
 })
 
+//Функция для обработки формы Find your card в секции Digital Library Cards
 function handleClickOnCheckCard(){
   let currList = JSON.parse(localStorage.readers);
   let testResult = 0;
@@ -863,6 +708,7 @@ function handleClickOnCheckCard(){
     });
 }
 
+//Функция для обработки события - клика вне модального окна
 function handleClickOutsideModals(event) {
   if (!document.getElementById('modal-container').contains(event.target)) {
     closeModal();
@@ -886,9 +732,10 @@ authMenuLogin.addEventListener('click', () => {
   authMenu.classList.remove('auth-menu-open');
 });
 
+//Функция для выхода из аккаунта
 function logOut(){
   localStorage.loginstat = JSON.stringify(new LoginStat);
-  updateContentWhenStetusChanged();
+  updateContentWhenStatusChanged();
   authMenu.classList.remove('auth-menu-open');
 }
 
@@ -906,6 +753,7 @@ loginButton.addEventListener('click', () => {
   openLoginModal();
 });
 
+//Функция -- добавление новой книги
 function addBook(bookdata, currentStatus, currentreaders){
   currentStatus.userBooks.push(bookdata);
   let indexOfCurrentUser = findIndexOfUserByEmail(currentStatus.userEmail);
@@ -913,7 +761,6 @@ function addBook(bookdata, currentStatus, currentreaders){
   localStorage.loginstat = JSON.stringify(currentStatus);
   localStorage.readers = JSON.stringify(currentreaders);
 }
-
 
 //handle click on book buttons
 bookButtons.forEach((book) => {
@@ -927,7 +774,7 @@ bookButtons.forEach((book) => {
             console.log('user have subscription');
             console.log(book.dataset.book);
             addBook(book.dataset.book, currStatus, currReadersList);
-            updateContentWhenStetusChanged();
+            updateContentWhenStatusChanged();
             break;
           case 0:
             openBuyModal();
@@ -942,13 +789,19 @@ bookButtons.forEach((book) => {
   });
 });
 
+//Функция очистки родительского элемента
 function removeChilds(element) {
   while (element.firstChild) {
       element.removeChild(element.firstChild);   
   }
 }
 
+//Функция для обработки события -- закрытие модального окна
 function closeModal() {
-  overlayModal.classList.add('modal-hidden');
-  bodyUnlock();
+  overlayModal.classList.add('modal-fade-out');
+  setTimeout(()=>{
+    overlayModal.classList.add('modal-hidden');
+    overlayModal.classList.remove('modal-fade-out');
+    bodyUnlock();
+  },200);
 }

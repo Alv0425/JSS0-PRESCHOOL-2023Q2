@@ -939,6 +939,11 @@ a {
     cursor: pointer;
   }
 
+  .carousel__arrow:disabled{
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
   .carousel__arrow::before{
     content: "";
     position:absolute;
@@ -960,8 +965,7 @@ a {
   display: flex;
 }
 
-.pagination-button,
-.pagination-button-active {
+.pagination-button {
   display: block;
   padding: 5px;
   transition: all 0.5s;
@@ -1000,8 +1004,12 @@ a {
   border: none;
 }
 
-.pagination-button-active .pagination-button__dot {
+.pagination-button:disabled .pagination-button__dot {
   background-color: #BB945F;
+}
+
+.pagination-button:disabled{
+  pointer-events: none;
 }
 
 .pagination-button:hover {
@@ -1009,15 +1017,13 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine){
-  .pagination-button:hover .pagination-button__dot,
-  .pagination-button-active:hover .pagination-button__dot {
+  .pagination-button:hover .pagination-button__dot{
     background-color: #8E8E8E;
     opacity: 0.5;
   }
 }
 
-.pagination-button:active .pagination-button__dot,
-  .pagination-button-active:active .pagination-button__dot {
+.pagination-button:active .pagination-button__dot {
     background-color: #8E8E8E;
     opacity: 0.5;
   }
@@ -1070,7 +1076,7 @@ a {
   border-radius: 3px;
 }
 
-@media (width <= 1258px) {
+@media (width < 1260px) {
   .favorites__filter{
     position: sticky;
     top:-1px;
@@ -1090,7 +1096,6 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width:500px;
   }
- 
 }
 
 .favorites__item{
@@ -1145,17 +1150,17 @@ a {
 
 .favorites__content {
   gap: 40px;
-  transition: 0.5s;
+  transition: 0.7s;
 }
 
 .favorites__content-show {
-  animation: fade-in 0.5s ease-in-out;
+  animation: fade-in 0.7s ease-in-out;
   opacity: 1;
 }
 
 .favorites__content-hidden {
   opacity: 0;
-  animation: fade-out 0.5s ease-in-out;
+  animation: fade-out 0.7s ease-in-out;
 }
 
 @media (width < 1260px) {
@@ -1171,7 +1176,7 @@ a {
   flex-basis: 590px;
   min-height: 555px;
   padding: 16px 20px;
-  transition: all 0.5s;
+  transition: all 0.7s;
 }
 
 @media (width <= 630px) {
@@ -1976,7 +1981,8 @@ p.contacts__item {
 
 .modal-form__input {
   border: 1px solid #BB945F;
-  line-height: 16px;
+  line-height: 14px;
+  padding-left: 2px;
 }
 
 .modal-form__input-small {
@@ -1985,7 +1991,7 @@ p.contacts__item {
 
 .modal-login-reg__button {
   max-width: 75px;
-  padding: 7px;
+  padding: 9px;
   margin-top: 19px;
 }
 
@@ -2221,6 +2227,11 @@ p.contacts__item {
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url("../assets/copy.svg");
+  transition: 0.5s;
+}
+
+.modal-profile__copy-button:active{
+  transform: scale(0.7);
 }
 
 .modal-profile__copy-button:hover {
@@ -2284,7 +2295,6 @@ p.contacts__item {
   .modal-buy-card__title{
     font-size: 30px;
   } 
-
 }
 
 .modal-buy-card__info {
@@ -2297,6 +2307,24 @@ p.contacts__item {
   line-height: 20px;
   letter-spacing: 2px;
   padding-top:10px;
+}
+
+.modal-buy-card__hint{
+  max-width: 329px;
+  color: #dc3e3e;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 2px;
+  padding-top:10px;
+  transition: 0.2s;
+}
+
+.modal-buy-card__hint-hidden{
+  opacity: 0;
+  content: '';
 }
 
 .modal-buy-card__form {
@@ -2329,6 +2357,11 @@ p.contacts__item {
   font-weight: 700;
   line-height: 20px;
   letter-spacing: 2px;
+}
+
+.modal-fade-out{
+  opacity: 0;
+  transition: 0.2s;
 }
 
 .modal-hidden{
