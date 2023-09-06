@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library task. Author: Alena Vilejszykava</title>
     <link rel="icon" href="./assets/favicon.svg">
-    <meta name="description" content="RSSchool course task: Library, part 1.">
+    <meta name="description" content="RSSchool course task: Library, part 3.">
     <meta name="author" content="Alena Vilejszykava">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +59,7 @@
           <h2 class="main-section__title">About</h2>
           <p class="main-section__paragraph">The Brooklyn Library is a free workspace, a large number of books and a cozy coffee shop inside</p>
           <div class="carousel">
-            <button class="carousel__arrow" id="arrow-left"></button>
+            <button class="carousel__arrow" id="arrow-left" disabled></button>
             <div class="carousel__body">
                 <div class="carousel__container" id="carousel-container">
                     <div class="carousel__images">
@@ -73,7 +73,7 @@
                     </div>
                 </div> 
                 <div class="carousel__pagination">
-                    <button class="pagination-button pagination-button-active" id="pagination-button-1">
+                    <button class="pagination-button" id="pagination-button-1" disabled>
                         <span class="pagination-button__dot"></span>
                     </button>
                     <button class="pagination-button" id="pagination-button-2">
@@ -131,7 +131,7 @@
                       <p class="book__title">Cackle</p>
                       <p class="book__author">By Rachel Harrison</p>
                       <p class="book__abstract">Are your Halloween movies of choice The Witches of Eastwick and Practical Magic? Look no further than here - where a woman recovering from a breakup moves to a quaint town in upstate New York and befriends a beautiful witch.</p>
-                      <button class="button book__button" type="button" data-book="Cackle, By Rachel Harrison">Buy</button>
+                      <button class="button book__button" type="button" data-book="Cackle, Rachel Harrison">Buy</button>
                       <img src="./images/favorites/Cackle_By_Rachel_Harrison.jpg" alt="Cackle By Rachel Harrison" class="book__cover">
                   </div>
                   <div class="book winter favorites-show">
@@ -139,7 +139,7 @@
                       <p class="book__title">Dante: Poet of the Secular World</p>
                       <p class="book__author">By Erich Auerbach</p>
                       <p class="book__abstract">Auerbach&#39;s engaging book places the &#39;Comedy&#39; within the tradition of epic, tragedy, and philosophy in general, arguing for Dante&#39;s uniqueness as one who raised the individual and his drama of soul into something of divine significance—An inspired introduction to Dante&#39;s main themes.</p>
-                      <button class="button book__button" type="button" data-book="Dante: Poet of the Secular World, By Erich Auerbach">Buy</button>
+                      <button class="button book__button" type="button" data-book="Dante: Poet of the Secular World, Erich Auerbach">Buy</button>
                       <img src="./images/favorites/Dante_Poet_of_the_Secular_World_By_Erich_Auerbach.jpg" alt="Dante: Poet of the Secular World By Erich Auerbach" class="book__cover">
                   </div>
                   <div class="book winter favorites-show">
@@ -187,7 +187,7 @@
                       <p class="book__title">Crude: A Memoir</p>
                       <p class="book__author">By Pablo Fajardo &amp; Sophie Tardy-Joubert</p>
                       <p class="book__abstract">Drawing and color by Damien Roudeau | This book illustrates the struggles of a group of indigenous Ecuadoreans as they try to sue the ChevronTexaco company for damage their oil fields did to the Amazon and her people</p>
-                      <button class="button book__button" type="button" data-book="Crude: A Memoir, By Pablo Fajardo &amp; Sophie Tardy-Joubert">Buy</button>
+                      <button class="button book__button" type="button" data-book="Crude: A Memoir, Pablo Fajardo &amp; Sophie Tardy-Joubert">Buy</button>
                       <img class="book__cover" src="./images/favorites/Crude_A_Memoir_By_Pablo_Fajardo_and_Sophie_Tardy-Joubert.jpg" alt="Crude: A Memoir">
                   </div>
                   <div class="book summer favorites-hide">
@@ -406,6 +406,10 @@
         <div class="modal-container" id="modal-container"></div>
       </div>
   </div>
-  <script src="./script.js"></script>  
+  <script src="./script/selfreview.js"></script>  
+  <script src="./script/burgermenu.js"></script>  
+  <script src="./script/aboutslider.js"></script> 
+  <script src="./script/favoritesslider.js"></script> 
+  <script src="./script/modals.js"></script>  
 </body>
 </html>
