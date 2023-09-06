@@ -1982,6 +1982,7 @@ p.contacts__item {
 .modal-form__input {
   border: 1px solid #BB945F;
   line-height: 14px;
+  padding-left: 2px;
 }
 
 .modal-form__input-small {
@@ -2308,6 +2309,24 @@ p.contacts__item {
   padding-top:10px;
 }
 
+.modal-buy-card__hint{
+  max-width: 329px;
+  color: #dc3e3e;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 2px;
+  padding-top:10px;
+  transition: 0.2s;
+}
+
+.modal-buy-card__hint-hidden{
+  opacity: 0;
+  content: '';
+}
+
 .modal-buy-card__form {
   display: flex;
   flex-direction: column;
@@ -2338,6 +2357,11 @@ p.contacts__item {
   font-weight: 700;
   line-height: 20px;
   letter-spacing: 2px;
+}
+
+.modal-fade-out{
+  opacity: 0;
+  transition: 0.2s;
 }
 
 .modal-hidden{

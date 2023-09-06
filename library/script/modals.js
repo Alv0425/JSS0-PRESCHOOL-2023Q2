@@ -519,9 +519,9 @@ let buyModalInputsAttrs = [
   {id: 'buy-card-postal-code', pattern: '^[\\d]{2,}$'},
   {id: 'buy-card-city', pattern: '^[a-zA-Z]{2,}$'}
 ];
-let buyModalHints = ['Card number should be 16 digits long, XXXXXXXXXXXXXXXX or XXXX XXXX XXXX XXXX',
+let buyModalHints = ['Card number should be 16 digits long.',
 'Expiration date should be in format MM / YY.','Expiration date should be in format MM / YY.',
-'CVV should have 3 digits.','','',''];
+'CVV should have 3 digits.','Name should be at least 2 letters long.','Postal code should be at least 2 digits long.','City should be at least 2 letters long.'];
 let buyInputs = [];
 let buyLabels = [];
 let buyModalLabels = ['Bank card number', 'Expiration code', '', 'CVC', 'Cardholder name', 'Postal code', 'City / Town'];
@@ -529,7 +529,9 @@ let buyModalHint = document.createElement('p');
 buyModalHint.className = 'modal-buy-card__hint modal-buy-card__hint-hidden';
 function showHint(){
   buyModalHint.classList.remove('modal-buy-card__hint-hidden');
-  setTimeout(()=>{buyModalHint.classList.add('modal-buy-card__hint-hidden');},200);
+}
+function hideHint(){
+  buyModalHint.classList.add('modal-buy-card__hint-hidden');
 }
 buyModalInputsAttrs.forEach((inputField, index) => {
   let newInput = document.createElement('INPUT');
@@ -565,7 +567,9 @@ let modalBuyCardInfo = document.createElement('div');
 modalBuyCardContainer.append(modalBuyCardButton,modalBuyCardPrice);
 buyModalForm.append(modalBuyCardContainer);
 modalBuyCardInfo.className = 'modal-buy-card__info';
-modalBuyCardInfo.textContent = 'If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.';
+let modalBuyCardInfoParagraph = document.createElement('p');
+modalBuyCardInfo.append(modalBuyCardInfoParagraph,buyModalHint);
+modalBuyCardInfoParagraph.textContent = 'If you are live, work, attend school, or pay property taxes in New York State, you can get a $25 digital library card right now using this online form. Visitors to New York State can also use this form to apply for a temporary card.';
 
 const openBuyModal = () => {
   bodyLock();
@@ -576,14 +580,54 @@ const openBuyModal = () => {
   buyModalContainer.append(buyModalForm,modalBuyCardInfo);
   modalBuyCardButton.disabled=true;
   const checkFields = () => {
-    if (!buyInputs.map(input => input.value).includes(''))
-    modalBuyCardButton.disabled=false;
+    modalBuyCardButton.disabled = buyInputs.map(input => input.value).includes('');
+    modalBuyCardButton.disabled = buyInputs.map((input, index) => (new RegExp(buyModalInputsAttrs[index].pattern)).test(input.value)).includes(false);
   }
-  buyInputs.forEach((input) => {
+  buyInputs.forEach((input, index) => {
     input.value = '';
-    input.addEventListener('keyup', ()=>{checkFields()});
+    input.addEventListener('keyup', ()=>{
+      checkFields();
+      if (!input.value.match(new RegExp(buyModalInputsAttrs[index].pattern))){
+        showHint();
+        buyModalHint.textContent = buyModalHints[index];
+      } else {
+        hideHint();
+      }
+      let curValue = input.value.replace(/\s/g, '').split('');
+      switch(index) {
+        case 0:
+          if (curValue.length == 16){
+            let newValueArr = [];
+            let fourDigits = '';
+            for (let i = 0; i < curValue.length; i++) {
+              if ((i+1) % 4 == 0) {
+                fourDigits += curValue[i];
+                newValueArr.push(fourDigits);
+                fourDigits = '';
+              } else {
+                fourDigits += curValue[i];
+              }
+            }
+            input.value = newValueArr.join(' ');
+          }
+          break;
+        case 1:
+        case 2:
+          if (buyInputs[1].value > 12 || buyInputs[1].value == 0){
+            showHint();
+            buyModalHint.textContent = 'Incorrect value for month. ' + buyModalHints[index];
+            modalBuyCardButton.disabled = true;
+          } else if (buyInputs[2].value < 23 && buyInputs[2].value > 0) {
+            showHint();
+            buyModalHint.textContent = 'Card have already expriced. ' + buyModalHints[index];
+            modalBuyCardButton.disabled = true;
+          } else {
+            modalBuyCardButton.disabled = false;
+          }
+          break;
+      }
+    });
   });
-  
   buyModalForm.addEventListener('submit', (event)=>{
     event.preventDefault();
     let currLoginStat = JSON.parse(localStorage.loginstat);
@@ -754,6 +798,10 @@ function removeChilds(element) {
 
 //Функция для обработки события -- закрытие модального окна
 function closeModal() {
-  overlayModal.classList.add('modal-hidden');
-  bodyUnlock();
+  overlayModal.classList.add('modal-fade-out');
+  setTimeout(()=>{
+    overlayModal.classList.add('modal-hidden');
+    overlayModal.classList.remove('modal-fade-out');
+    bodyUnlock();
+  },200);
 }
