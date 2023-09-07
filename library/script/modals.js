@@ -253,9 +253,9 @@ let regFormTitle = document.createElement('div');
 regFormTitle.textContent = 'Register';
 regFormTitle.className = 'modal-login-reg__title';
 let regFormFieldsText = ['First name','Last name','E-mail','Password'];
-let regFormPatterns = ['^([a-zA-Z]{2,})$','^([a-zA-Z]{1,})$','^(\\w{2,}|\\w{2,}.\\w{1,})@[a-zA-Z]{2,}.[a-zA-Z]{2,}$','^([\\w\\-]{8,})$'];
+let regFormPatterns = ['^(\\w{2,})$','^(\\w{1,})$','^(\\w{2,}|\\w{2,}.\\w{1,})@[a-zA-Z]{2,}.[a-zA-Z]{2,}$','^([\\w\\-]{8,})$'];
 let regErrorHints = ['First name should be at least 2 letters long.', "Fill out Last Name field, it shoudn't be empty", 'Invalid format for e-mail address.','Password should be at least 8 characters long.'];
-let regFormInputTypes = ['text','text','text','password'];
+let regFormInputTypes = ['text','text','email','password'];
 let regFormFields = regFormFieldsText.map((field, index) => {
   let inputlabel = document.createElement('LABEL');
   inputlabel.textContent = field;
@@ -295,6 +295,7 @@ const openRegisterModal = () => {
   regFormFields.forEach(labelInputPair => {
     regModalForm.append(...labelInputPair);  
     labelInputPair[1].value = '';
+    labelInputPair[1].classList.remove('modal-form__input-invalid');
   });
   regModalForm.append(regSubmitButton, regErrorHint, regFootnote);
   regErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
@@ -314,7 +315,6 @@ regModalForm.addEventListener("keyup", (event) => {
   } else {
     event.target.classList.remove('modal-form__input-invalid');
   }
-
 });
 
 regModalForm.addEventListener("submit", (event) => {
@@ -611,6 +611,7 @@ const openBuyModal = () => {
   }
   buyInputs.forEach((input, index) => {
     input.value = '';
+    input.classList.remove('modal-form__input-invalid');
     input.addEventListener('keyup', ()=>{
       checkFields();
       if (!input.value.match(new RegExp(buyModalInputsAttrs[index].pattern))){
@@ -708,33 +709,23 @@ document.getElementById('check-form').addEventListener("submit", (event)=>{
 //Функция для обработки формы Find your card в секции Digital Library Cards
 function handleClickOnCheckCard(){
   let currList = JSON.parse(localStorage.readers);
-  let testResult = 0;
-  let showStats = new Promise((resolve) => {
-    resolve(currList.forEach((reader) => {
-      let readerFullName = `${reader.readerFirstName} ${reader.readerLastName}`;
-      if (checkReaderNameInput.value == readerFullName && checkReaderNumberInput.value == reader.libraryCardNumber){
-        testResult = testResult + 1;
-        showUserStats(reader.readerVisits,reader.readerBonuses,reader.readerBooks.length,readerFullName,reader.libraryCardNumber);
-        checkReaderNameInput.readOnly = true;
-        checkReaderNumberInput.readOnly = true;
-        setTimeout(()=>{
+  //let testResult = 0;
+  currList.forEach((reader) => {
+    let readerName = [`${reader.readerFirstName} ${reader.readerLastName}`, reader.readerFirstName, reader.readerLastName, `${reader.readerLastName} ${reader.readerFirstName}`];
+    if (readerName.includes(checkReaderNameInput.value) && checkReaderNumberInput.value == reader.libraryCardNumber){
+     // testResult = testResult + 1;
+      showUserStats(reader.readerVisits,reader.readerBonuses,reader.readerBooks.length,readerName[0],reader.libraryCardNumber);
+      checkReaderNameInput.readOnly = true;
+      checkReaderNumberInput.readOnly = true;
+      setTimeout(()=>{
         showCheckCardButton();
         checkReaderNameInput.value = '';
         checkReaderNumberInput.value = '';
         checkReaderNameInput.readOnly = false;
         checkReaderNumberInput.readOnly = false;
-        },10000);
-      }
-    }));
-  })
-  showStats.then(()=>{
-      if(testResult == 0) {
-        checkCardButtonContainer.innerHTML = `<p class="check-form__error-hint">Error: invalid name and card number pair</p>`
-        setTimeout(()=>{
-          showCheckCardButton();
-        },3000);
-      }
-    });
+      },10000);
+    }
+  });
 }
 
 //Функция для обработки события - клика вне модального окна
