@@ -533,7 +533,7 @@ let buyModalInputsAttrs = [
   {id: 'buy-card-number', pattern: '^(\\d{16}|\\d{4}\\s\\d{4}\\s\\d{4}\\s\\d{4})$'},
   {id: 'buy-card-exp-code-1', pattern: '^\\d{2}$'},{id: 'buy-card-exp-code-2', pattern: '^\\d{2}$'},
   {id: 'buy-card-cvc', pattern: '^\\d{3}$'},
-  {id: 'buy-card-name', pattern: '^[a-zA-Z]{2,}$'},
+  {id: 'buy-card-name', pattern: '^[a-zA-Z\\s]{2,}$'},
   {id: 'buy-card-postal-code', pattern: '^[\\d]{2,}$'},
   {id: 'buy-card-city', pattern: '^[a-zA-Z]{2,}$'}
 ];
