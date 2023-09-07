@@ -253,7 +253,9 @@ let regFormTitle = document.createElement('div');
 regFormTitle.textContent = 'Register';
 regFormTitle.className = 'modal-login-reg__title';
 let regFormFieldsText = ['First name','Last name','E-mail','Password'];
-let regFormInputTypes = ['text','text','email','password'];
+let regFormPatterns = ['^([a-zA-Z]{2,})$','^([a-zA-Z]{1,})$','^(\\w{2,}|\\w{2,}.\\w{1,})@[a-zA-Z]{2,}.[a-zA-Z]{2,}$','^([\\w\\-]{8,})$'];
+let regErrorHints = ['First name should be at least 2 letters long.', "Fill out Last Name field, it shoudn't be empty", 'Invalid format for e-mail address.','Password should be at least 8 characters long.'];
+let regFormInputTypes = ['text','text','text','password'];
 let regFormFields = regFormFieldsText.map((field, index) => {
   let inputlabel = document.createElement('LABEL');
   inputlabel.textContent = field;
@@ -262,6 +264,7 @@ let regFormFields = regFormFieldsText.map((field, index) => {
   input.className = 'modal-form__input';
   input.setAttribute('id', field.replace(/\s/g, ''));
   input.setAttribute('type', regFormInputTypes[index]);
+  input.setAttribute('pattern', regFormPatterns[index]);
   input.required = true;
   inputlabel.setAttribute('for', field.replace(/\s/g, ''));
   return [inputlabel, input];
@@ -295,43 +298,58 @@ const openRegisterModal = () => {
   });
   regModalForm.append(regSubmitButton, regErrorHint, regFootnote);
   regErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
-    regModalForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    let newReader = new Reader;
-    newReader.readerFirstName = regFormFields[0][1].value;
-    newReader.readerLastName = regFormFields[1][1].value;
-    newReader.readerEmail = regFormFields[2][1].value;
-    newReader.readerPassword = regFormFields[3][1].value;
-    if (regFormFields[3][1].value.length >= 8) {
-      if (findIndexOfUserByEmail(regFormFields[2][1].value) == -1) {
-        newReader.libraryCardNumber = generateCardNumber();
-        let readersList = JSON.parse(localStorage.readers);
-        readersList.push(newReader);
-        let indexOfNewReader = readersList.length-1;
-        let curLoginStat = new LoginStat;
-        console.log(JSON.stringify(readersList));
-        loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
-        console.log(JSON.parse(localStorage.loginstat).loginStatus);
-        updateContentWhenStatusChanged();
-        setTimeout(()=>{
-          closeModal();
-        }, 200);
-      } else {
-        regErrorHint.classList.remove('modal-login-reg__hint-hidden');
-        regErrorHint.textContent = 'This email is already associated with an account.';
-        console.log('user with same email have already exists');
-      }
+}
+regSubmitButton.addEventListener('click', () => {
+  regErrorHint.innerHTML = '';
+  regFormFields.forEach((field, index) => {
+    if (!(new RegExp(field[1].pattern)).test(field[1].value)) {
+      regErrorHint.classList.remove('modal-login-reg__hint-hidden');
+      regErrorHint.innerHTML += regErrorHints[index] + '<br>';
+    } 
+  });
+});
+regModalForm.addEventListener("keyup", (event) => {
+  if (!(new RegExp(event.target.pattern)).test(event.target.value)){
+    event.target.classList.add('modal-form__input-invalid');
+  } else {
+    event.target.classList.remove('modal-form__input-invalid');
+  }
+
+});
+
+regModalForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let newReader = new Reader;
+  newReader.readerFirstName = regFormFields[0][1].value;
+  newReader.readerLastName = regFormFields[1][1].value;
+  newReader.readerEmail = regFormFields[2][1].value;
+  newReader.readerPassword = regFormFields[3][1].value;
+  if (regFormFields[3][1].value.length >= 8) {
+    if (findIndexOfUserByEmail(regFormFields[2][1].value) == -1) {
+      newReader.libraryCardNumber = generateCardNumber();
+      let readersList = JSON.parse(localStorage.readers);
+      readersList.push(newReader);
+      let indexOfNewReader = readersList.length-1;
+      let curLoginStat = new LoginStat;
+      console.log(JSON.stringify(readersList));
+      loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
+      console.log(JSON.parse(localStorage.loginstat).loginStatus);
+      updateContentWhenStatusChanged();
+      setTimeout(()=>{
+        closeModal();
+      }, 200);
     } else {
       regErrorHint.classList.remove('modal-login-reg__hint-hidden');
-      regErrorHint.textContent = 'Password should be at least 8 characters long.';
+      regErrorHint.textContent = 'This email is already associated with an account.';
+      console.log('user with same email have already exists');
     }
-  });
-  regFooterLink.addEventListener('click', () => {
-    setTimeout(()=>{
-      openLoginModal();
-    }, 200);
-  });
-}
+  }
+});
+regFooterLink.addEventListener('click', () => {
+  setTimeout(()=>{
+    openLoginModal();
+  }, 200);
+});
 
 // Элементы модального окна входа в личный кабинет
 let loginModal = document.createElement('div');
@@ -581,7 +599,15 @@ const openBuyModal = () => {
   modalBuyCardButton.disabled=true;
   const checkFields = () => {
     modalBuyCardButton.disabled = buyInputs.map(input => input.value).includes('');
-    modalBuyCardButton.disabled = buyInputs.map((input, index) => (new RegExp(buyModalInputsAttrs[index].pattern)).test(input.value)).includes(false);
+    modalBuyCardButton.disabled = buyInputs.map((input, index) => {
+      let testField = (new RegExp(buyModalInputsAttrs[index].pattern)).test(input.value);
+      if (!testField) {
+        input.classList.add('modal-form__input-invalid');
+      } else {
+        input.classList.remove('modal-form__input-invalid');
+      }
+      return testField;
+    }).includes(false);
   }
   buyInputs.forEach((input, index) => {
     input.value = '';
@@ -615,14 +641,17 @@ const openBuyModal = () => {
         case 2:
           if (buyInputs[1].value > 12 || buyInputs[1].value == 0){
             showHint();
+            buyInputs[1].classList.add('modal-form__input-invalid');
             buyModalHint.textContent = 'Incorrect value for month. ' + buyModalHints[index];
             modalBuyCardButton.disabled = true;
           } else if (buyInputs[2].value < 23 && buyInputs[2].value > 0) {
             showHint();
+            buyInputs[2].classList.add('modal-form__input-invalid');
             buyModalHint.textContent = 'Card have already expriced. ' + buyModalHints[index];
             modalBuyCardButton.disabled = true;
-          } else {
-            modalBuyCardButton.disabled = false;
+          } else if (buyInputs[1].value.length == 2) {
+            buyInputs[1].classList.remove('modal-form__input-invalid');
+            buyInputs[2].classList.remove('modal-form__input-invalid');
           }
           break;
       }
