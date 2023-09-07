@@ -1985,6 +1985,14 @@ p.contacts__item {
   padding-left: 2px;
 }
 
+.modal-form__input-invalid{
+  border: 1px solid #e51212;
+}
+
+.modal-form__input-invalid:focus{
+  outline: 1.5px solid #e51212;
+}
+
 .modal-form__input-small {
   width: 45px;
 }
