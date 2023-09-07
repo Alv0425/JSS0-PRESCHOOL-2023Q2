@@ -566,6 +566,8 @@ buyModalInputsAttrs.forEach((inputField, index) => {
   buyInputs.push(newInput);
   buyLabels.push(newLabel);
 });
+console.log(buyLabels[4]);
+buyLabels[4].classList.add('modal-form__label-spaced');
 buyInputs.slice(1,4).forEach(input => input.className = 'modal-form__input modal-form__input-small');
 let buyModalExpCodeField = document.createElement('div');
 buyModalExpCodeField.className = 'exp-code-field';
