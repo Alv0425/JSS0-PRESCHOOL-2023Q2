@@ -330,31 +330,14 @@
           <h2 class="main-section__title">Digital library cards</h2>
           <div class="two-columns-layout library-cards">
               <div class="library-cards__searching-form check-form">
-                  <h3 class="check-form__title">Find your Library card</h3>
+                  <h3 class="check-form__title" id="check-form-title">Find your Library card</h3>
                   <form class="check-form__body" id="check-form">
                       <fieldset class="check-form__fieldset">
                           <p class="check-form__label">Brooklyn Public Library</p>
-                          <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="^[a-zA-Z\-\s]+" required>
-                          <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="[A-Z0-9]{9,}" title="It should contains uppercase letters and numbers only." required>
+                          <input type="text" class="check-form__field" id="readers-name" placeholder="Reader&#39;s name" name="name" pattern="^[\w\s]{1,}$" required>
+                          <input type="text" class="check-form__field" id="card-number" placeholder="Card number" name="nubmer" pattern="^[A-F0-9]{9}$" title="It should contains uppercase letters and numbers only." required>
                       </fieldset>
                       <div class="check-form__button-container" id="check-form-button-container">
-                        
-                        <!--
-                               <div class="check-form-overlay"></div><div class="check-form__stats-icon">
-                            <div class="stats-icon__value">Visits</div>
-                            <div class="stats-icon__icon icon-visits"></div>
-                            <div class="stats-icon__value">0</div>
-                          </div>
-                          <div class="check-form__stats-icon">
-                            <div class="stats-icon__value">Bonuses</div>
-                            <div class="stats-icon__icon icon-bonuses"></div>
-                            <div class="stats-icon__value">0</div>
-                          </div>
-                          <div class="check-form__stats-icon">
-                            <div class="stats-icon__value">Books</div>
-                            <div class="stats-icon__icon icon-books"></div>
-                            <div class="stats-icon__value">0</div>
-                          </div>-->
                         <button type="submit" class="button check-form__button" id="check-form__button">Check the card</button>
                       </div>
                   </form>
