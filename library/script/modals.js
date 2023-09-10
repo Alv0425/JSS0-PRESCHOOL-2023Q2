@@ -68,7 +68,7 @@ class Reader {
     this.readerPassword = '';
     this.readerVisits = 1;
     this.readerBooks = [];
-    this.readerBonuses = 0;
+    this.readerBonuses = 1240;
     this.libraryCardNumber = 'libraryCardNumber';
     this.readerSubscription = 0;
   }
@@ -167,6 +167,7 @@ function updateContentWhenStatusChanged() {
       authMenuLogout.classList.add('auth-menu__item-hidden');
       authMenuMyProfile.classList.add('auth-menu__item-hidden');
       authMenuTitle.textContent = 'Profile';
+      document.getElementById('check-form-title').textContent = 'Find your Library card';
       showCheckCardButton();
       document.getElementById('readers-name').value = '';
       document.getElementById('card-number').value = '';
@@ -696,6 +697,7 @@ function showUserStats(visits, bonuses, books, name, number) {
   document.getElementById('card-number').value = number;
   document.getElementById('readers-name').readOnly = true;
   document.getElementById('card-number').readOnly = true;
+  document.getElementById('check-form-title').textContent = 'Your Library card';
 }
 
 //Функция показывающая кнопку Check the card в секции Digital Library Cards
