@@ -341,7 +341,7 @@ a {
   align-items: center;
   font-weight: 700;
   margin-bottom: 20px;
-  
+  font-family: Inter;  
 }
 
 .auth-menu__title::after{
@@ -354,6 +354,8 @@ a {
 .auth-menu__item{
   margin-bottom: 10px;
   background-color: transparent;
+  font-family: Inter;
+  transition: 0.5s;
 }
 
 .auth-menu__item-hidden{
@@ -363,6 +365,9 @@ a {
 @media (hover: hover) and (pointer: fine) {
   .user-button:hover{
     filter:none;
+  }
+  .auth-menu__item:hover{
+    color:#BB945F;
   }
 }
 
@@ -610,7 +615,7 @@ a {
 
 .three-columns-layout__item:nth-child(2) {
   text-align: center;
-  flex-basis: 301px;
+  flex-basis: 310px;
 }
 
 .three-columns-layout__item:nth-child(3) {
@@ -1943,6 +1948,13 @@ p.contacts__item {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 18px 18px;
+  transition: 0.5s;
+}
+
+@media (hover: hover) and (pointer: fine){
+  .modal-login-reg__close:hover{
+    background-color: #BB945F;
+  }
 }
 
 .modal-login-reg__close:hover {
@@ -2088,10 +2100,14 @@ p.contacts__item {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 18px 18px;
+  transition: 0.5s;
 }
 
-.modal-profile__close:hover {
-  cursor: pointer;
+@media (hover: hover) and (pointer: fine){
+  .modal-profile__close:hover{
+    background-color: #BB945F;
+    cursor: pointer;
+  }
 }
 
 .modal-profile__photo {
@@ -2275,10 +2291,14 @@ p.contacts__item {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 18px 18px;
+  transition: 0.5s;
 }
 
-.modal-buy-card__close:hover {
-  cursor: pointer;
+@media (hover: hover) and (pointer: fine){
+  .modal-buy-card__close:hover{
+    background-color: #BB945F;
+    cursor: pointer;
+  }
 }
 
 .modal-buy-card__title {
