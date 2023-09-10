@@ -341,7 +341,7 @@ a {
   align-items: center;
   font-weight: 700;
   margin-bottom: 20px;
-  
+  font-family: Inter;  
 }
 
 .auth-menu__title::after{
@@ -354,6 +354,7 @@ a {
 .auth-menu__item{
   margin-bottom: 10px;
   background-color: transparent;
+  font-family: Inter;
 }
 
 .auth-menu__item-hidden{
@@ -610,7 +611,7 @@ a {
 
 .three-columns-layout__item:nth-child(2) {
   text-align: center;
-  flex-basis: 301px;
+  flex-basis: 310px;
 }
 
 .three-columns-layout__item:nth-child(3) {
