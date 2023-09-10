@@ -97,7 +97,7 @@ class Reader {
 }
 
 function checkLoginAttempt(login, password) {
-  let readersList = JSON.parse(localStorage.readers);
+  let readersList = JSON.parse(localStorage.readersbplvil);
   let indexOfReader = -1;
   for (let i=0; i<readersList.length; i++){
     if (login == readersList[i].libraryCardNumber || login.toLowerCase() == readersList[i].readerEmail.toLowerCase()) {
@@ -118,7 +118,6 @@ function updateContentWhenStatusChanged() {
   let currentUser = JSON.parse(localStorage.loginstat);
   switch (currentUser.loginUserStatus) {
     case 1:
-      console.log("logined");
       userButton.classList.remove('user-button');
       userButton.classList.add('user-button-logged-in');
       userButton.textContent = (currentUser.userFirstName[0] + currentUser.userLastName[0]).toUpperCase();
@@ -137,7 +136,6 @@ function updateContentWhenStatusChanged() {
       showUserStats(currentUser.userVisits,currentUser.userBonuses,currentUser.userBooks.length,`${currentUser.userFirstName} ${currentUser.userLastName}`, currentUser.userCard);
       //Modal Profile
       authMenuMyProfile.addEventListener('click',()=>{
-        console.log('modal profile is opened');
         openProfileModal();
         authMenu.classList.remove('auth-menu-open');
       });
@@ -157,7 +155,6 @@ function updateContentWhenStatusChanged() {
       });
       break;
     case 0:
-      console.log("not logined");
       userButton.classList.remove('user-button-logged-in');
       userButton.classList.add('user-button');
       userButton.textContent = '';
@@ -188,13 +185,11 @@ function updateContentWhenStatusChanged() {
 
 //Обработчик события при загрузке страницы(если полей readers и loginstat в localstorage нет, то они создаются).
 window.addEventListener('load', () => {
-  if(localStorage.hasOwnProperty('readers')) {
-    console.log(localStorage.readers);
+  if(localStorage.hasOwnProperty('readersbplvil')) {
   } else {
-    localStorage.readers = JSON.stringify([]);
+    localStorage.readersbplvil = JSON.stringify([]);
   }
   if(localStorage.hasOwnProperty('loginstat')) {
-    console.log(localStorage.loginstat);
   } else {
     localStorage.loginstat = JSON.stringify(new LoginStat);
   }
@@ -222,13 +217,13 @@ function loginStatusUpdate(loginStatus,cReadersList,indexOfReader) {
   loginStatus.userEmail = cReadersList[indexOfReader].readerEmail;
   loginStatus.userBooks = cReadersList[indexOfReader].readerBooks;
   loginStatus.userSubscription = cReadersList[indexOfReader].readerSubscription;
-  localStorage.readers = JSON.stringify(cReadersList);
+  localStorage.readersbplvil = JSON.stringify(cReadersList);
   localStorage.loginstat = JSON.stringify(loginStatus);
 }
 
 //Функция для поиска индекса читателя по email в массиве зарегистрированных пользователей (поле readers в localstorage)
 function findIndexOfUserByEmail(email) {
-  let readersList = JSON.parse(localStorage.readers);
+  let readersList = JSON.parse(localStorage.readersbplvil);
   let index = -1;
   for (let i = 0; i<readersList.length; i++) {
     if (readersList[i].readerEmail == email){
@@ -246,7 +241,6 @@ loginRegHeader.className = 'modal-login-reg__header';
 let closeRegModalButton = document.createElement('button');
 closeRegModalButton.className = 'modal-login-reg__close';
 closeRegModalButton.setAttribute('onclick', 'closeModal()');
-console.log(closeRegModalButton);
 let regModalForm = document.createElement('FORM');
 regModalForm.className = 'modal-login-reg__container modal-form';
 regModalForm.setAttribute('id','reg-form');
@@ -328,13 +322,11 @@ regModalForm.addEventListener("submit", (event) => {
   if (regFormFields[3][1].value.length >= 8) {
     if (findIndexOfUserByEmail(regFormFields[2][1].value) == -1) {
       newReader.libraryCardNumber = generateCardNumber();
-      let readersList = JSON.parse(localStorage.readers);
+      let readersList = JSON.parse(localStorage.readersbplvil);
       readersList.push(newReader);
       let indexOfNewReader = readersList.length-1;
       let curLoginStat = new LoginStat;
-      console.log(JSON.stringify(readersList));
       loginStatusUpdate(curLoginStat,readersList,indexOfNewReader);
-      console.log(JSON.parse(localStorage.loginstat).loginStatus);
       updateContentWhenStatusChanged();
       setTimeout(()=>{
         closeModal();
@@ -342,7 +334,6 @@ regModalForm.addEventListener("submit", (event) => {
     } else {
       regErrorHint.classList.remove('modal-login-reg__hint-hidden');
       regErrorHint.textContent = 'This email is already associated with an account.';
-      console.log('user with same email have already exists');
     }
   }
 });
@@ -384,7 +375,7 @@ loginSubmitButton.className = 'button modal-login-reg__button';
 loginSubmitButton.textContent = 'Log in';
 let loginFootnote = document.createElement('p');
 loginFootnote.className = 'modal-login-reg__footnote';
-loginFootnote.innerHTML = 'Dont have an account?';
+loginFootnote.textContent = "Don't have an account?";
 let loginFooterLink = document.createElement('span');
 loginFooterLink.textContent = 'Register';
 loginFooterLink.className = 'modal-login-reg__link';
@@ -392,7 +383,6 @@ loginFootnote.append(loginFooterLink);
 let loginErrorHint = document.createElement('p');
 loginErrorHint.className = 'modal-login-reg__hint modal-login-reg__hint-hidden';
 loginErrorHint.setAttribute('id','login-error-hint');
-console.log(loginModalForm);
 
 loginModalForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -401,23 +391,18 @@ loginModalForm.addEventListener("submit", (event) => {
   let indexOfLoginReader = checkLoginAttempt(login, password);
   switch(indexOfLoginReader){
     case -1:
-      console.log('modalopen',indexOfLoginReader);
       loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
       loginErrorHint.textContent="Error: invalid login";
       break;
     case -2:
-      console.log('modalopen',indexOfLoginReader);
       loginErrorHint.classList.remove('modal-login-reg__hint-hidden');
       loginErrorHint.textContent="Error: invalid password";
       break;
     default:
-      console.log('modalclose',indexOfLoginReader);
-      let currentReadersList = JSON.parse(localStorage.readers);
+      let currentReadersList = JSON.parse(localStorage.readersbplvil);
       let currentLoginStatus = JSON.parse(localStorage.loginstat);
       currentReadersList[indexOfLoginReader].readerVisits = currentReadersList[indexOfLoginReader].readerVisits + 1;
-      console.log(currentReadersList[indexOfLoginReader].readerVisits);
       loginStatusUpdate(currentLoginStatus,currentReadersList,indexOfLoginReader);
-      console.log(JSON.parse(localStorage.readers)[indexOfLoginReader]);
       updateContentWhenStatusChanged();
       closeModal();
       break;
@@ -567,7 +552,6 @@ buyModalInputsAttrs.forEach((inputField, index) => {
   buyInputs.push(newInput);
   buyLabels.push(newLabel);
 });
-console.log(buyLabels[4]);
 buyLabels[4].classList.add('modal-form__label-spaced');
 buyInputs.slice(1,4).forEach(input => input.className = 'modal-form__input modal-form__input-small');
 let buyModalExpCodeField = document.createElement('div');
@@ -664,11 +648,11 @@ const openBuyModal = () => {
   buyModalForm.addEventListener('submit', (event)=>{
     event.preventDefault();
     let currLoginStat = JSON.parse(localStorage.loginstat);
-    let currReadersList = JSON.parse(localStorage.readers);
+    let currReadersList = JSON.parse(localStorage.readersbplvil);
     let indexOfCurrentUser = findIndexOfUserByEmail(currLoginStat.userEmail);
     currReadersList[indexOfCurrentUser].readerSubscription = 1;
     currLoginStat.userSubscription = 1;
-    localStorage.readers = JSON.stringify(currReadersList);
+    localStorage.readersbplvil = JSON.stringify(currReadersList);
     localStorage.loginstat = JSON.stringify(currLoginStat);
     closeModal();
   });
@@ -712,12 +696,10 @@ document.getElementById('check-form').addEventListener("submit", (event)=>{
 
 //Функция для обработки формы Find your card в секции Digital Library Cards
 function handleClickOnCheckCard(){
-  let currList = JSON.parse(localStorage.readers);
-  //let testResult = 0;
+  let currList = JSON.parse(localStorage.readersbplvil);
   currList.forEach((reader) => {
     let readerName = [`${reader.readerFirstName} ${reader.readerLastName}`, reader.readerFirstName, reader.readerLastName, `${reader.readerLastName} ${reader.readerFirstName}`];
     if (readerName.includes(checkReaderNameInput.value) && checkReaderNumberInput.value == reader.libraryCardNumber){
-     // testResult = testResult + 1;
       showUserStats(reader.readerVisits,reader.readerBonuses,reader.readerBooks.length,readerName[0],reader.libraryCardNumber);
       checkReaderNameInput.readOnly = true;
       checkReaderNumberInput.readOnly = true;
@@ -783,26 +765,23 @@ function addBook(bookdata, currentStatus, currentreaders){
   let indexOfCurrentUser = findIndexOfUserByEmail(currentStatus.userEmail);
   currentreaders[indexOfCurrentUser].readerBooks.push(bookdata);
   localStorage.loginstat = JSON.stringify(currentStatus);
-  localStorage.readers = JSON.stringify(currentreaders);
+  localStorage.readersbplvil = JSON.stringify(currentreaders);
 }
 
 //handle click on book buttons
 bookButtons.forEach((book) => {
   book.addEventListener('click',() => {
     let currStatus = JSON.parse(localStorage.loginstat);
-    let currReadersList = JSON.parse(localStorage.readers);
+    let currReadersList = JSON.parse(localStorage.readersbplvil);
     switch (currStatus.loginUserStatus) {
       case 1:
         switch(currStatus.userSubscription) {
           case 1:
-            console.log('user have subscription');
-            console.log(book.dataset.book);
             addBook(book.dataset.book, currStatus, currReadersList);
             updateContentWhenStatusChanged();
             break;
           case 0:
             openBuyModal();
-            console.log('user have no subscription');
             break;
         }
         break;
