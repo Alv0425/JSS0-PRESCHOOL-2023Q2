@@ -248,7 +248,7 @@ let regFormTitle = document.createElement('div');
 regFormTitle.textContent = 'Register';
 regFormTitle.className = 'modal-login-reg__title';
 let regFormFieldsText = ['First name','Last name','E-mail','Password'];
-let regFormPatterns = ['^(\\w{2,})$','^(\\w{1,})$','^(\\w{2,}|\\w{2,}.\\w{1,})@[a-zA-Z]{2,}.[a-zA-Z]{2,}$','^([\\w\\-]{8,})$'];
+let regFormPatterns = ['^(\\w{2,})$','^(\\w{1,})$','^(\\w{2,}|\\w{2,}.\\w{1,})@[a-zA-Z]{2,}.[a-zA-Z]{2,}$','^.{8,}$'];
 let regErrorHints = ['First name should be at least 2 letters long.', "Fill out Last Name field, it shoudn't be empty", 'Invalid format for e-mail address.','Password should be at least 8 characters long.'];
 let regFormInputTypes = ['text','text','email','password'];
 let regFormFields = regFormFieldsText.map((field, index) => {
