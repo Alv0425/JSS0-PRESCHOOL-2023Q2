@@ -69,15 +69,15 @@ function playNext(){
     openTrack(playlistIndexes[currentMusuic]);
     playMusic();
     isPlayingNow = 1;
-    playPauseButton.classList.remove('control-play');
-    playPauseButton.classList.add('control-pause');
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
   } else {
     currentMusuic = 0;
     openTrack(playlistIndexes[currentMusuic]);
     playMusic();
     isPlayingNow = 1;
-    playPauseButton.classList.remove('control-play');
-    playPauseButton.classList.add('control-pause');
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
   }
 }
 
@@ -107,4 +107,3 @@ progressRange.addEventListener('input', () => {
   currTime = progressRange.value * music.duration / 100;
   music.currentTime = currTime;
 });
-
