@@ -99,5 +99,12 @@ function playPrev(){
   }
 }
 
-nextButton.addEventListener('click', () => {playNext();});
-prevButton.addEventListener('click', () => {playPrev();});
+controlNext.addEventListener('click', () => {playNext();});
+controlPrev.addEventListener('click', () => {playPrev();});
+
+progressRange.addEventListener('input', () => {
+  console.log(progressRange.value);
+  currTime = progressRange.value * music.duration / 100;
+  music.currentTime = currTime;
+});
+
