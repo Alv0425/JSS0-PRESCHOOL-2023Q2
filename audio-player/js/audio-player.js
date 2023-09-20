@@ -32,23 +32,33 @@ function pauseMusic() {
   music.pause();
 }
 
-playPauseButton.addEventListener('click', () => {
+controlPlayPause.addEventListener('click', () => {
   if (isPlayingNow) {
     pauseMusic();
     isPlayingNow = false;
-    playPauseButton.classList.remove('control-pause');
-    playPauseButton.classList.add('control-play');
+    controlPlayPause.classList.remove('control-pause');
+    controlPlayPause.classList.add('control-play');
   } else {
     playMusic();
     isPlayingNow = true;
-    playPauseButton.classList.remove('control-play');
-    playPauseButton.classList.add('control-pause');
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
   }
 });
 
 function getCurrentTime(value) {
-  let sec = Math.round(value);
-  let min = Math.round(sec / 60);
+  let sec = Math.floor(value);
+  let min = Math.floor(sec / 60);
   sec -= min * 60;
   return `${min}:${(sec < 10) ? '0' + sec : sec}`;
 }
+
+setInterval(() => {
+  progressRange.value = music.currentTime / music.duration * 100;
+  progressCurrent.style.width = inputRange.value + "%";
+  timeCurrent.textContent = getCurrentTime(music.currentTime);
+  currTime = music.currentTime;
+  if (currTime == music.duration) {
+    playNext();
+  }
+}, 500);
