@@ -55,10 +55,49 @@ function getCurrentTime(value) {
 
 setInterval(() => {
   progressRange.value = music.currentTime / music.duration * 100;
-  progressCurrent.style.width = inputRange.value + "%";
+  progressCurrent.style.width = progressRange.value + "%";
   timeCurrent.textContent = getCurrentTime(music.currentTime);
   currTime = music.currentTime;
   if (currTime == music.duration) {
     playNext();
   }
 }, 500);
+
+function playNext(){
+  if (currentMusuic < 3) {
+    currentMusuic += 1;
+    openTrack(playlistIndexes[currentMusuic]);
+    playMusic();
+    isPlayingNow = 1;
+    playPauseButton.classList.remove('control-play');
+    playPauseButton.classList.add('control-pause');
+  } else {
+    currentMusuic = 0;
+    openTrack(playlistIndexes[currentMusuic]);
+    playMusic();
+    isPlayingNow = 1;
+    playPauseButton.classList.remove('control-play');
+    playPauseButton.classList.add('control-pause');
+  }
+}
+
+function playPrev(){
+  if (currentMusuic > 0) {
+    currentMusuic -= 1;
+    openTrack(playlistIndexes[currentMusuic]);
+    playMusic();
+    isPlayingNow = 1;
+    playPauseButton.classList.remove('control-play');
+    playPauseButton.classList.add('control-pause');
+  } else {
+    currentMusuic = 3;
+    openTrack(playlistIndexes[currentMusuic]);
+    playMusic();
+    isPlayingNow = 1;
+    playPauseButton.classList.remove('control-play');
+    playPauseButton.classList.add('control-pause');
+  }
+}
+
+nextButton.addEventListener('click', () => {playNext();});
+prevButton.addEventListener('click', () => {playPrev();});
