@@ -45,3 +45,10 @@ playPauseButton.addEventListener('click', () => {
     playPauseButton.classList.add('control-pause');
   }
 });
+
+function getCurrentTime(value) {
+  let sec = Math.round(value);
+  let min = Math.round(sec / 60);
+  sec -= min * 60;
+  return `${min}:${(sec < 10) ? '0' + sec : sec}`;
+}
