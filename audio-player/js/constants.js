@@ -1,6 +1,7 @@
 'use strict';
+const body = document.getElementsByTagName('body')[0];
 const main = document.createElement('main');
-document.getElementsByTagName('body')[0].appendChild(main);
+body.appendChild(main);
 
 const player = document.createElement('div');
 player.className = 'container';
@@ -52,3 +53,33 @@ controlPrev.className = 'control control-left';
 playerControls.append(controlRepeatShuffle, controlPrev, controlPlayPause, controlNext, controlPlaylist);
 
 player.append(cover, trackName, playerProgress, playerControls);
+
+const tracks = [
+  {
+    'title':'Elephant gun',
+    'author':'Beirut',
+    'src':'./audio/beirut-elephant-gun.mp3',
+    'cover':'./images/beirut.jpg'
+  },
+  {
+    'title':'Fade into you',
+    'author':'Mazzy Star',
+    'src':'./audio/fade-into-you-mazzy-star.mp3',
+    'cover':'./images/mazzy-star.jfif'
+  },
+  {
+    'title':'Rise',
+    'author':'Eddie Vedder and Michael Brook',
+    'src':'./audio/michael-brook-with-eddie-vedder-rise.mp3',
+    'cover':'./images/eddie-vedder.jpg'
+  },
+  {
+    'title':'Scientist',
+    'author':'Coldplay',
+    'src':'./audio/the-scientist-coldplay.mp3',
+    'cover':'./images/coldplay.avif'
+  }
+];
+
+const music = new Audio;
+music.preload = 'auto';
