@@ -31,3 +31,17 @@ function playMusic() {
 function pauseMusic() {
   music.pause();
 }
+
+playPauseButton.addEventListener('click', () => {
+  if (isPlayingNow) {
+    pauseMusic();
+    isPlayingNow = false;
+    playPauseButton.classList.remove('control-pause');
+    playPauseButton.classList.add('control-play');
+  } else {
+    playMusic();
+    isPlayingNow = true;
+    playPauseButton.classList.remove('control-play');
+    playPauseButton.classList.add('control-pause');
+  }
+});
