@@ -27,10 +27,14 @@ const progressFull = document.createElement('div');
 const progressCurrent = document.createElement('div');
 progressFull.className = 'progress-bar__bar-full';
 progressCurrent.className = 'progress-bar__bar-current';
+const progressRange = document.createElement('INPUT');
+progressRange.setAttribute('type','range');
+progressRange.classList = 'input-range';
 const timeFull = document.createElement('p');
 const timeCurrent = document.createElement('p');
 timeFull.className = 'progress-bar__time-full';
 timeCurrent.className = 'progress-bar__time-current';
+progressFull.append(progressCurrent, progressRange);
 playerProgress.append(timeFull, progressFull, timeCurrent);
 
 const playerControls = document.createElement('div');
