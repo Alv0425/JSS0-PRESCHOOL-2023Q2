@@ -22,3 +22,12 @@ function openTrack(index) {
     event.target.removeEventListener('loadedmetadata', metadataLoad);
   },false);
 }
+
+function playMusic() {
+  music.currentTime = currTime;
+  music.play();
+}
+
+function pauseMusic() {
+  music.pause();
+}
