@@ -1,16 +1,4 @@
 'use strict';
-const loadDuration = (src) => {
-  const trackAudio = new Audio;
-  trackAudio.preload = 'auto';
-  trackAudio.src = src;
-  trackAudio.addEventListener('loadeddata', function trackMetadataLoad() {
-    let duration = getCurrentTime(trackAudio.duration);
-    trackAudio.removeEventListener('loadeddata', trackMetadataLoad);
-    // console.log(duration);
-    return duration;
-  },false);
-}
-
 const tracks = [
   {
     'title':'Elephant gun',
@@ -94,7 +82,7 @@ controlNext.className = 'control control-right';
 controlPrev.className = 'control control-left';
 playerControls.append(controlRepeatShuffle, controlPrev, controlPlayPause, controlNext, controlPlaylist);
 
-const music = new Audio;
+let music = new Audio;
 music.preload = 'auto';
 
 const getCurrentTime = (value) => {
