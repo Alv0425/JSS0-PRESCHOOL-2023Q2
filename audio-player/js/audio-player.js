@@ -99,6 +99,7 @@ setInterval(() => {
     } else {
       let randomIndex = Math.floor(Math.random() * 4);
       currentMusuic = randomIndex !== currentMusuic ? randomIndex : Math.floor(Math.random() * 4);
+      console.log('shuffled!', randomIndex);
       openTrack(currentMusuic);
       playMusic();
     }
@@ -139,6 +140,7 @@ progressRange.addEventListener('input', () => {
 
 controlRepeatShuffle.addEventListener('click', () => {
   if (isSorted) {
+    isSorted = false;
     controlRepeatShuffle.classList.remove('control-repeat');
     controlRepeatShuffle.classList.add('control-shuffle');
   } else {
@@ -147,4 +149,20 @@ controlRepeatShuffle.addEventListener('click', () => {
     controlRepeatShuffle.classList.remove('control-shuffle');
   }
 });
- 
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == 'Space'){
+    if (isPlayingNow) {
+      pauseMusic();
+    } else {
+      playMusic();
+    }
+  };
+  if (event.key == 'ArrowLeft'){
+    playPrev();
+  }
+  if (event.key == 'ArrowRight'){
+    playNext();
+  }
+});
+
