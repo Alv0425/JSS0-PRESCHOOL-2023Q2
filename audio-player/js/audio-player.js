@@ -4,6 +4,7 @@ let currentMusuic = 0;
 let currentDuration = 0;
 let isPlayingNow = false;
 let currTime = 0;
+let isSorted = true;
 
 openTrack(0);
 
@@ -59,21 +60,32 @@ setInterval(() => {
   timeCurrent.textContent = getCurrentTime(music.currentTime);
   currTime = music.currentTime;
   if (currTime == music.duration) {
-    playNext();
+    if (isSorted) {
+      playNext();
+    } else {
+      let randomIndex = Math.floor(Math.random() * 4);
+      currentMusuic = randomIndex !== currentMusuic ? randomIndex : Math.floor(Math.random() * 4);
+      openTrack(currentMusuic);
+      playMusic();
+      isPlayingNow = 1;
+      controlPlayPause.classList.remove('control-play');
+      controlPlayPause.classList.add('control-pause');
+    }
+    
   }
 }, 500);
 
 function playNext(){
   if (currentMusuic < 3) {
     currentMusuic += 1;
-    openTrack(playlistIndexes[currentMusuic]);
+    openTrack(currentMusuic);
     playMusic();
     isPlayingNow = 1;
     controlPlayPause.classList.remove('control-play');
     controlPlayPause.classList.add('control-pause');
   } else {
     currentMusuic = 0;
-    openTrack(playlistIndexes[currentMusuic]);
+    openTrack(currentMusuic);
     playMusic();
     isPlayingNow = 1;
     controlPlayPause.classList.remove('control-play');
@@ -84,18 +96,18 @@ function playNext(){
 function playPrev(){
   if (currentMusuic > 0) {
     currentMusuic -= 1;
-    openTrack(playlistIndexes[currentMusuic]);
+    openTrack(currentMusuic);
     playMusic();
     isPlayingNow = 1;
-    playPauseButton.classList.remove('control-play');
-    playPauseButton.classList.add('control-pause');
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
   } else {
     currentMusuic = 3;
-    openTrack(playlistIndexes[currentMusuic]);
+    openTrack(currentMusuic);
     playMusic();
     isPlayingNow = 1;
-    playPauseButton.classList.remove('control-play');
-    playPauseButton.classList.add('control-pause');
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
   }
 }
 
@@ -103,7 +115,17 @@ controlNext.addEventListener('click', () => {playNext();});
 controlPrev.addEventListener('click', () => {playPrev();});
 
 progressRange.addEventListener('input', () => {
-  console.log(progressRange.value);
   currTime = progressRange.value * music.duration / 100;
   music.currentTime = currTime;
+});
+
+controlRepeatShuffle.addEventListener('click', () => {
+  if (isSorted) {
+    controlRepeatShuffle.classList.remove('control-repeat');
+    controlRepeatShuffle.classList.add('control-shuffle');
+  } else {
+    isSorted = true;
+    controlRepeatShuffle.classList.add('control-repeat');
+    controlRepeatShuffle.classList.remove('control-shuffle');
+  }
 });
