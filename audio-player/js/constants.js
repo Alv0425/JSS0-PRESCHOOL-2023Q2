@@ -1,16 +1,4 @@
 'use strict';
-const loadDuration = (src) => {
-  const trackAudio = new Audio;
-  trackAudio.preload = 'auto';
-  trackAudio.src = src;
-  trackAudio.addEventListener('loadeddata', function trackMetadataLoad() {
-    let duration = getCurrentTime(trackAudio.duration);
-    trackAudio.removeEventListener('loadeddata', trackMetadataLoad);
-    // console.log(duration);
-    return duration;
-  },false);
-}
-
 const tracks = [
   {
     'title':'Elephant gun',
@@ -43,7 +31,6 @@ const srcs = tracks.map((track) => {return track.src});
 
 const body = document.getElementsByTagName('body')[0];
 const main = document.createElement('main');
-body.append(main);
 
 const player = document.createElement('div');
 player.className = 'container';
@@ -94,7 +81,7 @@ controlNext.className = 'control control-right';
 controlPrev.className = 'control control-left';
 playerControls.append(controlRepeatShuffle, controlPrev, controlPlayPause, controlNext, controlPlaylist);
 
-const music = new Audio;
+let music = new Audio;
 music.preload = 'auto';
 
 const getCurrentTime = (value) => {
@@ -122,4 +109,28 @@ playlistButton.addEventListener('click', () => {
   playlistContainer.classList.remove('playlist-open');
 });
 
+/* <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__year">2023</div>
+      <a href = "https://github.com/Alv0425" class="footer__author">alv0425</a>
+      <a href="https://rs.school/js-stage0/" class="footer__rss-logo"></a>
+    </div>    
+</footer> */
 
+const footer = document.createElement('footer');
+footer.className = 'footer';
+const footerContainer = document.createElement('div');
+footerContainer.className = 'footer__container';
+const footerYear = document.createElement('div');
+const footerAuthor = document.createElement('a');
+const footerRSS = document.createElement('a');
+footerYear.className = 'footer__year';
+footerYear.textContent = '2023';
+footerAuthor.className = 'footer__author';
+footerAuthor.textContent = 'Alv0425';
+footerAuthor.href = 'https://github.com/Alv0425';
+footerRSS.className = 'footer__rss-logo';
+footerRSS.href = 'https://rs.school/js-stage0/';
+footerContainer.append(footerYear, footerAuthor, footerRSS);
+footer.append(footerContainer);
+body.prepend(main,footer);

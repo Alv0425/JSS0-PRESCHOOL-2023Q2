@@ -362,3 +362,42 @@ input[type="range"]::-moz-range-thumb {
 .track__time{
   margin-left: auto;
 }
+
+.footer{
+  margin-top: auto;
+  width: 100%;
+  font-family: Inter;
+  font-weight: 700;
+  border: 1px solid #B9B9B9;
+  background: rgba(217, 217, 217, 0.40);
+  backdrop-filter: blur(2px); 
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.footer__container{
+  margin: 0 auto;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.footer__rss-logo{
+  width: 100px;
+  height: 40px;
+  background-image: url(./assets/rs_school_js.svg);
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.footer__author{
+  text-decoration: none;
+  color:#000000;
+  transition: 0.5s;
+}
+
+.footer__author:hover{
+  color:rgb(59, 36, 136);
+}

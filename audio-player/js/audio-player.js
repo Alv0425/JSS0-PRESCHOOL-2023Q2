@@ -30,6 +30,7 @@ tracks.forEach((track, index) => {
     currentMusuic = index;
     openTrack(currentMusuic);
     currTime = 0;
+    isPlayingNow = false;
     playMusic();
   });
 });
@@ -48,6 +49,9 @@ srcs.forEach((src, index) => {
 });
 
 function openTrack(index) {
+  if (isPlayingNow) {
+    music.pause();
+  }
   music.src = tracks[index].src;
   currTime = 0;
   timeCurrent.textContent = currTime;
@@ -66,18 +70,22 @@ function openTrack(index) {
 }
 
 function playMusic() {
-  music.currentTime = currTime;
-  music.play();
-  isPlayingNow = true;
-  controlPlayPause.classList.remove('control-play');
-  controlPlayPause.classList.add('control-pause');
+  if (!isPlayingNow) {
+    music.currentTime = currTime;
+    music.play();
+    isPlayingNow = true;
+    controlPlayPause.classList.remove('control-play');
+    controlPlayPause.classList.add('control-pause');
+  }
 }
 
 function pauseMusic() {
-  music.pause();
-  isPlayingNow = false;
-  controlPlayPause.classList.add('control-play');
-  controlPlayPause.classList.remove('control-pause');
+  if (isPlayingNow) {
+    music.pause();
+    isPlayingNow = false;
+    controlPlayPause.classList.add('control-play');
+    controlPlayPause.classList.remove('control-pause');
+  }
 }
 
 controlPlayPause.addEventListener('click', () => {
@@ -100,8 +108,11 @@ setInterval(() => {
       let randomIndex = Math.floor(Math.random() * 4);
       currentMusuic = randomIndex !== currentMusuic ? randomIndex : Math.floor(Math.random() * 4);
       console.log('shuffled!', randomIndex);
-      openTrack(currentMusuic);
-      playMusic();
+      setTimeout(() => {
+        openTrack(currentMusuic);
+        isPlayingNow = false;
+        playMusic();
+      },100);
     }
   }
 }, 500);
@@ -110,11 +121,17 @@ function playNext(){
   if (currentMusuic < 3) {
     currentMusuic += 1;
     openTrack(currentMusuic);
-    playMusic();
+    setTimeout(() => {
+      isPlayingNow = false;
+      playMusic();
+    },100)
   } else {
     currentMusuic = 0;
     openTrack(currentMusuic);
-    playMusic();
+    setTimeout(() => {
+      isPlayingNow = false;
+      playMusic();
+    },100);
   }
 }
 
@@ -122,11 +139,17 @@ function playPrev(){
   if (currentMusuic > 0) {
     currentMusuic -= 1;
     openTrack(currentMusuic);
-    playMusic();
+    setTimeout(()=>{
+      isPlayingNow = false;
+      playMusic();
+    },100);
   } else {
     currentMusuic = 3;
     openTrack(currentMusuic);
-    playMusic();
+    setTimeout(()=>{
+      isPlayingNow = false;
+      playMusic();
+    },100);
   }
 }
 
@@ -150,7 +173,7 @@ controlRepeatShuffle.addEventListener('click', () => {
   }
 });
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keyup", (event) => {
   if (event.code == 'Space'){
     if (isPlayingNow) {
       pauseMusic();
@@ -159,10 +182,14 @@ document.addEventListener("keydown", (event) => {
     }
   };
   if (event.key == 'ArrowLeft'){
-    playPrev();
+    setTimeout(() => {
+      playPrev();
+    },500);
   }
   if (event.key == 'ArrowRight'){
-    playNext();
+    setTimeout(() => {
+      playNext();
+    },500);
   }
 });
 
