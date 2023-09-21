@@ -39,15 +39,6 @@ const tracks = [
 ];
 
 const srcs = tracks.map((track) => {return track.src});
-const audiosDuration = srcs.map((src) => {
-  const audio = new Audio;
-  audio.preload = 'auto';
-  audio.src = src;
-  console.log(audio.duration);
-  return audio.duration;
-});
-
-console.log(audiosDuration);
 
 
 const body = document.getElementsByTagName('body')[0];
@@ -102,8 +93,6 @@ controlRepeatShuffle.className = 'control control-repeat';
 controlNext.className = 'control control-right';
 controlPrev.className = 'control control-left';
 playerControls.append(controlRepeatShuffle, controlPrev, controlPlayPause, controlNext, controlPlaylist);
-
-
 
 const music = new Audio;
 music.preload = 'auto';

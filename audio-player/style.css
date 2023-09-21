@@ -23,25 +23,6 @@ body {
   background-color: #000000;
 }
 
-body::after{
-  position: absolute;
-  z-index: -1;
-  content : url(./images/beirut.jpg)
-            url(./images/coldplay.avif)
-            url(./images/eddie-vedder.jpg)
-            url(./images/mazzy-star.jfif)
-            url(./images/survivor.jpg)
-            url(./assets/angle-down.svg)
-            url(./assets/caret-right-solid.svg)
-            url(./assets/left.svg)
-            url(./assets/pause.svg)
-            url(./assets/play.svg)
-            url(./assets/repeat-solid.svg)
-            url(./assets/shuffle-solid.svg)
-            url(./assets/right.svg)
-            url(./assets/shuffle-solid.svg)
-}
-
 @keyframes fade-out {
   0% {opacity: 0;}
   100% {opacity: 1;} 
