@@ -211,5 +211,100 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
+.playlist{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 10px;
+  flex-direction: column;
+  color:#000000;
+  font-family: Inter;
+  border: 1px solid #e0dfdf;
+  background: rgba(225, 225, 225, 0.8);
+  backdrop-filter: blur(2px); 
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.7s;
+}
 
+.playlist-open{
+  max-height: 100%;
+  opacity: 1;
+}
 
+.playlist__button{
+  width: 100%;
+  height: 30px;
+  background-image: url(./assets/angle-down.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 20px 20px;
+  /* display: flex; */
+  text-align: left;
+}
+
+.playlist__button:hover{
+  cursor: pointer;
+}
+
+.playlist__list{
+  /* list-style-position: outside; */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  list-style: none;
+  /* padding-left: 20px; */
+}
+
+.track__button{
+  position: relative;
+  padding: 10px 5px;
+  display: inline-flex;
+  width: 270px;
+  transition: 0.5s;
+} 
+
+.track__button:hover{
+  cursor: pointer;
+  color:rgb(59, 36, 136);
+  background-color: #fff;
+}
+
+.track{
+  padding: 5px 0;
+}
+
+.track-active .track-name,
+.track-active .track__time{
+  color:rgb(59, 36, 136);
+}
+
+.track-name{
+  max-width: 200px;
+  text-align: left;
+}
+
+.track__title{
+  font-weight: 700;
+}
+
+.track__author{
+  text-align: left;
+}
+
+.track__title::after{
+  content: "-";
+  padding: 0 5px;
+}
+
+.track__time{
+  margin-left: auto;
+}

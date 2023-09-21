@@ -1,7 +1,58 @@
 'use strict';
+const loadDuration = (src) => {
+  const trackAudio = new Audio;
+  trackAudio.preload = 'auto';
+  trackAudio.src = src;
+  trackAudio.addEventListener('loadeddata', function trackMetadataLoad() {
+    let duration = getCurrentTime(trackAudio.duration);
+    trackAudio.removeEventListener('loadeddata', trackMetadataLoad);
+    // console.log(duration);
+    return duration;
+  },false);
+}
+
+const tracks = [
+  {
+    'title':'Elephant gun',
+    'author':'Beirut',
+    'src':'./audio/beirut-elephant-gun.mp3',
+    'cover':'./images/beirut.jpg'
+  },
+  {
+    'title':'Fade into you',
+    'author':'Mazzy Star',
+    'src':'./audio/fade-into-you-mazzy-star.mp3',
+    'cover':'./images/mazzy-star.jfif'
+  },
+  {
+    'title':'Rise',
+    'author':'Eddie Vedder and Michael Brook',
+    'src':'./audio/michael-brook-with-eddie-vedder-rise.mp3',
+    'cover':'./images/eddie-vedder.jpg'
+  },
+  {
+    'title':'Scientist',
+    'author':'Coldplay',
+    'src':'./audio/the-scientist-coldplay.mp3',
+    'cover':'./images/coldplay.avif'
+  }
+];
+
+const srcs = tracks.map((track) => {return track.src});
+const audiosDuration = srcs.map((src) => {
+  const audio = new Audio;
+  audio.preload = 'auto';
+  audio.src = src;
+  console.log(audio.duration);
+  return audio.duration;
+});
+
+console.log(audiosDuration);
+
+
 const body = document.getElementsByTagName('body')[0];
 const main = document.createElement('main');
-body.appendChild(main);
+body.append(main);
 
 const player = document.createElement('div');
 player.className = 'container';
@@ -52,34 +103,34 @@ controlNext.className = 'control control-right';
 controlPrev.className = 'control control-left';
 playerControls.append(controlRepeatShuffle, controlPrev, controlPlayPause, controlNext, controlPlaylist);
 
-player.append(cover, trackName, playerProgress, playerControls);
 
-const tracks = [
-  {
-    'title':'Elephant gun',
-    'author':'Beirut',
-    'src':'./audio/beirut-elephant-gun.mp3',
-    'cover':'./images/beirut.jpg'
-  },
-  {
-    'title':'Fade into you',
-    'author':'Mazzy Star',
-    'src':'./audio/fade-into-you-mazzy-star.mp3',
-    'cover':'./images/mazzy-star.jfif'
-  },
-  {
-    'title':'Rise',
-    'author':'Eddie Vedder and Michael Brook',
-    'src':'./audio/michael-brook-with-eddie-vedder-rise.mp3',
-    'cover':'./images/eddie-vedder.jpg'
-  },
-  {
-    'title':'Scientist',
-    'author':'Coldplay',
-    'src':'./audio/the-scientist-coldplay.mp3',
-    'cover':'./images/coldplay.avif'
-  }
-];
 
 const music = new Audio;
 music.preload = 'auto';
+
+const getCurrentTime = (value) => {
+  let sec = Math.floor(value);
+  let min = Math.floor(sec / 60);
+  sec -= min * 60;
+  return `${min}:${(sec < 10) ? '0' + sec : sec}`;
+}
+
+const playlistContainer = document.createElement('div');
+playlistContainer.className = 'playlist';
+const playlistButton = document.createElement('button');
+playlistButton.className = 'playlist__button';
+const playlistList = document.createElement('ul');
+playlistList.className = 'playlist__list';
+playlistContainer.append(playlistButton, playlistList);
+
+player.append(cover, trackName, playerProgress, playerControls, playlistContainer);
+
+controlPlaylist.addEventListener('click', () => {
+  playlistContainer.classList.add('playlist-open');
+});
+
+playlistButton.addEventListener('click', () => {
+  playlistContainer.classList.remove('playlist-open');
+});
+
+
