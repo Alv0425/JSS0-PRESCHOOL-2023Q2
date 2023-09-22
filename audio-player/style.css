@@ -2,6 +2,10 @@
   box-sizing: inherit;
 }
 
+:root{
+  --background: url(./assets/topography.svg);
+}
+
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -12,15 +16,87 @@ body {
   flex-direction: column;
   align-items: center; 
   margin: 0;
-  height: calc(100vh + 70px);
+  height: 100vh;
   text-rendering: optimizelegibility;
   text-decoration-skip: objects;
   text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-  background: url(./images/beirut.jpg);
+  background-color: #1d1333;
+  background-attachment: fixed;
   background-size: cover;
-  background-color: #000000;
+  transition: 2s;
+}
+
+.body__background{
+  position: absolute;
+  inset: 0 0 0 0;
+}
+
+@keyframes change-shape-rotate{
+  0%{
+  border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  34%{
+      border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+  }
+  50%{
+    transform: rotateZ(180deg);
+  }
+  67%{
+    border-radius: 100% 50% 60% 100% / 100% 100% 60% 60% ;
+    transform: rotateZ(241deg);
+  }
+  100%{
+    border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: rotateZ(360deg);
+  }
+}
+
+.background__bulb{
+  position: fixed;
+  left:20%;
+  top:20%;
+  background-color: #ffffff;
+  border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
+  opacity: 0.5;
+  width:1450px;
+  height: 1450px;
+  animation: change-shape-rotate 50s linear infinite;
+  transition: border-radius 1s;
+  animation-play-state: paused;
+}
+
+.background__bulb-2{
+  position: fixed;
+  left:35%;
+  top:25%;
+  background-color: #ffffff;
+  opacity: 0.7;
+  border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
+  width:850px;
+  height: 850px;
+  animation: change-shape-rotate 30s linear infinite;
+  transition: all 1s;
+  animation-play-state: paused;
+}
+
+.background__bulb-3{
+  position: fixed;
+  left:-20%;
+  top:-20%;
+  background-color: #ffffff;
+  opacity: 0.5;
+  border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
+  width:550px;
+  height:550px;
+  animation: change-shape-rotate 20s linear infinite;
+  transition: all 1s;
+  animation-play-state: paused;
+}
+
+.blub-rotate{
+  animation-play-state: running;
 }
 
 body:after {
@@ -35,9 +111,9 @@ body:after {
            url(./assets/playlist.svg)
            url(./assets/rs_school_js.svg)
            url(./images/beirut.jpg)
-           url(./images/coldplay.avif)
+           url(./images/coldplay.jpg)
            url(./images/eddie-vedder.jpg)
-           url(./images/mazzy-star.jfif)
+           url(./images/mazzy-star.jpg)
            url(./images/survivor.jpg);
   display: none; 
 }
@@ -53,10 +129,8 @@ main {
   min-height: 500px;
   height: 150vh;
   width: 100%;
-  background: url(./images/beirut.jpg);
-  background-size: cover;
-  filter: brightness(0.8) grayscale(0.2);
   animation: fade-out 1s ease;
+  transition: background-image 1s ease-in-out;
 }
 
 button{
@@ -78,14 +152,17 @@ button:hover{
   gap: 10px;
   border: 1px solid #B9B9B9;
   border-radius: 10px;
-  background: rgba(217, 217, 217, 0.50);
-  backdrop-filter: blur(4px) grayscale(0.2); 
+  background: rgba(217, 217, 217, 0.40);
+  backdrop-filter: blur(4px); 
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  filter: brightness(1.3);
+  filter: brightness(1.1);
 }
 
 .cover{
-  object-fit: cover;
+  width:250px;
+  height:250px;
+  background-size: contain;
+  transition: background-image 1s ease-in-out;
 }
 
 .title{
@@ -141,7 +218,7 @@ button:hover{
   padding: 0;
   top: 0;
   color:#000000;
-  background: #ffffff;
+  background: #b7b6b6;
   height: 5px;
   opacity: 1;
   overflow: hidden;
@@ -257,11 +334,13 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 10px;
   overflow: hidden;
   transition: 0.7s;
+  pointer-events: none;
 }
 
 .playlist-open{
   max-height: 100%;
   opacity: 1;
+  pointer-events: all;
 }
 
 .playlist__button{
@@ -271,7 +350,6 @@ input[type="range"]::-moz-range-thumb {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 20px 20px;
-  /* display: flex; */
   text-align: left;
 }
 
@@ -280,14 +358,12 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .playlist__list{
-  /* list-style-position: outside; */
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: start;
   list-style: none;
-  /* padding-left: 20px; */
 }
 
 .track__button{
@@ -367,18 +443,20 @@ input[type="range"]::-moz-range-thumb {
   margin-top: auto;
   width: 100%;
   font-family: Inter;
+  color: #000000;
   font-weight: 700;
-  border: 1px solid #B9B9B9;
-  background: rgba(217, 217, 217, 0.40);
-  backdrop-filter: blur(2px); 
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(4px);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px); 
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .footer__container{
   margin: 0 auto;
-  max-width: 1024px;
+  max-width: 600px;
   display: flex;
-  justify-content: space-between;
+  gap:20px;
   align-items: center;
   padding: 10px;
 }
@@ -395,9 +473,10 @@ input[type="range"]::-moz-range-thumb {
 .footer__author{
   text-decoration: none;
   color:#000000;
+  margin-left: auto;
   transition: 0.5s;
 }
 
 .footer__author:hover{
-  color:rgb(59, 36, 136);
+  color:rgb(145, 122, 223);
 }
