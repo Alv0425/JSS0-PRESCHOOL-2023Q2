@@ -1,28 +1,46 @@
 'use strict';
 const tracks = [
   {
-    'title':'Elephant gun',
-    'author':'Beirut',
-    'src':'./audio/beirut-elephant-gun.mp3',
-    'cover':'./images/beirut.jpg'
-  },
-  {
-    'title':'Fade into you',
-    'author':'Mazzy Star',
-    'src':'./audio/fade-into-you-mazzy-star.mp3',
-    'cover':'./images/mazzy-star.jfif'
+    'title':'Eye of the tiger',
+    'author':'Survivor',
+    'src':'./audio/eye-of-the-tiger-survivor.mp3',
+    'cover':'./images/survivor.jpg',
+    'color':'#180501'
   },
   {
     'title':'Rise',
     'author':'Eddie Vedder and Michael Brook',
     'src':'./audio/michael-brook-with-eddie-vedder-rise.mp3',
-    'cover':'./images/eddie-vedder.jpg'
+    'cover':'./images/eddie-vedder.jpg',
+    'color':'#071530'
+  },
+  {
+    'title':'Keep me in your heart',
+    'author':'Warren Zevon',
+    'src':'./audio/warren-zevon-keep-me-in-your-heart.mp3',
+    'cover':'./images/warren-zevon.jpg',
+    'color':'#180501'
+  },
+  {
+    'title':'Elephant gun',
+    'author':'Beirut',
+    'src':'./audio/beirut-elephant-gun.mp3',
+    'cover':'./images/beirut.jpg',
+    'color':'#97BDD2'
+  },
+  {
+    'title':'Fade into you',
+    'author':'Mazzy Star',
+    'src':'./audio/fade-into-you-mazzy-star.mp3',
+    'cover':'./images/mazzy-star.jpg',
+    'color': '#563A58'
   },
   {
     'title':'Scientist',
     'author':'Coldplay',
     'src':'./audio/the-scientist-coldplay.mp3',
-    'cover':'./images/coldplay.avif'
+    'cover':'./images/coldplay.jpg',
+    'color': '#0E103D'
   }
 ];
 
@@ -32,16 +50,23 @@ const srcs = tracks.map((track) => {return track.src});
 const body = document.getElementsByTagName('body')[0];
 const main = document.createElement('main');
 
+const backgroundBody = document.createElement('div');
+backgroundBody.className = 'body__background';
+const backgroundBulb = document.createElement('div');
+backgroundBulb.className = 'background__bulb';
+const backgroundBulb2 = document.createElement('div');
+backgroundBulb2.className = 'background__bulb-2';
+const backgroundBulb3 = document.createElement('div');
+backgroundBulb3.className = 'background__bulb-3';
+backgroundBody.append(backgroundBulb,backgroundBulb2,backgroundBulb3);
+
 const player = document.createElement('div');
 player.className = 'container';
 main.append(player);
 
-const cover = document.createElement('img');
+const cover = document.createElement('div');
 cover.className = 'cover';
-cover.width = 250;
-cover.height = 250;
-cover.src = './images/beirut.jpg';
-cover.alt = 'cover';
+cover.style.backgroundImage = 'url('+'./images/beirut.jpg'+')';
 
 const trackName = document.createElement('div');
 trackName.className = 'title';
@@ -109,13 +134,11 @@ playlistButton.addEventListener('click', () => {
   playlistContainer.classList.remove('playlist-open');
 });
 
-/* <footer class="footer">
-    <div class="footer__container">
-      <div class="footer__year">2023</div>
-      <a href = "https://github.com/Alv0425" class="footer__author">alv0425</a>
-      <a href="https://rs.school/js-stage0/" class="footer__rss-logo"></a>
-    </div>    
-</footer> */
+body.addEventListener('click', (event) => {
+    if (!controlPlaylist.contains(event.target) && !playlistButton.contains(event.target) && !playlistContainer.contains(event.target)) {
+      playlistContainer.classList.remove('playlist-open');
+    }
+});
 
 const footer = document.createElement('footer');
 footer.className = 'footer';
@@ -133,4 +156,4 @@ footerRSS.className = 'footer__rss-logo';
 footerRSS.href = 'https://rs.school/js-stage0/';
 footerContainer.append(footerYear, footerAuthor, footerRSS);
 footer.append(footerContainer);
-body.prepend(main,footer);
+body.prepend(backgroundBody,main,footer);

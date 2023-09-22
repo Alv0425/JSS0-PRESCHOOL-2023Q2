@@ -55,9 +55,10 @@ function openTrack(index) {
   music.src = tracks[index].src;
   currTime = 0;
   timeCurrent.textContent = currTime;
-  body.style.backgroundImage = `url(${tracks[index].cover})`;
-  main.style.backgroundImage = `url(${tracks[index].cover})`;
-  cover.src = tracks[index].cover;
+  body.style.backgroundColor = tracks[index].color;
+  // main.style.backgroundImage = `url(${tracks[index].cover})`;
+  
+  cover.style.backgroundImage = `url(${tracks[index].cover})`;
   trackTitle.textContent = tracks[index].title;
   trackAuthor.textContent = tracks[index].author; 
   trackItems.forEach((item) => {item.className = 'track'});
@@ -76,6 +77,9 @@ function playMusic() {
     isPlayingNow = true;
     controlPlayPause.classList.remove('control-play');
     controlPlayPause.classList.add('control-pause');
+    backgroundBulb.classList.add('blub-rotate');
+    backgroundBulb2.classList.add('blub-rotate');
+    backgroundBulb3.classList.add('blub-rotate');
   }
 }
 
@@ -85,6 +89,9 @@ function pauseMusic() {
     isPlayingNow = false;
     controlPlayPause.classList.add('control-play');
     controlPlayPause.classList.remove('control-pause');
+    backgroundBulb.classList.remove('blub-rotate');
+    backgroundBulb2.classList.remove('blub-rotate');
+    backgroundBulb3.classList.remove('blub-rotate');
   }
 }
 
@@ -105,7 +112,7 @@ setInterval(() => {
     if (isSorted) {
       playNext();
     } else {
-      let randomIndex = Math.floor(Math.random() * 4);
+      let randomIndex = Math.floor(Math.random() * tracks.length);
       currentMusuic = randomIndex !== currentMusuic ? randomIndex : Math.floor(Math.random() * 4);
       console.log('shuffled!', randomIndex);
       setTimeout(() => {
@@ -118,7 +125,7 @@ setInterval(() => {
 }, 500);
 
 function playNext(){
-  if (currentMusuic < 3) {
+  if (currentMusuic < tracks.length - 1) {
     currentMusuic += 1;
     openTrack(currentMusuic);
     setTimeout(() => {
@@ -144,7 +151,7 @@ function playPrev(){
       playMusic();
     },100);
   } else {
-    currentMusuic = 3;
+    currentMusuic = tracks.length - 1;
     openTrack(currentMusuic);
     setTimeout(()=>{
       isPlayingNow = false;
@@ -176,17 +183,22 @@ controlRepeatShuffle.addEventListener('click', () => {
 document.addEventListener("keyup", (event) => {
   if (event.code == 'Space'){
     if (isPlayingNow) {
-      pauseMusic();
+      setTimeout(() => {
+        pauseMusic();
+      },10);
+      
     } else {
-      playMusic();
+      setTimeout(() => {
+        playMusic();
+      },10);
     }
   };
-  if (event.key == 'ArrowLeft'){
+  if (event.key == 'ArrowUp'){
     setTimeout(() => {
       playPrev();
     },500);
   }
-  if (event.key == 'ArrowRight'){
+  if (event.key == 'ArrowDown'){
     setTimeout(() => {
       playNext();
     },500);
