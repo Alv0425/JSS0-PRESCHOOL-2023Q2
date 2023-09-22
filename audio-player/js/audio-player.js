@@ -56,7 +56,6 @@ function openTrack(index) {
   currTime = 0;
   timeCurrent.textContent = currTime;
   body.style.backgroundColor = tracks[index].color;
-  // main.style.backgroundImage = `url(${tracks[index].cover})`;
   
   cover.style.backgroundImage = `url(${tracks[index].cover})`;
   trackTitle.textContent = tracks[index].title;
@@ -67,7 +66,7 @@ function openTrack(index) {
     timeFull.textContent = getCurrentTime(music.duration);
     currentDuration = music.duration;
     event.target.removeEventListener('loadedmetadata', metadataLoad);
-  },false);
+  }, false);
 }
 
 function playMusic() {
@@ -119,7 +118,7 @@ setInterval(() => {
         openTrack(currentMusuic);
         isPlayingNow = false;
         playMusic();
-      },100);
+      }, 100);
     }
   }
 }, 500);
@@ -131,14 +130,14 @@ function playNext(){
     setTimeout(() => {
       isPlayingNow = false;
       playMusic();
-    },100)
+    }, 100)
   } else {
     currentMusuic = 0;
     openTrack(currentMusuic);
     setTimeout(() => {
       isPlayingNow = false;
       playMusic();
-    },100);
+    }, 100);
   }
 }
 
@@ -149,14 +148,14 @@ function playPrev(){
     setTimeout(()=>{
       isPlayingNow = false;
       playMusic();
-    },100);
+    }, 100);
   } else {
     currentMusuic = tracks.length - 1;
     openTrack(currentMusuic);
     setTimeout(()=>{
       isPlayingNow = false;
       playMusic();
-    },100);
+    }, 100);
   }
 }
 
@@ -185,23 +184,23 @@ document.addEventListener("keyup", (event) => {
     if (isPlayingNow) {
       setTimeout(() => {
         pauseMusic();
-      },10);
+      }, 10);
       
     } else {
       setTimeout(() => {
         playMusic();
-      },10);
+      }, 10);
     }
   };
   if (event.key == 'ArrowUp'){
     setTimeout(() => {
       playPrev();
-    },500);
+    }, 500);
   }
   if (event.key == 'ArrowDown'){
     setTimeout(() => {
       playNext();
-    },500);
+    }, 500);
   }
 });
 

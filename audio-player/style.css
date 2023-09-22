@@ -30,22 +30,7 @@ body {
 
 .body__background{
   position: absolute;
-  inset:0 0 0 0;
-}
-
-@keyframes change-shape{
-  0%{
-  border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
-  }
-  34%{
-      border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
-  }
-  67%{
-    border-radius: 100% 50% 60% 100% / 100% 100% 60% 60% ;
-  }
-  100%{
-    border-radius: 32% 58% 70% 30% / 45% 45% 55% 55%;
-  }
+  inset: 0 0 0 0;
 }
 
 @keyframes change-shape-rotate{
@@ -126,7 +111,7 @@ body:after {
            url(./assets/playlist.svg)
            url(./assets/rs_school_js.svg)
            url(./images/beirut.jpg)
-           url(./images/coldplay.avif)
+           url(./images/coldplay.jpg)
            url(./images/eddie-vedder.jpg)
            url(./images/mazzy-star.jpg)
            url(./images/survivor.jpg);
