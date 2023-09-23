@@ -74,7 +74,6 @@ const tracks = [
 
 const srcs = tracks.map((track) => {return track.src});
 
-
 const body = document.getElementsByTagName('body')[0];
 const main = document.createElement('main');
 
@@ -196,4 +195,36 @@ footerRSS.className = 'footer__rss-logo';
 footerRSS.href = 'https://rs.school/js-stage0/';
 footerContainer.append(footerYear, footerAuthor, footerRSS);
 footer.append(footerContainer);
-body.prepend(backgroundBody,main,footer);
+
+// url(./assets/angle-down.svg) 
+//            url(./assets/caret-right-solid.svg)
+//            url(./assets/left.svg)
+//            url(./assets/pause.svg)
+//            url(./assets/play.svg)
+//            url(./assets/shuffle-solid.svg)
+//            url(./assets/right.svg)
+//            url(./assets/repeat-solid.svg)
+//            url(./assets/playlist.svg)
+//            url(./assets/rss.svg)
+//            url(./assets/volume.svg)
+//            url(./assets/volume-muted.svg)
+
+const icons = [
+  './assets/angle-down.svg',
+  './assets/caret-right-solid.svg',
+  './assets/left.svg',
+  './assets/pause.svg',
+  './assets/play.svg',
+  './assets/shuffle-solid.svg',
+  './assets/right.svg',
+  './assets/repeat-solid.svg',
+  './assets/playlist.svg',
+  './assets/rss.svg',
+  './assets/volume.svg,',
+  './assets/volume-muted.svg'
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+  body.prepend(backgroundBody,main,footer);
+});
+

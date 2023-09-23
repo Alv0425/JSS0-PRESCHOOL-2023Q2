@@ -46,6 +46,14 @@ srcs.forEach((src, index) => {
   };
 });
 
+function setCoverImage(src) {  
+  const image = new Image();
+  image.src = src;
+  image.onload = () => {      
+    cover.style.backgroundImage = `url(${src})`;
+  }; 
+}
+
 function openTrack(index) {
   if (isPlayingNow) {
     music.pause();
@@ -54,8 +62,7 @@ function openTrack(index) {
   currTime = 0;
   timeCurrent.textContent = currTime;
   body.style.backgroundColor = tracks[index].color;
-  
-  cover.style.backgroundImage = `url(${tracks[index].cover})`;
+  setCoverImage(tracks[index].cover);
   trackTitle.textContent = tracks[index].title;
   trackAuthor.textContent = tracks[index].author; 
   trackItems.forEach((item) => {item.className = 'track'});
