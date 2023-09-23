@@ -68,6 +68,18 @@ const cover = document.createElement('div');
 cover.className = 'cover';
 cover.style.backgroundImage = 'url('+'./images/beirut.jpg'+')';
 
+const volumeBarContainer = document.createElement('div');
+volumeBarContainer.className = 'volume-bar-container';
+const volumeBar = document.createElement('input');
+volumeBar.type = 'range';
+volumeBar.className = 'volume-bar';
+volumeBar.value = 70;
+const controlVolume = document.createElement('button');
+controlVolume.className = 'control-volume';
+volumeBarContainer.append(controlVolume, volumeBar);
+cover.append(volumeBarContainer);
+
+
 const trackName = document.createElement('div');
 trackName.className = 'title';
 const trackTitle = document.createElement('p');

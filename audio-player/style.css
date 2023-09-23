@@ -159,12 +159,72 @@ button:hover{
 }
 
 .cover{
+  position: relative;
   width:250px;
   height:250px;
   background-size: contain;
   border-radius: 10px;
   border: #B9B9B9 1px solid;
   transition: background-image 1s ease-in-out;
+}
+
+.volume-bar-container{
+  position: absolute;
+  top:5px;
+  left:5px;
+  display:flex;
+  gap:2px;
+  align-items: center;
+  padding: 3px;
+  background-color: rgba(217, 217, 217, 0.7);
+  border-radius: 15px;
+  transition: 1.2s;
+  opacity: 0.6;
+}
+
+.control-volume{
+  width:25px;
+  height:25px;
+  background-size: 90%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(./assets/volume.svg);
+  border-radius: 50%;
+}
+
+.control-volume-muted{
+  background-image: url(./assets/volume-muted.svg);
+}
+
+.volume-bar{
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  width:50px;
+}
+
+.volume-bar-container:hover{
+  opacity: 1;
+}
+
+@media (pointer:fine) and (hover:hover) {
+  .volume-bar-container .volume-bar {
+    width: 0;
+    transition: 1s;
+    gap: 0;
+    padding-right: 0;
+    margin:0px;
+  }
+
+  .volume-bar-container:hover .volume-bar {
+    width: 50px;
+  }
+
+  .volume-bar:hover{
+    cursor: pointer;
+  }
 }
 
 .title{
@@ -234,10 +294,11 @@ input[type=range]:focus {
   outline: none;
 }
 
+.volume-bar::-webkit-slider-thumb,
 .input-range::-webkit-slider-thumb{
   -webkit-appearance: none;
   appearance: none;
-  width: 5px;
+  width: 2px;
   height: 5px;
   background-color: #000000;
   box-shadow: -250px 0 0 250px #000;
@@ -260,6 +321,10 @@ input[type="range"]::-moz-range-thumb {
 .control{
   background-position: center;
   transition: 0.3s;
+}
+
+.control:hover{
+  opacity: 0.65;
 }
 
 .control-shuffle{
@@ -288,10 +353,6 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   background-image: url(./assets/play.svg);
   background-size: contain;
-}
-
-.control:hover{
-  opacity: 0.7;
 }
 
 .control-pause{

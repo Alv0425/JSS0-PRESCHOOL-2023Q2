@@ -5,6 +5,7 @@ let currentDuration = 0;
 let isPlayingNow = false;
 let currTime = 0;
 let isSorted = true;
+let currentVolume = 0.7;
 
 const trackItems = [];
 tracks.forEach((track, index) => {
@@ -130,7 +131,7 @@ function playNext(){
     setTimeout(() => {
       isPlayingNow = false;
       playMusic();
-    }, 100)
+    }, 100);
   } else {
     currentMusuic = 0;
     openTrack(currentMusuic);
@@ -191,7 +192,7 @@ document.addEventListener("keyup", (event) => {
         playMusic();
       }, 10);
     }
-  };
+  }
   if (event.key == 'ArrowUp'){
     setTimeout(() => {
       playPrev();
@@ -204,3 +205,17 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+volumeBar.addEventListener('input', () => {
+  currentVolume = volumeBar.value / 100;
+  music.volume = currentVolume;
+});
+
+controlVolume.addEventListener('click', () => {
+  if (!music.muted) {
+    music.muted = true;
+    controlVolume.classList.add('control-volume-muted');
+  } else {
+    music.muted = false;
+    controlVolume.classList.remove('control-volume-muted');
+  }
+});
