@@ -5,6 +5,7 @@ let currentDuration = 0;
 let isPlayingNow = false;
 let currTime = 0;
 let isSorted = true;
+let currentVolume = 0.7;
 
 const trackItems = [];
 tracks.forEach((track, index) => {
@@ -36,15 +37,12 @@ tracks.forEach((track, index) => {
 });
 openTrack(0);
 
-console.log(trackItems[0].childNodes[0].childNodes[1]);
-
 srcs.forEach((src, index) => {
   const audio = new Audio;
   audio.preload = 'auto';
   audio.src = src;
   audio.onloadedmetadata = () => { 
     trackItems[index].childNodes[0].childNodes[1].textContent = getCurrentTime(audio.duration);
-    console.log(audio.duration);
   };
 });
 
@@ -113,7 +111,6 @@ setInterval(() => {
     } else {
       let randomIndex = Math.floor(Math.random() * tracks.length);
       currentMusuic = randomIndex !== currentMusuic ? randomIndex : Math.floor(Math.random() * 4);
-      console.log('shuffled!', randomIndex);
       setTimeout(() => {
         openTrack(currentMusuic);
         isPlayingNow = false;
@@ -130,7 +127,7 @@ function playNext(){
     setTimeout(() => {
       isPlayingNow = false;
       playMusic();
-    }, 100)
+    }, 100);
   } else {
     currentMusuic = 0;
     openTrack(currentMusuic);
@@ -191,7 +188,7 @@ document.addEventListener("keyup", (event) => {
         playMusic();
       }, 10);
     }
-  };
+  }
   if (event.key == 'ArrowUp'){
     setTimeout(() => {
       playPrev();
@@ -204,3 +201,17 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+volumeBar.addEventListener('input', () => {
+  currentVolume = volumeBar.value / 100;
+  music.volume = currentVolume;
+});
+
+controlVolume.addEventListener('click', () => {
+  if (!music.muted) {
+    music.muted = true;
+    controlVolume.classList.add('control-volume-muted');
+  } else {
+    music.muted = false;
+    controlVolume.classList.remove('control-volume-muted');
+  }
+});
