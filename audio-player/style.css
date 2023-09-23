@@ -2,10 +2,6 @@
   box-sizing: inherit;
 }
 
-:root{
-  --background: url(./assets/topography.svg);
-}
-
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -109,12 +105,19 @@ body::after {
            url(./assets/right.svg)
            url(./assets/repeat-solid.svg)
            url(./assets/playlist.svg)
-           url(./assets/rs_school_js.svg)
+           url(./assets/rss.svg)
+           url(./assets/volume.svg)
+           url(./assets/volume-muted.svg)
            url(./images/beirut.jpg)
            url(./images/coldplay.jpg)
            url(./images/eddie-vedder.jpg)
            url(./images/mazzy-star.jpg)
-           url(./images/survivor.jpg);
+           url(./images/survivor.jpg)
+           url(./images/fortunate-son.jfif)
+           url(./images/ccr-have-you-ever.jpg)
+           url(./images/warren-zevon.jpg)
+           url(./images/stone-sour.jpeg)
+           url(./images/jain.jfif);
   display: none; 
 }
 
@@ -156,13 +159,14 @@ button:hover{
   backdrop-filter: blur(4px); 
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   filter: brightness(1.1);
+  transition: height 1s;
 }
 
 .cover{
   position: relative;
   width:250px;
   height:250px;
-  background-size: contain;
+  background-size: cover;
   border-radius: 10px;
   border: #B9B9B9 1px solid;
   transition: background-image 1s ease-in-out;
@@ -170,8 +174,8 @@ button:hover{
 
 .volume-bar-container{
   position: absolute;
-  top:5px;
-  left:5px;
+  top:7px;
+  left:7px;
   display:flex;
   gap:2px;
   align-items: center;
@@ -229,6 +233,7 @@ button:hover{
 
 .title{
   text-align: center;
+  max-width: 250px;
 }
 
 .title .title__author,
@@ -240,7 +245,7 @@ button:hover{
 }
 
 .title .title__title{
-  font-size: 20px;
+  font-size:  18px;
   font-weight: 700;
 }
 
@@ -427,6 +432,20 @@ input[type="range"]::-moz-range-thumb {
   flex-direction: column;
   align-items: start;
   list-style: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.playlist__list::-webkit-scrollbar{
+  width:5px;
+}
+
+.playlist__list::-webkit-scrollbar-track {
+  background: #ffffff; 
+}
+
+.playlist__list::-webkit-scrollbar-thumb {
+  background: #d8d8d8; 
 }
 
 .track__button{
@@ -527,10 +546,16 @@ input[type="range"]::-moz-range-thumb {
 .footer__rss-logo{
   width: 100px;
   height: 40px;
-  background-image: url(./assets/rs_school_js.svg);
+  background-image: url(./assets/rss.svg);
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+  filter: brightness(0);
+  transition: 1s;
+}
+
+.footer__rss-logo:hover{
+  filter: brightness(1);
 }
 
 .footer__author{
@@ -541,5 +566,5 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .footer__author:hover{
-  color:rgb(145, 122, 223);
+  color:rgb(56, 35, 125);
 }

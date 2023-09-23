@@ -1,10 +1,38 @@
 'use strict';
 const tracks = [
   {
+    'title':'Have you ever seen the rain',
+    'author':'Creedence Clearwater Revival',
+    'src':'./audio/have-you-ever-seen-the-rain-ccr.mp3',
+    'cover':'./images/ccr-have-you-ever.jpg',
+    'color':'#28395A'
+  },
+  {
+    'title':'Through the glass',
+    'author':'Stone sour',
+    'src':'./audio/stone-sour-through-the-glass.mp3',
+    'cover':'./images/stone-sour.jpeg',
+    'color':'#C5D5EA'
+  },
+  {
     'title':'Eye of the tiger',
     'author':'Survivor',
     'src':'./audio/eye-of-the-tiger-survivor.mp3',
     'cover':'./images/survivor.jpg',
+    'color':'#180501'
+  },
+  {
+    'title':'Makeba',
+    'author':'Jain',
+    'src':'./audio/makeba-jain.mp3',
+    'cover':'./images/jain.jfif',
+    'color':'#F9C610'
+  },
+  {
+    'title':'Fortunate son',
+    'author':'Creedence Clearwater Revival',
+    'src':'./audio/fortunate-son-ccr.mp3',
+    'cover':'./images/fortunate-son.jfif',
     'color':'#180501'
   },
   {
