@@ -89,6 +89,7 @@ backgroundBody.append(backgroundBulb, backgroundBulb2, backgroundBulb3);
 
 const loadingIcon = document.createElement('div');
 loadingIcon.className = 'loading-icon';
+body.append(loadingIcon);
 
 const player = document.createElement("div");
 player.className = "container";
@@ -96,7 +97,6 @@ main.append(player);
 
 const cover = document.createElement("div");
 cover.className = "cover";
-cover.style.backgroundImage = "url(" + "./images/beirut.jpg" + ")";
 
 const volumeBarContainer = document.createElement("div");
 volumeBarContainer.className = "volume-bar-container";
@@ -212,8 +212,10 @@ footerYear.textContent = "2023";
 footerAuthor.className = "footer__author";
 footerAuthor.textContent = "Alv0425";
 footerAuthor.href = "https://github.com/Alv0425";
+footerAuthor.target = "_blank";
 footerRSS.className = "footer__rss-logo";
 footerRSS.href = "https://rs.school/js-stage0/";
+footerRSS.target = "_blank";
 footerContainer.append(footerYear, footerAuthor, footerRSS);
 footer.append(footerContainer);
 
@@ -232,26 +234,6 @@ const icons = [
   "./assets/volume-muted.svg",
 ];
 
-function loadImage(src) {
-  let img = new Image();
-  img.src = src;
-}
-
-function getImage(src) {
-  let img = new Image();
-  img.src = src;
-  return img;
-}
-
-// icons.forEach((iconSrc) => {
-//   loadImage(iconSrc);
-// });
-
-tracks.forEach((track) => {
-  loadImage(track.cover);
-});
-
-const iconsArray = icons.map((iconSrc) =>  getImage(iconSrc));
 const iconsPromisesArray = icons.map((iconSrc) => {
   return new Promise((resolve) => {
     const image = new Image();
@@ -262,9 +244,29 @@ const iconsPromisesArray = icons.map((iconSrc) => {
   });
 });
 
-body.append(loadingIcon);
+const coversPromisesArray = tracks.map((track) => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.addEventListener('load', () => {
+      resolve('loaded');
+    });
+  image.src = track.cover;
+  });
+});
 
-Promise.all(iconsPromisesArray).then(() => {
+const audioMetadataPromises = tracks.map((track) => {
+  return new Promise((resolve) => {
+    const audio = new Audio;
+    audio.addEventListener('loadedmetadata', () => {
+      resolve('loaded');
+    });
+  audio.src = track.src;
+  });
+});
+
+const allImagesPromises = iconsPromisesArray.concat(coversPromisesArray, audioMetadataPromises);
+
+Promise.all(allImagesPromises).then(() => {
   loadingIcon.remove();
   body.prepend(backgroundBody, main, footer);
 });

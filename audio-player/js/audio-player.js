@@ -6,6 +6,7 @@ let currTime = 0;
 let isSorted = true;
 let currentVolume = 0.7;
 
+//Add playlist
 const trackItems = [];
 tracks.forEach((track, index) => {
   const playlistItem = document.createElement("li");
@@ -34,19 +35,21 @@ tracks.forEach((track, index) => {
     playMusic();
   });
 });
+
+//Open first track
 openTrack(0);
 
+//Load audio durations for all tracks in the playlist
 srcs.forEach((src, index) => {
   const audio = new Audio();
   audio.preload = "auto";
   audio.src = src;
   audio.onloadedmetadata = () => {
-    trackItems[index].childNodes[0].childNodes[1].textContent = getCurrentTime(
-      audio.duration
-    );
+    trackItems[index].childNodes[0].childNodes[1].textContent = getCurrentTime(audio.duration);
   };
 });
 
+//Preload cover image for animated change
 function setCoverImage(src) {
   const image = new Image();
   image.src = src;
@@ -55,6 +58,7 @@ function setCoverImage(src) {
   };
 }
 
+//Load all data and media required for track
 function openTrack(index) {
   if (isPlayingNow) {
     music.pause();
@@ -70,17 +74,43 @@ function openTrack(index) {
     item.className = "track";
   });
   trackItems[index].classList.add("track-active");
-  music.addEventListener(
-    "loadedmetadata",
+  music.addEventListener("loadedmetadata",
     function metadataLoad(event) {
       timeFull.textContent = getCurrentTime(music.duration);
       currentDuration = music.duration;
       event.target.removeEventListener("loadedmetadata", metadataLoad);
-    },
-    false
-  );
+    },false);
 }
 
+function openTrackPromise(index) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (isPlayingNow) {
+        music.pause();
+      }
+      music.src = tracks[index].src;
+      currTime = 0;
+      timeCurrent.textContent = currTime;
+      body.style.backgroundColor = tracks[index].color;
+      setCoverImage(tracks[index].cover);
+      trackTitle.textContent = tracks[index].title;
+      trackAuthor.textContent = tracks[index].author;
+      trackItems.forEach((item) => {
+        item.className = "track";
+      });
+      trackItems[index].classList.add("track-active");
+      music.addEventListener("loadedmetadata",
+        function metadataLoad(event) {
+          timeFull.textContent = getCurrentTime(music.duration);
+          currentDuration = music.duration;
+          event.target.removeEventListener("loadedmetadata", metadataLoad);
+          resolve('track loaded');
+        },false);
+    }, 100);
+  });
+}
+
+//Function playing audio
 function playMusic() {
   if (!isPlayingNow) {
     music.currentTime = currTime;
@@ -94,6 +124,7 @@ function playMusic() {
   }
 }
 
+//Function pausing audio
 function pauseMusic() {
   if (isPlayingNow) {
     music.pause();
@@ -106,6 +137,7 @@ function pauseMusic() {
   }
 }
 
+//Onclick events handler for play/pause button
 controlPlayPause.addEventListener("click", () => {
   if (isPlayingNow) {
     pauseMusic();
@@ -114,6 +146,7 @@ controlPlayPause.addEventListener("click", () => {
   }
 });
 
+//Progress handler
 setInterval(() => {
   progressRange.value = (music.currentTime / music.duration) * 100;
   progressCurrent.style.width = progressRange.value + "%";
@@ -137,24 +170,28 @@ setInterval(() => {
   }
 }, 500);
 
+//Play next handler
 function playNext() {
   if (currentMusuic < tracks.length - 1) {
     currentMusuic += 1;
-    openTrack(currentMusuic);
-    setTimeout(() => {
-      isPlayingNow = false;
-      playMusic();
-    }, 100);
+    openTrackPromise(currentMusuic).then(() => {
+      setTimeout(() => {
+        isPlayingNow = false;
+        playMusic();
+      }, 100);
+    });
   } else {
     currentMusuic = 0;
-    openTrack(currentMusuic);
-    setTimeout(() => {
-      isPlayingNow = false;
-      playMusic();
-    }, 100);
+    openTrackPromise(currentMusuic).then(() => {
+      setTimeout(() => {
+        isPlayingNow = false;
+        playMusic();
+      }, 100);
+    });
   }
 }
 
+//Play prev handler
 function playPrev() {
   if (currentMusuic > 0) {
     currentMusuic -= 1;
@@ -173,6 +210,7 @@ function playPrev() {
   }
 }
 
+//Event listeners for click on play next and prev
 controlNext.addEventListener("click", () => {
   playNext();
 });
@@ -180,11 +218,13 @@ controlPrev.addEventListener("click", () => {
   playPrev();
 });
 
+//Event listener for interactions with progress bar
 progressRange.addEventListener("input", () => {
   currTime = (progressRange.value * music.duration) / 100;
   music.currentTime = currTime;
 });
 
+//Repeat-shuffle modes
 controlRepeatShuffle.addEventListener("click", () => {
   if (isSorted) {
     isSorted = false;
@@ -197,30 +237,32 @@ controlRepeatShuffle.addEventListener("click", () => {
   }
 });
 
-// document.addEventListener("keyup", (event) => {
-//   if (event.code == "Space") {
-//     if (isPlayingNow) {
-//       setTimeout(() => {
-//         pauseMusic();
-//       }, 10);
-//     } else {
-//       setTimeout(() => {
-//         playMusic();
-//       }, 10);
-//     }
-//   }
-//   if (event.key == "ArrowUp") {
-//     setTimeout(() => {
-//       playPrev();
-//     }, 500);
-//   }
-//   if (event.key == "ArrowDown") {
-//     setTimeout(() => {
-//       playNext();
-//     }, 500);
-//   }
-// });
+//keyboard events
+document.addEventListener("keyup", (event) => {
+  if (event.code == "Space") {
+    if (isPlayingNow) {
+      setTimeout(() => {
+        pauseMusic();
+      }, 10);
+    } else {
+      setTimeout(() => {
+        playMusic();
+      }, 10);
+    }
+  }
+  if (event.key == "ArrowUp") {
+    setTimeout(() => {
+      playPrev();
+    }, 500);
+  }
+  if (event.key == "ArrowDown") {
+    setTimeout(() => {
+      playNext();
+    }, 500);
+  }
+});
 
+//Volume controls
 volumeBar.addEventListener("input", () => {
   currentVolume = volumeBar.value / 100;
   music.volume = currentVolume;
