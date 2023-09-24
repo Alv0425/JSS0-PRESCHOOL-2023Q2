@@ -232,26 +232,26 @@ const icons = [
   "./assets/volume-muted.svg",
 ];
 
-function loadImage(src) {
-  let img = new Image();
-  img.src = src;
-}
+// function loadImage(src) {
+//   let img = new Image();
+//   img.src = src;
+// }
 
-function getImage(src) {
-  let img = new Image();
-  img.src = src;
-  return img;
-}
+// function getImage(src) {
+//   let img = new Image();
+//   img.src = src;
+//   return img;
+// }
 
 // icons.forEach((iconSrc) => {
 //   loadImage(iconSrc);
 // });
 
-tracks.forEach((track) => {
-  loadImage(track.cover);
-});
+// tracks.forEach((track) => {
+//   loadImage(track.cover);
+// });
 
-const iconsArray = icons.map((iconSrc) =>  getImage(iconSrc));
+// const iconsArray = icons.map((iconSrc) =>  getImage(iconSrc));
 const iconsPromisesArray = icons.map((iconSrc) => {
   return new Promise((resolve) => {
     const image = new Image();
@@ -262,9 +262,30 @@ const iconsPromisesArray = icons.map((iconSrc) => {
   });
 });
 
+const coversPromisesArray = tracks.map((track) => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.addEventListener('load', () => {
+      resolve('loaded');
+    });
+  image.src = track.cover;
+  });
+});
+
+const audioMetadataPromises = tracks.map((track) => {
+  return new Promise((resolve) => {
+    const audio = new Audio;
+    audio.addEventListener('loadedmetadata', () => {
+      resolve('loaded');
+    });
+  audio.src = track.src;
+  });
+});
+
+const allImagesPromises = iconsPromisesArray.concat(coversPromisesArray, audioMetadataPromises);
 body.append(loadingIcon);
 
-Promise.all(iconsPromisesArray).then(() => {
+Promise.all(allImagesPromises).then(() => {
   loadingIcon.remove();
   body.prepend(backgroundBody, main, footer);
 });
