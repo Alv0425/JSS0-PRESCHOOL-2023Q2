@@ -197,29 +197,29 @@ controlRepeatShuffle.addEventListener("click", () => {
   }
 });
 
-document.addEventListener("keyup", (event) => {
-  if (event.code == "Space") {
-    if (isPlayingNow) {
-      setTimeout(() => {
-        pauseMusic();
-      }, 10);
-    } else {
-      setTimeout(() => {
-        playMusic();
-      }, 10);
-    }
-  }
-  if (event.key == "ArrowUp") {
-    setTimeout(() => {
-      playPrev();
-    }, 500);
-  }
-  if (event.key == "ArrowDown") {
-    setTimeout(() => {
-      playNext();
-    }, 500);
-  }
-});
+// document.addEventListener("keyup", (event) => {
+//   if (event.code == "Space") {
+//     if (isPlayingNow) {
+//       setTimeout(() => {
+//         pauseMusic();
+//       }, 10);
+//     } else {
+//       setTimeout(() => {
+//         playMusic();
+//       }, 10);
+//     }
+//   }
+//   if (event.key == "ArrowUp") {
+//     setTimeout(() => {
+//       playPrev();
+//     }, 500);
+//   }
+//   if (event.key == "ArrowDown") {
+//     setTimeout(() => {
+//       playNext();
+//     }, 500);
+//   }
+// });
 
 volumeBar.addEventListener("input", () => {
   currentVolume = volumeBar.value / 100;

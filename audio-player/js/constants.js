@@ -87,6 +87,9 @@ const backgroundBulb3 = document.createElement("div");
 backgroundBulb3.className = "background__bulb-3";
 backgroundBody.append(backgroundBulb, backgroundBulb2, backgroundBulb3);
 
+const loadingIcon = document.createElement('div');
+loadingIcon.className = 'loading-icon';
+
 const player = document.createElement("div");
 player.className = "container";
 main.append(player);
@@ -152,6 +155,9 @@ playerControls.append(
 
 let music = new Audio();
 music.preload = "auto";
+music.controls = "true";
+music.style.display = 'none';
+body.append(music);
 
 const getCurrentTime = (value) => {
   let sec = Math.floor(value);
@@ -231,14 +237,34 @@ function loadImage(src) {
   img.src = src;
 }
 
-icons.forEach((iconSrc) => {
-  loadImage(iconSrc);
-});
+function getImage(src) {
+  let img = new Image();
+  img.src = src;
+  return img;
+}
+
+// icons.forEach((iconSrc) => {
+//   loadImage(iconSrc);
+// });
 
 tracks.forEach((track) => {
   loadImage(track.cover);
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+const iconsArray = icons.map((iconSrc) =>  getImage(iconSrc));
+const iconsPromisesArray = icons.map((iconSrc) => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.addEventListener('load', () => {
+      resolve('loaded');
+    });
+  image.src = iconSrc;
+  });
+});
+
+body.append(loadingIcon);
+
+Promise.all(iconsPromisesArray).then(() => {
+  loadingIcon.remove();
   body.prepend(backgroundBody, main, footer);
 });
