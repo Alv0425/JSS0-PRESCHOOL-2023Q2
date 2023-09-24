@@ -89,6 +89,7 @@ backgroundBody.append(backgroundBulb, backgroundBulb2, backgroundBulb3);
 
 const loadingIcon = document.createElement('div');
 loadingIcon.className = 'loading-icon';
+body.append(loadingIcon);
 
 const player = document.createElement("div");
 player.className = "container";
@@ -96,7 +97,6 @@ main.append(player);
 
 const cover = document.createElement("div");
 cover.className = "cover";
-cover.style.backgroundImage = "url(" + "./images/beirut.jpg" + ")";
 
 const volumeBarContainer = document.createElement("div");
 volumeBarContainer.className = "volume-bar-container";
@@ -232,26 +232,6 @@ const icons = [
   "./assets/volume-muted.svg",
 ];
 
-// function loadImage(src) {
-//   let img = new Image();
-//   img.src = src;
-// }
-
-// function getImage(src) {
-//   let img = new Image();
-//   img.src = src;
-//   return img;
-// }
-
-// icons.forEach((iconSrc) => {
-//   loadImage(iconSrc);
-// });
-
-// tracks.forEach((track) => {
-//   loadImage(track.cover);
-// });
-
-// const iconsArray = icons.map((iconSrc) =>  getImage(iconSrc));
 const iconsPromisesArray = icons.map((iconSrc) => {
   return new Promise((resolve) => {
     const image = new Image();
@@ -283,7 +263,6 @@ const audioMetadataPromises = tracks.map((track) => {
 });
 
 const allImagesPromises = iconsPromisesArray.concat(coversPromisesArray, audioMetadataPromises);
-body.append(loadingIcon);
 
 Promise.all(allImagesPromises).then(() => {
   loadingIcon.remove();
