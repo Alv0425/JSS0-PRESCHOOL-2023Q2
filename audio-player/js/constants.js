@@ -212,8 +212,10 @@ footerYear.textContent = "2023";
 footerAuthor.className = "footer__author";
 footerAuthor.textContent = "Alv0425";
 footerAuthor.href = "https://github.com/Alv0425";
+footerAuthor.target = "_blank";
 footerRSS.className = "footer__rss-logo";
 footerRSS.href = "https://rs.school/js-stage0/";
+footerRSS.target = "_blank";
 footerContainer.append(footerYear, footerAuthor, footerRSS);
 footer.append(footerContainer);
 
