@@ -12,3 +12,11 @@ document.addEventListener('click', (event) => {
     body.classList.remove('body-lock');
   }
 });
+
+headerSearchInput.onkeyup = () => {
+  if (headerSearchInput.value) {
+    headerSearchButton.disabled = false;
+  } else {
+    headerSearchButton.disabled = true;
+  }
+}
