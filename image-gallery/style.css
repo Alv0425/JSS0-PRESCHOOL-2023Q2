@@ -41,6 +41,11 @@ body {
   transition: 2s;
 }
 
+.body-lock{
+  position: fixed;
+  overflow: scroll;
+}
+
 .header{
   position: relative;
   top:0;
