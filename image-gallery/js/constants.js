@@ -19,3 +19,30 @@ gallery.append(...cols);
 
 const header = document.createElement('header');
 header.className = 'header';
+
+const headerSeachContainer = document.createElement('FORM');
+headerSeachContainer.className = 'header__search';
+const searchContainer = document.createElement('div');
+searchContainer.className = 'search__container';
+const headerSearchForm = document.createElement('FIELDSET');
+headerSearchForm.className = 'search__form';
+const searchIcon = document.createElement('button');
+searchIcon.type = 'submit';
+searchIcon.className = 'search__icon';
+const headerSearchInput = document.createElement('INPUT');
+headerSearchInput.autofocus = true;
+headerSearchInput.className = 'search__input';
+headerSearchInput.type = 'text';
+headerSearchInput.placeholder = 'summer';
+const headerSearchButton = document.createElement('button');
+headerSearchButton.className = 'cross__button';
+headerSearchButton.disabled = true;
+const filterButton= document.createElement('button');
+filterButton.className = 'header__filter-button';
+filterButton.type = 'button';
+
+header.append(headerSeachContainer);
+searchContainer.append(headerSearchForm, filterButton);
+headerSeachContainer.append(searchContainer);
+headerSearchForm.append(searchIcon, headerSearchInput, headerSearchButton);
+body.append(header, gallery);
