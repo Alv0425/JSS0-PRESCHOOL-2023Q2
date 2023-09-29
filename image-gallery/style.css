@@ -35,3 +35,63 @@ body {
   background-color: var(--white);
   transition: 2s;
 }
+
+.header{
+  position: relative;
+  top:0;
+  left:0;
+  display:flex;
+  flex-direction: column;
+  width:100vw;
+  z-index: 1;
+  background-color: var(--black);
+}
+
+.gallery{
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  gap:10px;
+  flex-wrap: wrap;
+  transition: 1.5s;
+}
+
+.gallery__col{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 24%;
+  max-width: 24%;
+}
+
+
+@media (width < 1024px) {
+  .gallery__col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 49%;
+    max-width: 49%;
+  }
+}
+
+@media (width < 648px) {
+  .gallery__col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 99%;
+    max-width: 99%;  
+  }
+}
+
+.gallery__col img {
+  margin-top: 10px;
+  vertical-align: middle;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
