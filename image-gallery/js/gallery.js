@@ -1,4 +1,6 @@
 'use strict';
+let imagesUnsplash = [];
+let imagesFlickr = [];
 
 //Open-close filter menu
 filterButton.addEventListener('click', () => {
@@ -28,4 +30,35 @@ headerSearchButton.onclick = (event) => {
   event.preventDefault();
   headerSearchInput.value = '';
   headerSearchButton.disabled = true;
+}
+
+//Auxiliary functions
+//1. Removes all childs of node
+function removeChilds(element) {
+  while (element.firstChild) {
+      element.removeChild(element.firstChild);   
+  }
+}
+
+//2. Distributes all images among four columns of gallery grid
+function sortImages(arrImages) {
+  let arrFour = [[],[],[],[]];
+  let j = 0;
+  while (j < arrImages.length) {
+    for (let i=0; i<4; i++){
+      arrFour[i].push(arrImages[j]);
+      j += 1;
+    }
+  }
+  return arrFour.map((col) => {return col.sort(() => Math.random() - 0.5);});
+}
+
+//3. Converts creation date from JSON data of Unsplash and Flickr response to human-readable form
+function getCreationDate(str) {
+  if (str.length === 20 || str.length === 19) {
+    let year = str.slice(0,4);
+    let month = str.slice(5,7);
+    let day = str.slice(8,10);
+    return `${day}.${month}.${year}`;
+  }
 }
