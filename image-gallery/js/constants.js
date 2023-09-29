@@ -41,8 +41,73 @@ const filterButton= document.createElement('button');
 filterButton.className = 'header__filter-button';
 filterButton.type = 'button';
 
+const searchFilter = document.createElement('div');
+searchFilter.className = 'search__filter';
+const sourceFilter = document.createElement('div');
+sourceFilter.className = 'search__filter-source';
+const sourceUnsplashOption = document.createElement('div');
+sourceUnsplashOption.className = 'filter__option';
+const sourceFlickrOption = document.createElement('div');
+sourceFlickrOption.className = 'filter__option';
+const sourceUnsplashRadio = document.createElement('INPUT');
+sourceUnsplashRadio.type = 'radio';
+sourceUnsplashRadio.checked = true;
+sourceUnsplashRadio.name = 'source';
+sourceUnsplashRadio.setAttribute('id','source-unsplash');
+const sourceFlickrRadio = document.createElement('INPUT');
+sourceFlickrRadio.type = 'radio';
+sourceFlickrRadio.name = 'source';
+sourceFlickrRadio.setAttribute('id','source-flickr');
+const sourceUnsplashLabel = document.createElement('LABEL');
+const sourceFlickrLabel = document.createElement('LABEL');
+sourceUnsplashLabel.setAttribute('for','source-unsplash')
+sourceFlickrLabel.setAttribute('for','source-flickr');
+sourceUnsplashLabel.title = 'Unsplash';
+sourceFlickrLabel.title = 'Flickr';
+
+const orientationFilter = document.createElement('div');
+orientationFilter.className = 'search__filter-orientation';
+const orientationLandscapeOption = document.createElement('div');
+orientationLandscapeOption.className = 'filter__option';
+const orientationPortraitOption = document.createElement('div');
+orientationPortraitOption.className = 'filter__option';
+const orientationSquareOption = document.createElement('div');
+orientationSquareOption.className = 'filter__option';
+const orientationLandscapeRadio = document.createElement('INPUT');
+const orientationPortraitRadio = document.createElement('INPUT');
+const orientationSquareRadio = document.createElement('INPUT');
+[orientationLandscapeRadio.type, orientationPortraitRadio.type, orientationSquareRadio.type] = ['checkbox', 'checkbox', 'checkbox'];
+[orientationLandscapeRadio.checked, orientationPortraitRadio.checked, orientationSquareRadio.checked] = [true, true, true];
+[orientationLandscapeRadio.name, orientationPortraitRadio.name, orientationSquareRadio.name] = ['checkbox-landscape', 'checkbox-portrait', 'checkbox-squarish'];
+[orientationLandscapeRadio.value, orientationPortraitRadio.value, orientationSquareRadio.value] = ['landscape', 'portrait', 'squarish'];
+orientationLandscapeRadio.setAttribute('id','orientation-landscape');
+orientationPortraitRadio.setAttribute('id','orientation-portrait');
+orientationSquareRadio.setAttribute('id','orientation-squarish');
+const orientationLandscapeLabel = document.createElement('LABEL');
+const orientationPortraitLabel = document.createElement('LABEL');
+const orientationSquareLabel = document.createElement('LABEL');
+orientationLandscapeLabel.setAttribute('for','orientation-landscape');
+orientationPortraitLabel.setAttribute('for','orientation-portrait');
+orientationSquareLabel.setAttribute('for','orientation-squarish');
+orientationLandscapeLabel.title = 'landscape';
+orientationPortraitLabel.title = 'portrait';
+orientationSquareLabel.title = 'squarish';
+
+orientationFilter.append(orientationLandscapeOption, orientationPortraitOption, orientationSquareOption);
+orientationLandscapeOption.append(orientationLandscapeRadio, orientationLandscapeLabel);
+orientationPortraitOption.append(orientationPortraitRadio, orientationPortraitLabel);
+orientationSquareOption.append(orientationSquareRadio, orientationSquareLabel);
+
+searchFilter.append(sourceFilter, orientationFilter);
+sourceFilter.append(sourceUnsplashOption, sourceFlickrOption);
+sourceUnsplashOption.append(sourceUnsplashRadio, sourceUnsplashLabel);
+sourceFlickrOption.append(sourceFlickrRadio, sourceFlickrLabel);
+
 header.append(headerSeachContainer);
 searchContainer.append(headerSearchForm, filterButton);
-headerSeachContainer.append(searchContainer);
+headerSeachContainer.append(searchContainer, searchFilter);
 headerSearchForm.append(searchIcon, headerSearchInput, headerSearchButton);
 body.append(header, gallery);
+
+const errorMessage = document.createElement('p');
+errorMessage.style.color = '#000';

@@ -2,6 +2,10 @@
   box-sizing: inherit;
   font-family: inherit;
 }
+/* 
+* {
+  border: red 1px solid;
+} */
 
 :root{
   --black: #191627ff;
@@ -23,6 +27,7 @@ a{
 
 body {
   display: flex;
+  margin: 0;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
@@ -185,3 +190,200 @@ body {
   border: none;
 }
 
+.header__filter{
+  display: flex;
+  gap:15px;
+  width:100%;
+  justify-content: center;
+}
+
+.search__filter{
+  display: flex;  
+  gap:15px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--black);
+  transition: 1s;
+}
+
+.search__filter-show{
+  transform: translateY(100%);
+  padding:10px 0 20px 0;
+  height: 50px;
+  z-index: 1;
+}
+
+.search__filter-source{
+  display:flex;
+  gap:10px;
+  align-items: center;
+}
+
+.search__filter-source::before{
+  content: 'Source:';
+}
+
+.search__filter-orientation{
+  display:flex;
+  align-items: center;
+}
+
+input[type='radio'],
+input[type='checkbox']{
+  display: none;
+}
+
+label[for='source-unsplash']{
+  background-image: url(./assets/unsplash.svg);
+}
+label[for='source-flickr']{
+  background-image: url(./assets/flickr.svg);
+}
+
+label[for='source-unsplash'],
+label[for='source-flickr'],
+label[for='orientation-landscape'],
+label[for='orientation-portrait'],
+label[for='orientation-squarish'] {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 80%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  filter: brightness(0.5) grayscale(1);
+  transition: 0.5s;
+}
+
+label[for='orientation-landscape'] {
+  background-image: url(./assets/landscape.svg);
+}
+label[for='orientation-portrait']{
+  background-image: url(./assets/portrait.svg);
+}
+label[for='orientation-squarish']{
+  background-image: url(./assets/square.svg);
+}
+
+#orientation-landscape:checked + label[for='orientation-landscape'],
+#orientation-portrait:checked + label[for='orientation-portrait'],
+#orientation-squarish:checked + label[for='orientation-squarish']{
+  filter: brightness(1) grayscale(0);
+}
+
+@media (pointer:fine) and (hover:hover) {
+  label[for='source-unsplash']:hover,
+  label[for='source-flickr']:hover,
+  label[for='orientation-landscape']:hover,
+  label[for='orientation-portrait']:hover,
+  label[for='orientation-squarish']:hover {
+    filter: brightness(1) grayscale(0);
+    cursor: pointer;  
+  }
+
+  #orientation-landscape:checked + label[for='orientation-landscape']:hover,
+  #orientation-portrait:checked + label[for='orientation-portrait']:hover,
+  #orientation-squarish:checked + label[for='orientation-squarish']:hover{
+    filter: brightness(1) grayscale(1);
+  }
+}
+
+#source-unsplash:checked + label[for='source-unsplash'],
+#source-flickr:checked + label[for='source-flickr']{
+  filter: brightness(1) grayscale(0);
+}
+
+.search__filter-orientation::before{
+  content: 'Orientation:';
+  margin-right: 10px;
+}
+
+.header__filter-button{
+  height: 32px;
+  width:32px;
+  display: none;
+  background-color: transparent;
+  background-image: url(./assets/gear-solid.svg);
+  background-size: 70%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  font-size: 17px;
+  border: none;
+}
+
+@media (width < 900px) {
+  .header__search{
+    justify-content: end;
+  }
+  .search__filter{
+    position:fixed;
+    top:70px;
+    right:0;
+    height: 260px;
+    width:200px;
+    flex-direction: column;
+    padding: 20px;
+    transform: translateX(100%);
+  }
+
+  .search__filter-show{
+    transform: translateX(0);
+  }
+
+  .search__filter-source,
+  .search__filter-orientation{
+    flex-direction: column;
+    width:100%;
+    align-items: start;
+  }
+
+  label[for='source-unsplash'],
+  label[for='source-flickr'],
+  label[for='orientation-landscape'],
+  label[for='orientation-portrait'],
+  label[for='orientation-squarish']{
+    position: relative;
+  }
+
+  label[for='source-unsplash']::after,
+  label[for='source-flickr']::after,
+  label[for='orientation-landscape']::after,
+  label[for='orientation-portrait']::after,
+  label[for='orientation-squarish']::after{
+    position: absolute;
+    left:35px;
+    top: 5px;
+    display: block;
+    color: var(--canary);
+  }
+
+  label[for='source-unsplash']::after{
+    content: 'Unsplash';
+  }
+  label[for='source-flickr']::after{
+    content: 'Flickr';
+  }
+  label[for='orientation-landscape']::after{
+    content: 'Landscape';
+  }
+  label[for='orientation-portrait']::after{
+    content: 'Portrait';
+  }
+  label[for='orientation-squarish']::after{
+    content: 'Squarish';
+  }
+
+  .header__filter-button{
+    display: block;
+    transition: 1s;
+    transform: rotate(0);
+    filter: grayscale(1);
+  }
+
+  .header__filter-button-rot{
+   transform: rotate(180deg);
+   filter: grayscale(0);
+  }
+}
