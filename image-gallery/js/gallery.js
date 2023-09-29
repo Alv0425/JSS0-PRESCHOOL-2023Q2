@@ -1,4 +1,6 @@
 'use strict';
+
+//Open-close filter menu
 filterButton.addEventListener('click', () => {
   filterButton.classList.toggle('header__filter-button-rot');
   searchFilter.classList.toggle('search__filter-show');
@@ -13,10 +15,17 @@ document.addEventListener('click', (event) => {
   }
 });
 
+//Reset button in search form
 headerSearchInput.onkeyup = () => {
   if (headerSearchInput.value) {
     headerSearchButton.disabled = false;
   } else {
     headerSearchButton.disabled = true;
   }
+}
+
+headerSearchButton.onclick = (event) => {
+  event.preventDefault();
+  headerSearchInput.value = '';
+  headerSearchButton.disabled = true;
 }
