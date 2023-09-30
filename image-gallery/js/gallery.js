@@ -89,6 +89,9 @@ function setUnsplashImages(data) {
     img.dataLocation = data.results[i].user.location;
     img.dataInstagram = data.results[i].user['instagram_username'];
     img.dataSource = 'unsplash';
+    img.addEventListener('click', (event) => {
+      showImageModal(event, img);
+    });
     if (img.src) {
       imgs.push(img);
     } 
@@ -169,6 +172,9 @@ function setFlickrImages(data) {
     img.dataDate = getCreationDate(data.photos.photo[i].datetaken);
     img.dataFlickr = data.photos.photo[i].pathalias;
     img.dataSourse = 'flickr';
+    img.addEventListener('click', (event) => {
+      showImageModal(event, img);
+    });
     if (img.src) {
       imgs.push(img);
     } 
@@ -265,6 +271,80 @@ async function searchFlickr(query){
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
   }
+}
+
+//Overlay image modal
+closeButton.addEventListener('click', () => {
+  removeChilds(overlay);
+  overlay.remove();
+  body.style.overflow = 'auto';
+  gallery.classList.remove('gallery-hide');
+});
+
+function setPositionC(image){
+  if (body.clientWidth > 648) {
+    image.style.left = '0';
+    image.style.top = '0';
+    let height = `${overlay.clientHeight}px`;
+    image.style.width = '50%';
+    image.style.height = height;
+  } else {
+    let height = `${overlay.clientHeight / 2}px`;
+    image.style.top = `40px`;
+    image.style.left = `0`;
+    image.style.width = '100%';
+    image.style.height = height;
+  }
+}
+
+function showImageModal(event, img) {
+  body.append(overlay);
+        body.style.overflow = 'hidden';
+        let imgDuplicate = document.createElement('div');
+        imgDuplicate.className = 'image-modal-small';
+        imgDuplicate.style.left = `${event.clientX - event.offsetX}px`;
+        imgDuplicate.style.top = `${event.clientY - event.offsetY}px`;
+        imgDuplicate.style.width = img.clientWidth + 'px';
+        imgDuplicate.style.height = img.clientHeight + 'px';
+        imgDuplicate.style.backgroundImage = `url(${img.src})`;
+        overlay.append(imgDuplicate);
+        setTimeout(() => {
+          setPositionC(imgDuplicate);
+          overlay.append(closeButton);
+          gallery.classList.add('gallery-hide');
+          let info = document.createElement('div');
+          info.className = 'info-modal-small';
+          let infoDescription = document.createElement('div');
+          infoDescription.className = 'info-modal-small__description';
+          let infoAuthor = document.createElement('div');
+          infoAuthor.className = 'info-modal-small__author';
+          let infoDate = document.createElement('div');
+          infoDate.className = 'info-modal-small__creation-date';
+          overlay.append(info);
+          info.append(infoDescription, infoAuthor, infoDate);
+          if (img.dataInstagram) {
+            let infoInstagram = document.createElement('div');
+            infoInstagram.className = 'info-modal-small__instagram';
+            infoInstagram.innerHTML = `<a href="https://www.instagram.com/${img.dataInstagram}" target="_blank">${img.dataInstagram}</a>`;
+            info.append(infoInstagram);
+          }
+          if (img.dataLocation) {
+            let infoLocation = document.createElement('div');
+            infoLocation.className = 'info-modal-small__location';
+            infoLocation.textContent = img.dataLocation;
+            info.append(infoLocation);
+          }
+          if (img.dataFlickr) {
+            let infoFlickr = document.createElement('div');
+            infoFlickr.className = 'info-modal-small__flickr';
+            infoFlickr.innerHTML = `<a href="https://www.flickr.com/photos/${img.dataFlickr}" target="_blank">${img.dataFlickr}</a>`;
+            info.append(infoFlickr);
+          }
+          infoDescription.textContent = img.dataDescription;
+          infoAuthor.textContent = img.dataAuthor;
+          infoDate.textContent = img.dataDate;
+        },100);
+        console.log(img.clientHeight);
 }
 
 searchFlickr('summer');

@@ -111,3 +111,8 @@ body.append(header, gallery);
 
 const errorMessage = document.createElement('p');
 errorMessage.style.color = '#000';
+
+const overlay = document.createElement('div');
+const closeButton = document.createElement('div');
+closeButton.className = 'close-button';
+overlay.className = 'overlay';

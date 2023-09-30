@@ -105,6 +105,11 @@ body {
   transition: 0.5s;
 }
 
+.gallery__col img:hover {
+  opacity:0.75;
+  cursor: pointer;
+}
+
 .header__search{
   position: relative;
   display: flex;
@@ -391,4 +396,202 @@ label[for='orientation-squarish']{
    transform: rotate(180deg);
    filter: grayscale(0);
   }
+}
+
+.overlay{
+  position: fixed;
+  display: flex;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.99);
+  height: 100vh;
+  width: 100vw;
+  animation: fade-in-bg 1s ease;
+  transition: 1.5s;
+  z-index: 3;
+}
+
+.close-button{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(./assets/cicon.svg);
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: 50% 50%;
+  animation: fade-in 1s ease;
+  transition: 1s;
+  z-index: 3;
+}
+
+@media (pointer:fine) and (hover:hover) {
+  .close-button:hover{
+    cursor: pointer;
+    filter: brightness(2) grayscale(1);
+  }
+  .header__filter-button:hover{
+    cursor: pointer;
+  }
+}
+
+.image-modal-small{
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transition: 1s;
+}
+
+.info-modal-small{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  gap:10px;
+}
+
+.info-modal-small__description{
+  font-size: 25px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+}
+
+.info-modal-small__author{
+  font-size: 20px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-modal-small__author::before{
+  content:'';
+  background-image: url(./assets/photo-author.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.info-modal-small__creation-date{
+  font-size: 20px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-modal-small__creation-date::before{
+  content:'';
+  background-image: url(./assets/calendar-days-solid.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.info-modal-small__location{
+  font-size: 20px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-modal-small__location::before{
+  content:'';
+  background-image: url(./assets/location.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.info-modal-small__instagram{
+  font-size: 20px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-modal-small__instagram::before{
+  content:'';
+  background-image: url(./assets/instagram.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.info-modal-small__flickr{
+  font-size: 20px;
+  animation: fade-in 1s ease;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-modal-small__flickr::before{
+  content:'';
+  background-image: url(./assets/flickr.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@media (width < 648px) {
+  .info-modal-small{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(100%);
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-icon{
+  position: absolute;
+  top:calc(50% - 25px);
+  left:calc(50% - 25px);
+  width:50px;
+  height: 50px;
+  background-image: url(./assets/loading.svg);
+  background-size: contain;
+  animation: rotate 4s linear infinite;
 }
