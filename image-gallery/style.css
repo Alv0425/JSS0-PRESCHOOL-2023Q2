@@ -105,6 +105,18 @@ body {
   transition: 0.7s;
 }
 
+.img-landscape{
+  aspect-ratio: 1.5 / 1;
+}
+
+.img-portrait{
+  aspect-ratio: 1 / 1.5;
+}
+
+.img-squarish{
+  aspect-ratio: 1 / 1;
+}
+
 .gallery__col img:hover {
   opacity:0.75;
   cursor: pointer;
@@ -112,6 +124,10 @@ body {
 
 .gallery-hide .gallery__col img{
   transform: scale(0.5);
+}
+
+.img-hide{
+  display:none;
 }
 
 .gallery-hide{

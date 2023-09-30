@@ -282,7 +282,7 @@ closeButton.addEventListener('click', () => {
   gallery.classList.remove('gallery-hide');
 });
 
-function setPositionC(image){
+function setPosition(image){
   if (body.clientWidth > 648) {
     image.style.left = '0';
     image.style.top = '0';
@@ -310,7 +310,7 @@ function showImageModal(event, img) {
         imgDuplicate.style.backgroundImage = `url(${img.src})`;
         overlay.append(imgDuplicate);
         setTimeout(() => {
-          setPositionC(imgDuplicate);
+          setPosition(imgDuplicate);
           overlay.append(closeButton);
           gallery.classList.add('gallery-hide');
           let info = document.createElement('div');
@@ -348,4 +348,46 @@ function showImageModal(event, img) {
         console.log(img.clientHeight);
 }
 
-searchFlickr('summer');
+function submitForm() {
+  if (headerSearchInput.value.trim()) {
+    errorMessage.remove();
+    cols.forEach((col) => {
+    removeChilds(col);
+    });
+    console.log(headerSearchInput.value);
+    if (sourceUnsplashRadio.checked) {
+      searchUnsplash(headerSearchInput.value);
+    } else if (sourceFlickrRadio.checked) {
+      searchFlickr(headerSearchInput.value);
+    }
+    filterButton.classList.remove('header__filter-button-rot');
+    searchFilter.classList.remove('search__filter-show');
+    body.classList.remove('body-lock'); 
+  }
+}
+
+headerSeachContainer.addEventListener('submit', (event) => {
+  event.preventDefault();
+  submitForm();
+});
+
+sourceUnsplashRadio.oninput = () => {
+  submitForm();
+}
+
+sourceFlickrRadio.oninput = () => {
+  submitForm();
+}
+
+function filterOrientationApply(){
+  let images = document.querySelectorAll('img');
+  images.forEach((img) => {
+    filterOrientation(img);
+  });
+}
+
+orientationLandscapeRadio.oninput = () => {filterOrientationApply();}
+orientationPortraitOption.oninput = () => {filterOrientationApply();}
+orientationSquareOption.oninput = () => {filterOrientationApply();}
+
+searchUnsplash('summer');
