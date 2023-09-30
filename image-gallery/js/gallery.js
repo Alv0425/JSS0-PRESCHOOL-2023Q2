@@ -145,18 +145,6 @@ async function getDataUnsplash(query) {
   const imagesPortrait = setUnsplashImages(dataPortrait);
   const imagesSquarish = setUnsplashImages(dataSquarish);
   setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
-  // const imagesLandscape = setUnsplashImages(dataLandscape);
-  // imagesLandscape.forEach((img) => {
-  //   img.dataOrientation = 'landscape';
-  // });
-  // const imagesPortrait = setUnsplashImages(dataPortrait);
-  // imagesPortrait.forEach((img) => {
-  //   img.dataOrientation = 'portrait';
-  // });
-  // const imagesSquarish = setUnsplashImages(dataSquarish);
-  // imagesSquarish.forEach((img) => {
-  //   img.dataOrientation = 'squarish';
-  // });
   imagesUnsplash = imagesLandscape.concat(imagesPortrait, imagesSquarish);
   console.log(imagesUnsplash);
   imagesUnsplash.forEach((img) => {
@@ -306,7 +294,7 @@ async function searchFlickr(query){
 closeButton.addEventListener('click', () => {
   removeChilds(overlay);
   overlay.remove();
-  body.style.overflow = 'auto';
+  body.classList.remove('body-lock');
   gallery.classList.remove('gallery-hide');
 });
 
@@ -328,7 +316,7 @@ function setPosition(image){
 
 function showImageModal(event, img) {
   body.append(overlay);
-        body.style.overflow = 'hidden';
+        body.classList.add('body-lock');
         let imgDuplicate = document.createElement('div');
         imgDuplicate.className = 'image-modal-small';
         imgDuplicate.style.left = `${event.clientX - event.offsetX}px`;
@@ -425,14 +413,3 @@ orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
 searchUnsplash('summer');
-
-// async function downloadImage(img, downloadButton) {
-//   const response = await fetch(img.src);
-//   const blobImage = await response.blob();
-//   const href = URL.createObjectURL(blobImage);
-//   downloadButton.href = href;
-//   console.log(href);
-//   // window.URL.revokeObjectURL(href);
-//   console.log(href);
-// }
-
