@@ -64,7 +64,7 @@ function getCreationDate(str) {
   }
 }
 
-//4. 
+//4. Filler for orientation
 function filterOrientation(img) {
   img.classList.add('img-hide');
   if (img.dataOrientation == 'landscape' && orientationLandscapeRadio.checked) {
@@ -76,6 +76,35 @@ function filterOrientation(img) {
   if (img.dataOrientation == 'squarish' && orientationSquareRadio.checked) {
     img.classList.remove('img-hide');
   }
+}
+
+//5. Download images function
+async function downloadImage(img) {
+  const image = await fetch(img.src);
+  const imageBlob = await image.blob();
+  const imageHref = URL.createObjectURL(imageBlob);
+  const link = document.createElement('a');
+  link.href = imageHref;
+  link.download = img.alt;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(imageHref);
+}
+
+function setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish){
+  imagesLandscape.forEach((img) => {
+    img.dataOrientation = 'landscape';
+    img.classList.add('img-landscape');
+  });
+  imagesPortrait.forEach((img) => {
+    img.dataOrientation = 'portrait';
+    img.classList.add('img-portrait');
+  });
+  imagesSquarish.forEach((img) => {
+    img.dataOrientation = 'squarish';
+    img.classList.add('img-squarish');
+  });
 }
 
 function setUnsplashImages(data) {
@@ -113,17 +142,21 @@ async function getDataUnsplash(query) {
   const dataPortrait = await resPortrait.json();
   const dataSquarish = await resSquarish.json();
   const imagesLandscape = setUnsplashImages(dataLandscape);
-  imagesLandscape.forEach((img) => {
-    img.dataOrientation = 'landscape';
-  });
   const imagesPortrait = setUnsplashImages(dataPortrait);
-  imagesPortrait.forEach((img) => {
-    img.dataOrientation = 'portrait';
-  });
   const imagesSquarish = setUnsplashImages(dataSquarish);
-  imagesSquarish.forEach((img) => {
-    img.dataOrientation = 'squarish';
-  });
+  setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
+  // const imagesLandscape = setUnsplashImages(dataLandscape);
+  // imagesLandscape.forEach((img) => {
+  //   img.dataOrientation = 'landscape';
+  // });
+  // const imagesPortrait = setUnsplashImages(dataPortrait);
+  // imagesPortrait.forEach((img) => {
+  //   img.dataOrientation = 'portrait';
+  // });
+  // const imagesSquarish = setUnsplashImages(dataSquarish);
+  // imagesSquarish.forEach((img) => {
+  //   img.dataOrientation = 'squarish';
+  // });
   imagesUnsplash = imagesLandscape.concat(imagesPortrait, imagesSquarish);
   console.log(imagesUnsplash);
   imagesUnsplash.forEach((img) => {
@@ -196,17 +229,10 @@ async function getDataFlickr(query) {
   const resSquarish = await fetch(urlSquarish);
   const dataSquarish = await resSquarish.json();
   const imagesLandscape = setFlickrImages(dataLandscape);
-  imagesLandscape.forEach((img) => {
-    img.dataOrientation = 'landscape';
-  });
   const imagesPortrait = setFlickrImages(dataPortrait);
-  imagesPortrait.forEach((img) => {
-    img.dataOrientation = 'portrait';
-  });
   const imagesSquarish = setFlickrImages(dataSquarish);
-  imagesSquarish.forEach((img) => {
-    img.dataOrientation = 'squarish';
-  });
+  setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
+
   imagesFlickr = imagesLandscape.concat(imagesPortrait, imagesSquarish);
   console.log(imagesFlickr);
   let imagesToDelete = [];
@@ -230,6 +256,10 @@ async function getDataFlickr(query) {
     console.log('all images loaded');
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
+    images = images.filter((img) => !imagesToDelete.includes(img));
+    images.forEach((colImgs, index) => {
+      cols[index].append(...colImgs);
+    });  
     imagesToDelete.forEach((img) => {
       img.remove();
     });
@@ -239,9 +269,7 @@ async function getDataFlickr(query) {
     errorMessage.textContent = 'Nothing was found on Flickr';
     gallery.before(errorMessage);
   }
-  images.forEach((colImgs, index) => {
-    cols[index].append(...colImgs);
-  });  
+  
   
   setTimeout(() => {
     loadingIcon.remove();
@@ -311,7 +339,13 @@ function showImageModal(event, img) {
         overlay.append(imgDuplicate);
         setTimeout(() => {
           setPosition(imgDuplicate);
-          overlay.append(closeButton);
+          const downloadButton = document.createElement('a');
+          downloadButton.className = 'download-button';
+          overlay.append(closeButton, downloadButton);
+          downloadButton.onclick = (event) => {
+            event.preventDefault();
+            downloadImage(img, downloadButton);
+          }
           gallery.classList.add('gallery-hide');
           let info = document.createElement('div');
           info.className = 'info-modal-small';
@@ -391,3 +425,14 @@ orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
 searchUnsplash('summer');
+
+// async function downloadImage(img, downloadButton) {
+//   const response = await fetch(img.src);
+//   const blobImage = await response.blob();
+//   const href = URL.createObjectURL(blobImage);
+//   downloadButton.href = href;
+//   console.log(href);
+//   // window.URL.revokeObjectURL(href);
+//   console.log(href);
+// }
+

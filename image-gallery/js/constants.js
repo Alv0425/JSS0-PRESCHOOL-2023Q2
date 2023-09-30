@@ -116,3 +116,4 @@ const overlay = document.createElement('div');
 const closeButton = document.createElement('div');
 closeButton.className = 'close-button';
 overlay.className = 'overlay';
+

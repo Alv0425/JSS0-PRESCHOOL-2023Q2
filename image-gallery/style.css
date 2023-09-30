@@ -100,7 +100,7 @@ body {
   vertical-align: middle;
   object-fit: cover;
   width: 100%;
-  height: 100%;
+  flex-grow: 2;
   border-radius: 3px;
   transition: 0.7s;
 }
@@ -470,8 +470,26 @@ label[for='orientation-squarish']{
   z-index: 3;
 }
 
+.download-button{
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(./assets/download-solid.svg);
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: 50% 50%;
+  animation: fade-in 1s ease;
+  transition: 1s;
+  z-index: 3;
+}
+
 @media (pointer:fine) and (hover:hover) {
-  .close-button:hover{
+  .close-button:hover,
+  .download-button:hover{
     cursor: pointer;
     filter: brightness(2) grayscale(1);
   }
