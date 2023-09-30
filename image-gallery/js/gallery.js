@@ -30,6 +30,7 @@ headerSearchButton.onclick = (event) => {
   event.preventDefault();
   headerSearchInput.value = '';
   headerSearchButton.disabled = true;
+  headerSearchInput.focus();
 }
 
 //Auxiliary functions
