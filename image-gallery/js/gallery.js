@@ -412,4 +412,4 @@ orientationLandscapeRadio.oninput = () => {filterOrientationApply();}
 orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
-searchUnsplash('summer');
+searchUnsplash('wind');
