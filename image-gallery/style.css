@@ -350,6 +350,10 @@ label[for='orientation-squarish']{
 }
 
 @media (width < 900px) {
+  .header__logo{
+    display: none;
+  }
+
   .header__search{
     justify-content: end;
   }
