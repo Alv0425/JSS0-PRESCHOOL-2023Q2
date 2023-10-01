@@ -413,3 +413,24 @@ orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
 searchUnsplash('wind');
+
+function showToTopButton() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    scrollToTopButton.classList.add('scroll-to-top-show');
+  } else {
+    scrollToTopButton.classList.remove('scroll-to-top-show');
+  }
+}
+
+function moveToTop() {
+  body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+scrollToTopButton.onclick = () => {
+  moveToTop();
+}
+
+window.onscroll = () => {
+  showToTopButton();
+};

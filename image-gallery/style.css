@@ -728,17 +728,21 @@ input[type="search"]::-webkit-search-cancel-button {
   text-decoration: none;
 }
 
+@media (pointer:fine) and (hover:hover) {
+
+}
+
 .footer__github::after{
   position: absolute;
   content: '';
-  top:-5px;
+  top: -5px;
   left: calc(100% + 10px);
   width: 26px;
   height: 26px;
   background-image: url(./assets/github.svg);
 }
 
-@media (width<680px) {
+@media (width < 680px) {
   .footer__container{
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -754,7 +758,7 @@ input[type="search"]::-webkit-search-cancel-button {
   .footer__date{
     grid-area: 1 / 1 / 2 / 3;
     margin: 0 auto;
-    max-width:calc(100% - 20px);
+    max-width: calc(100% - 20px);
     padding: 10px 0;
     border-left: none;
     border-bottom: 1px #fff solid;
@@ -763,6 +767,24 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .footer__github{
     grid-area: 2 / 2 / 3 / 3;
-    /* margin:auto auto; */
   }
+}
+
+.scroll-to-top{
+  display: none;
+  position: fixed;
+  bottom: 20%;
+  right: 50px;
+  width:50px;
+  height: 50px;
+  border: none;
+  background-size: contain;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+  background-image: url(./assets/circle-up-solid.svg);
+}
+
+.scroll-to-top-show{
+  display: block;
 }

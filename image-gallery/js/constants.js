@@ -141,3 +141,8 @@ footerGithub.textContent = 'alv0425';
 footerGithub.href = 'https://github.com/Alv0425';
 footerGithub.target = '_blank';
 footerDate.textContent = 'Сreated in 2023 as part of an assignment from the Rolling Scopes School course';
+
+const scrollToTopButton = document.createElement('button');
+scrollToTopButton.className = 'scroll-to-top';
+
+body.append(scrollToTopButton);
