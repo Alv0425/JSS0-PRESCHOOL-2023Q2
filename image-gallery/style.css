@@ -707,6 +707,8 @@ input[type="search"]::-webkit-search-cancel-button {
   background-image: url(./assets/rss.svg);
   background-repeat: no-repeat;
   background-size: contain;
+  filter: grayscale(100) brightness(3);
+  transition: 1s;
 }
 
 .footer__date{
@@ -726,10 +728,7 @@ input[type="search"]::-webkit-search-cancel-button {
   margin-left: auto;
   color:#fff;
   text-decoration: none;
-}
-
-@media (pointer:fine) and (hover:hover) {
-
+  transition: 1s;
 }
 
 .footer__github::after{
@@ -740,6 +739,8 @@ input[type="search"]::-webkit-search-cancel-button {
   width: 26px;
   height: 26px;
   background-image: url(./assets/github.svg);
+  filter: grayscale(100) brightness(3);
+  transition: 1s;
 }
 
 @media (width < 680px) {
@@ -783,8 +784,25 @@ input[type="search"]::-webkit-search-cancel-button {
   background-repeat: no-repeat;
   opacity: 0.7;
   background-image: url(./assets/circle-up-solid.svg);
+  transition: 1s;
 }
 
 .scroll-to-top-show{
   display: block;
+}
+
+@media (pointer:fine) and (hover:hover) {
+  .scroll-to-top-show:hover{
+    opacity:1;
+    cursor: pointer;
+  }
+
+  .footer__github:hover{
+    color: var(--canary);
+    cursor: pointer;
+  }
+  .footer__rss-link:hover,
+  .footer__github:hover::after{
+    filter: grayscale(0);
+  }
 }
