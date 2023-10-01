@@ -20,6 +20,11 @@ gallery.append(...cols);
 const header = document.createElement('header');
 header.className = 'header';
 
+const headerLogo = document.createElement('h1');
+headerLogo.className = 'header__logo';
+headerLogo.textContent = 'Image Gallery';
+header.append(headerLogo);
+
 const headerSeachContainer = document.createElement('FORM');
 headerSeachContainer.className = 'header__search';
 const searchContainer = document.createElement('div');
@@ -33,7 +38,8 @@ const headerSearchInput = document.createElement('INPUT');
 headerSearchInput.autofocus = true;
 headerSearchInput.className = 'search__input';
 headerSearchInput.type = 'search';
-headerSearchInput.placeholder = 'summer';
+headerSearchInput.autocomplete = 'off';
+headerSearchInput.placeholder = 'search...';
 const headerSearchButton = document.createElement('button');
 headerSearchButton.className = 'cross__button';
 headerSearchButton.disabled = true;
@@ -116,3 +122,28 @@ const overlay = document.createElement('div');
 const closeButton = document.createElement('div');
 closeButton.className = 'close-button';
 overlay.className = 'overlay';
+
+const footer =  document.createElement('footer');
+footer.className = 'footer';
+const footerContainer = document.createElement('div');
+footerContainer.className = 'footer__container';
+const footerRSSLink = document.createElement('a');
+footerRSSLink.className = 'footer__rss-link';
+const footerDate = document.createElement('p');
+footerDate.className = 'footer__date';
+const footerGithub = document.createElement('a');
+footerGithub.className = 'footer__github';
+footerContainer.append(footerRSSLink,footerDate,footerGithub);
+footer.append(footerContainer);
+body.append(footer);
+footerRSSLink.href = 'https://rs.school/js-stage0/';
+footerRSSLink.target = '_blank';
+footerGithub.textContent = 'alv0425';
+footerGithub.href = 'https://github.com/Alv0425';
+footerGithub.target = '_blank';
+footerDate.textContent = 'Сreated in 2023 as part of an assignment from the Rolling Scopes School course';
+
+const scrollToTopButton = document.createElement('button');
+scrollToTopButton.className = 'scroll-to-top';
+
+body.append(scrollToTopButton);

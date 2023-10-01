@@ -64,7 +64,7 @@ function getCreationDate(str) {
   }
 }
 
-//4. 
+//4. Filler for orientation
 function filterOrientation(img) {
   img.classList.add('img-hide');
   if (img.dataOrientation == 'landscape' && orientationLandscapeRadio.checked) {
@@ -76,6 +76,35 @@ function filterOrientation(img) {
   if (img.dataOrientation == 'squarish' && orientationSquareRadio.checked) {
     img.classList.remove('img-hide');
   }
+}
+
+//5. Download images function
+async function downloadImage(img) {
+  const image = await fetch(img.src);
+  const imageBlob = await image.blob();
+  const imageHref = URL.createObjectURL(imageBlob);
+  const link = document.createElement('a');
+  link.href = imageHref;
+  link.download = img.alt;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(imageHref);
+}
+
+function setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish){
+  imagesLandscape.forEach((img) => {
+    img.dataOrientation = 'landscape';
+    img.classList.add('img-landscape');
+  });
+  imagesPortrait.forEach((img) => {
+    img.dataOrientation = 'portrait';
+    img.classList.add('img-portrait');
+  });
+  imagesSquarish.forEach((img) => {
+    img.dataOrientation = 'squarish';
+    img.classList.add('img-squarish');
+  });
 }
 
 function setUnsplashImages(data) {
@@ -113,19 +142,10 @@ async function getDataUnsplash(query) {
   const dataPortrait = await resPortrait.json();
   const dataSquarish = await resSquarish.json();
   const imagesLandscape = setUnsplashImages(dataLandscape);
-  imagesLandscape.forEach((img) => {
-    img.dataOrientation = 'landscape';
-  });
   const imagesPortrait = setUnsplashImages(dataPortrait);
-  imagesPortrait.forEach((img) => {
-    img.dataOrientation = 'portrait';
-  });
   const imagesSquarish = setUnsplashImages(dataSquarish);
-  imagesSquarish.forEach((img) => {
-    img.dataOrientation = 'squarish';
-  });
+  setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
   imagesUnsplash = imagesLandscape.concat(imagesPortrait, imagesSquarish);
-  console.log(imagesUnsplash);
   imagesUnsplash.forEach((img) => {
     filterOrientation(img);
   });
@@ -140,14 +160,11 @@ async function getDataUnsplash(query) {
     });
   });
   let images = sortImages(imagesUnsplash);
-  console.log(images);
   Promise.all(promises).then(() => {
-    console.log('all images loaded');
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
   });
   if (!imagesUnsplash.length) {
-    console.log('Nothing was found on Unsplash');
     errorMessage.textContent = 'Nothing was found on Unsplash';
     gallery.before(errorMessage);
   }
@@ -196,19 +213,11 @@ async function getDataFlickr(query) {
   const resSquarish = await fetch(urlSquarish);
   const dataSquarish = await resSquarish.json();
   const imagesLandscape = setFlickrImages(dataLandscape);
-  imagesLandscape.forEach((img) => {
-    img.dataOrientation = 'landscape';
-  });
   const imagesPortrait = setFlickrImages(dataPortrait);
-  imagesPortrait.forEach((img) => {
-    img.dataOrientation = 'portrait';
-  });
   const imagesSquarish = setFlickrImages(dataSquarish);
-  imagesSquarish.forEach((img) => {
-    img.dataOrientation = 'squarish';
-  });
+  setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
+
   imagesFlickr = imagesLandscape.concat(imagesPortrait, imagesSquarish);
-  console.log(imagesFlickr);
   let imagesToDelete = [];
   let promises = imagesFlickr.map((img) => {
     return new Promise((resolve) => {
@@ -221,27 +230,26 @@ async function getDataFlickr(query) {
       })
     });
   });
-  console.log(imagesToDelete);
   imagesFlickr.forEach((img) => {
     filterOrientation(img);
   });
   let images = sortImages(imagesFlickr);
   Promise.all(promises).then(() => {
-    console.log('all images loaded');
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
+    images = images.filter((img) => !imagesToDelete.includes(img));
+    images.forEach((colImgs, index) => {
+      cols[index].append(...colImgs);
+    });  
     imagesToDelete.forEach((img) => {
       img.remove();
     });
   });
   if (!imagesFlickr.length) {
-    console.log('Nothing was found on Unsplash');
     errorMessage.textContent = 'Nothing was found on Flickr';
     gallery.before(errorMessage);
   }
-  images.forEach((colImgs, index) => {
-    cols[index].append(...colImgs);
-  });  
+  
   
   setTimeout(() => {
     loadingIcon.remove();
@@ -256,7 +264,7 @@ async function searchUnsplash(query) {
   } catch(e) {
     if (e.message.includes('Rate Limit')){
       errorMessage.style.color = '#000';
-      errorMessage.textContent = 'Try later';
+      errorMessage.textContent = 'Too many requests, try later.';
       gallery.before(errorMessage);
     }
     loadingIcon.remove();
@@ -268,7 +276,9 @@ async function searchFlickr(query){
   try {
     await getDataFlickr(query);
   } catch {
-    console.log('Nothing was found on Flickr');
+    errorMessage.style.color = '#000';
+    errorMessage.textContent = 'Too many requests, try later.';
+    gallery.before(errorMessage);
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
   }
@@ -278,7 +288,7 @@ async function searchFlickr(query){
 closeButton.addEventListener('click', () => {
   removeChilds(overlay);
   overlay.remove();
-  body.style.overflow = 'auto';
+  body.classList.remove('body-lock');
   gallery.classList.remove('gallery-hide');
 });
 
@@ -300,7 +310,7 @@ function setPosition(image){
 
 function showImageModal(event, img) {
   body.append(overlay);
-        body.style.overflow = 'hidden';
+        body.classList.add('body-lock');
         let imgDuplicate = document.createElement('div');
         imgDuplicate.className = 'image-modal-small';
         imgDuplicate.style.left = `${event.clientX - event.offsetX}px`;
@@ -311,7 +321,13 @@ function showImageModal(event, img) {
         overlay.append(imgDuplicate);
         setTimeout(() => {
           setPosition(imgDuplicate);
-          overlay.append(closeButton);
+          const downloadButton = document.createElement('a');
+          downloadButton.className = 'download-button';
+          overlay.append(closeButton, downloadButton);
+          downloadButton.onclick = (event) => {
+            event.preventDefault();
+            downloadImage(img, downloadButton);
+          }
           gallery.classList.add('gallery-hide');
           let info = document.createElement('div');
           info.className = 'info-modal-small';
@@ -345,7 +361,6 @@ function showImageModal(event, img) {
           infoAuthor.textContent = img.dataAuthor;
           infoDate.textContent = img.dataDate;
         },100);
-        console.log(img.clientHeight);
 }
 
 function submitForm() {
@@ -354,7 +369,6 @@ function submitForm() {
     cols.forEach((col) => {
     removeChilds(col);
     });
-    console.log(headerSearchInput.value);
     if (sourceUnsplashRadio.checked) {
       searchUnsplash(headerSearchInput.value);
     } else if (sourceFlickrRadio.checked) {
@@ -390,4 +404,25 @@ orientationLandscapeRadio.oninput = () => {filterOrientationApply();}
 orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
-searchUnsplash('summer');
+searchUnsplash('cats');
+
+function showToTopButton() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    scrollToTopButton.classList.add('scroll-to-top-show');
+  } else {
+    scrollToTopButton.classList.remove('scroll-to-top-show');
+  }
+}
+
+function moveToTop() {
+  body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+scrollToTopButton.onclick = () => {
+  moveToTop();
+}
+
+window.onscroll = () => {
+  showToTopButton();
+};
