@@ -22,6 +22,8 @@ header.className = 'header';
 
 const headerLogo = document.createElement('h1');
 headerLogo.className = 'header__logo';
+headerLogo.textContent = 'Image Gallery';
+header.append(headerLogo);
 
 const headerSeachContainer = document.createElement('FORM');
 headerSeachContainer.className = 'header__search';

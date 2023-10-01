@@ -45,6 +45,7 @@ body {
   display:flex;
   flex-direction: column;
   width:100%;
+  padding:10px 0;
   z-index: 1;
   background-color: var(--black);
 }
@@ -52,7 +53,9 @@ body {
 .header__logo{
   font-family: Montserrat;
   font-weight: 900;
-  font-size: 40px;
+  font-size: 70px;
+  letter-spacing: 2px;
+  text-align: center;
 }
 
 .gallery{
