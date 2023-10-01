@@ -146,7 +146,6 @@ async function getDataUnsplash(query) {
   const imagesSquarish = setUnsplashImages(dataSquarish);
   setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
   imagesUnsplash = imagesLandscape.concat(imagesPortrait, imagesSquarish);
-  console.log(imagesUnsplash);
   imagesUnsplash.forEach((img) => {
     filterOrientation(img);
   });
@@ -161,14 +160,11 @@ async function getDataUnsplash(query) {
     });
   });
   let images = sortImages(imagesUnsplash);
-  console.log(images);
   Promise.all(promises).then(() => {
-    console.log('all images loaded');
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
   });
   if (!imagesUnsplash.length) {
-    console.log('Nothing was found on Unsplash');
     errorMessage.textContent = 'Nothing was found on Unsplash';
     gallery.before(errorMessage);
   }
@@ -222,7 +218,6 @@ async function getDataFlickr(query) {
   setOrientationAttributes(imagesLandscape, imagesPortrait, imagesSquarish);
 
   imagesFlickr = imagesLandscape.concat(imagesPortrait, imagesSquarish);
-  console.log(imagesFlickr);
   let imagesToDelete = [];
   let promises = imagesFlickr.map((img) => {
     return new Promise((resolve) => {
@@ -235,13 +230,11 @@ async function getDataFlickr(query) {
       })
     });
   });
-  console.log(imagesToDelete);
   imagesFlickr.forEach((img) => {
     filterOrientation(img);
   });
   let images = sortImages(imagesFlickr);
   Promise.all(promises).then(() => {
-    console.log('all images loaded');
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
     images = images.filter((img) => !imagesToDelete.includes(img));
@@ -253,7 +246,6 @@ async function getDataFlickr(query) {
     });
   });
   if (!imagesFlickr.length) {
-    console.log('Nothing was found on Unsplash');
     errorMessage.textContent = 'Nothing was found on Flickr';
     gallery.before(errorMessage);
   }
@@ -272,7 +264,7 @@ async function searchUnsplash(query) {
   } catch(e) {
     if (e.message.includes('Rate Limit')){
       errorMessage.style.color = '#000';
-      errorMessage.textContent = 'Try later';
+      errorMessage.textContent = 'Too many requests, try later.';
       gallery.before(errorMessage);
     }
     loadingIcon.remove();
@@ -284,7 +276,9 @@ async function searchFlickr(query){
   try {
     await getDataFlickr(query);
   } catch {
-    console.log('Nothing was found on Flickr');
+    errorMessage.style.color = '#000';
+    errorMessage.textContent = 'Too many requests, try later.';
+    gallery.before(errorMessage);
     loadingIcon.remove();
     gallery.classList.remove('gallery-hide');
   }
@@ -367,7 +361,6 @@ function showImageModal(event, img) {
           infoAuthor.textContent = img.dataAuthor;
           infoDate.textContent = img.dataDate;
         },100);
-        console.log(img.clientHeight);
 }
 
 function submitForm() {
@@ -376,7 +369,6 @@ function submitForm() {
     cols.forEach((col) => {
     removeChilds(col);
     });
-    console.log(headerSearchInput.value);
     if (sourceUnsplashRadio.checked) {
       searchUnsplash(headerSearchInput.value);
     } else if (sourceFlickrRadio.checked) {
@@ -412,7 +404,7 @@ orientationLandscapeRadio.oninput = () => {filterOrientationApply();}
 orientationPortraitOption.oninput = () => {filterOrientationApply();}
 orientationSquareOption.oninput = () => {filterOrientationApply();}
 
-searchUnsplash('wind');
+searchUnsplash('cats');
 
 function showToTopButton() {
   if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
