@@ -149,7 +149,10 @@ class Game {
                     });
                     pourTubeB.then(() => {
                       this.steps +=1;
-                      // here check tubes 
+                      if(checkTubes(this.tubes)){
+                        console.log(`Completed in ${this.steps} moves`);
+                        //Add function for win event
+                      }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
                       this.tubes[tubeB].tube.classList.remove('tube-locked');
                       this.tubes[tubeA].tube.classList.remove(`tube-pour-${tubeB + 1}`);
@@ -214,6 +217,17 @@ function layerToPour(arr, maxlength) {
     }
   }
   return layerToPour;
+}
+
+function checkTubes(tubesList) {
+  let newList = tubesList.filter((tube) => {
+    return tube.colors.length !== 0;
+  })
+  return newList.reduce((accum, tube) => {
+    return accum && tube.colors.length == 4 && tube.colors.reduce((accum, color) => {
+      return accum && color.dataColor == tube.colors[0].dataColor;
+    });
+  });
 }
 
 const newGame = new Game(2);
