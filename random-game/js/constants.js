@@ -34,3 +34,4 @@ main.append(gameContainer);
 
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
+const tubes = document.createElement('div');

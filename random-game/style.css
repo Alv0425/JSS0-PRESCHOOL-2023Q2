@@ -66,6 +66,364 @@ main {
   height:550px;
 }
 
+@keyframes movetotop {
+  0% {
+    transform: translateY(40px);
+    opacity: 0.5;
+  }
+  50%{
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.tube{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  width:30px;
+  height: 200px;
+  border: 2px rgba(222,222,222,0.4) solid;
+  border-top: 1px rgba(222,222,222,0.3) solid;
+  outline: 1px rgba(47, 47, 47, 0.7) solid;
+  /* filter: blur(0.5px); */
+  border-radius: 3px 3px 20px 20px;
+  overflow: hidden;
+  transform-origin: top left;
+  transition: 0.5s;
+  /* transform: rotate(60deg); */
+
+}
+
+.tube::after{
+  position: absolute;
+  content: '';
+  top:0;
+  left:-2px;
+  width:34px;
+  height: 200px;
+  background-image: url(./assets/glass.svg);
+}
+
+.tube::before{
+  position: absolute;
+  content: '';
+  top:3px;
+  left:5px;
+  height:150px;
+  width:5px;
+  background: radial-gradient(circle, rgba(228,228,228,1) 0%, rgba(255,255,255,1) 10%, rgba(240,240,240,1) 18%, rgba(0,0,0,0) 100%);
+  background-size: 100% 100%;
+  filter: blur(3px);
+  z-index: 2;
+}
+
+.tube:hover{
+  cursor: pointer;
+}
+
+.liquid{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:200px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+@keyframes increase {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 40px;
+  }
+}
+
+
+
+.color{
+  position: relative;
+  height: 40px;
+  width: 100%;
+  margin-top: -1px;
+  /* transform: skewY(-60deg) translateY(10px); */
+  opacity: 0.99;
+  border-radius: -10px;
+  transition: 1s;
+  animation: increase 1s ease;
+}
+
+.bubbles{
+  position:absolute;
+  offset: 0 0 0 0;
+}
+
+.bubble{
+  position: absolute;
+  border-radius: 50%;
+  height: 3px;
+  width:3px;
+  opacity: 0;
+  border: 1px rgba(222,222,222,0.9) solid;
+  animation: movetotop 3s ease;
+}
+
+
+.color-decrease{
+  height: 0;
+}
+
+.red{
+  background-color: #F72C25;
+}
+.blue{
+  background-color: #0A37FF;
+}
+.green{
+  background-color: #2F9D50;
+}
+.yellow{
+  background-color: #e4eb0f;
+}
+.magenta{
+  background-color: #FF33C2;
+}
+.violet{
+  background-color: #68089C;
+}
+.orange{
+  background-color: #FFAD0A;
+}
+.cyan{
+  background-color: #20AEA7;
+}
+.sky{
+  background-color: #00C8FF;
+}
+
+
+.tube-static{
+  position: absolute;
+  top:50px;
+}
+
+.tube-hidden{
+  opacity: 0;
+  pointer-events: none;
+}
+
+:root{
+  --margin: 50px;
+  --mlevel4: 25px;
+  --mlevel1: 25px;
+}
+
+.lvl-1,
+.lvl-2,
+.lvl-3,
+.lvl-4{
+  position: absolute;
+  offset: 0 0;
+  width:100%;
+  height: 100%;
+}
+
+
+.lvl-1 .tube-pour-1,
+.lvl-1 .tube-static:nth-child(1){
+  left: calc(var(--mlevel1) + var(--margin));
+  top:50px;
+}
+.lvl-2 .tube-pour-1,
+.lvl-2 .tube-static:nth-child(1),
+.lvl-3 .tube-pour-1,
+.lvl-3 .tube-static:nth-child(1){
+  left: 50px;
+  top:50px;
+}
+
+.lvl-4 .tube-pour-1,
+.lvl-4 .tube-static:nth-child(1){
+  left: var(--mlevel4);
+  top:50px;
+}
+
+
+.lvl-1 .tube-pour-2,
+.lvl-1 .tube-static:nth-child(2){
+  left: calc(var(--mlevel1) + var(--margin) * 2);
+  top:50px;
+}
+
+.lvl-2 .tube-pour-2,
+.lvl-2 .tube-static:nth-child(2),
+.lvl-3 .tube-pour-2,
+.lvl-3 .tube-static:nth-child(2){
+  left: calc(var(--margin) * 2);
+  top:50px;
+}
+
+.lvl-4 .tube-pour-2,
+.lvl-4 .tube-static:nth-child(2){
+  left: calc(calc(var(--margin) * 1) + var(--mlevel4));
+  top:50px;
+}
+
+.lvl-1 .tube-pour-3,
+.lvl-1 .tube-static:nth-child(3){
+  left: calc(var(--mlevel1) + var(--margin) * 3);
+  top:50px;
+}
+
+.lvl-2 .tube-pour-3,
+.lvl-2 .tube-static:nth-child(3),
+.lvl-3 .tube-pour-3,
+.lvl-3 .tube-static:nth-child(3){
+  left: calc(var(--margin) * 3);
+  top:50px;
+}
+
+.lvl-4 .tube-pour-3,
+.lvl-4 .tube-static:nth-child(3){
+  left: calc(calc(var(--margin) * 2) + var(--mlevel4));
+  top:50px;
+}
+
+.lvl-1 .tube-pour-4,
+.lvl-1 .tube-static:nth-child(4){
+  left: calc(var(--mlevel1) + var(--margin) * 4);
+  top:50px;
+}
+
+.lvl-2 .tube-pour-4,
+.lvl-2 .tube-static:nth-child(4),
+.lvl-3 .tube-pour-4,
+.lvl-3 .tube-static:nth-child(4){
+  left: calc(var(--margin) * 4);
+  top:50px;
+}
+
+.lvl-4 .tube-pour-4,
+.lvl-4 .tube-static:nth-child(4){
+  left: calc(calc(var(--margin) * 3) + var(--mlevel4));
+  top:50px;
+}
+
+.lvl-1 .tube-pour-5,
+.lvl-1 .tube-static:nth-child(5),
+.lvl-2 .tube-pour-5,
+.lvl-2 .tube-static:nth-child(5),
+.lvl-3 .tube-pour-5,
+.lvl-3 .tube-static:nth-child(5){
+  left: calc(var(--margin) * 5);
+  top:50px;
+}
+
+.lvl-4 .tube-pour-5,
+.lvl-4 .tube-static:nth-child(5){
+  left: calc(calc(var(--margin) * 4) + var(--mlevel4));
+  top:50px;
+}
+
+.lvl-2 .tube-pour-6,
+.lvl-2 .tube-static:nth-child(6){
+  left: calc(var(--margin) * 2 + 15px);
+  top:300px;
+}
+
+.lvl-4 .tube-pour-6,
+.lvl-4 .tube-static:nth-child(6){
+  left: calc(calc(var(--margin) * 5) + var(--mlevel4));
+  top:50px;
+}
+
+.lvl-2 .tube-pour-7,
+.lvl-2 .tube-static:nth-child(7){
+  left: calc(var(--margin) * 3 + 15px);
+  top:300px;
+}
+
+.lvl-4 .tube-pour-7,
+.lvl-4 .tube-static:nth-child(7){
+  left: calc(var(--margin) * 0 + var(--mlevel4));
+  top:300px;
+}
+
+.lvl-3 .tube-pour-6,
+.lvl-3 .tube-static:nth-child(6){
+  left: calc(var(--margin) * 1);
+  top:300px;
+}
+
+.lvl-3 .tube-pour-7,
+.lvl-3 .tube-static:nth-child(7){
+  left: calc(var(--margin) * 2);
+  top:300px;
+}
+
+.lvl-3 .tube-pour-8,
+.lvl-3 .tube-static:nth-child(8){
+  left: calc(var(--margin) * 3);
+  top:300px;
+}
+
+.lvl-4 .tube-pour-8,
+.lvl-4 .tube-static:nth-child(8){
+  left: calc(var(--margin) * 1 + var(--mlevel4));
+  top:300px;
+}
+
+.lvl-3 .tube-pour-9,
+.lvl-3 .tube-static:nth-child(9){
+  left: calc(var(--margin) * 4);
+  top:300px;
+}
+
+.lvl-4 .tube-pour-9,
+.lvl-4 .tube-static:nth-child(9){
+  left: calc(var(--margin) * 2 + var(--mlevel4));
+  top:300px;
+}
+
+.lvl-3 .tube-pour-10,
+.lvl-3 .tube-static:nth-child(10){
+  left: calc(var(--margin) * 5);
+  top:300px;
+}
+
+.lvl-4 .tube-pour-10,
+.lvl-4 .tube-static:nth-child(10){
+  left: calc(var(--margin) * 3 + var(--mlevel4));
+  top:300px;
+}
+
+.lvl-4 .tube-pour-11,
+.lvl-4 .tube-static:nth-child(11){
+  left: calc(var(--margin) * 4 + var(--mlevel4));
+  top:300px;
+}
+
+.lvl-4 .tube-pour-12,
+.lvl-4 .tube-static:nth-child(12){
+  left: calc(var(--margin) * 5 + var(--mlevel4));
+  top:300px;
+}
+
+.tube-selected{
+  position: absolute;
+  transform: translateY(-20px);
+  z-index: 3;
+}
+
+.tube-locked{
+  pointer-events: none;
+}
+
 /* Footer */
 .footer{
   display: flex;

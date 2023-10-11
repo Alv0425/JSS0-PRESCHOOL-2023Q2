@@ -37,4 +37,46 @@ class Game {
     this.tubesColors = tubes;
   }
 
+  renderTubes(){
+    removeChilds(tubes);
+    tubes.className =`lvl-${this.level}`;
+    this.tubesColors.forEach((portion) => {
+      let tube = document.createElement('div');
+      tube.className = 'tube';  
+      tube.classList.add('tube-static');
+      portion.forEach((color) => {
+        let layer = document.createElement('div');
+        layer.className = 'color';
+        layer.classList.add(color);
+        layer.dataColor = color;
+        tube.append(layer);
+      });
+      tubes.append(tube);  
+    });
+    for (let i = 0; i < Math.ceil((19/64)*((this.level * 2) + 1)); i++) {
+      let tube = document.createElement('div');
+      tube.className = 'tube';  
+      tubes.append(tube);
+      tube.classList.add('tube-static');
+    }
+    if (this.level == 2 || this.level == 3) {
+      tubes.childNodes[tubes.childNodes.length - 1].classList.add('tube-hidden');
+    }
+    gameContainer.append(tubes);
+    const allTubes = tubes.childNodes;
+    this.tubes = Array.from(allTubes).map((tube) => {
+      let tubeObj = {
+        'tube': tube,
+        'colors': Array.from(tube.childNodes),
+        'X': tube.getBoundingClientRect().left - gameContainer.getBoundingClientRect().left,
+        'Y': tube.getBoundingClientRect().top - gameContainer.getBoundingClientRect().top,  
+      }
+      return tubeObj;
+    });
+    return tubes;
+  }
 }
+
+const newGame = new Game(1);
+newGame.generateLiquid();
+newGame.renderTubes();
