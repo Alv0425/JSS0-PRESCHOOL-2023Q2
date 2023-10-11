@@ -435,6 +435,52 @@ main {
   z-index: 0;
 }
 
+.game__settings{
+  display:flex;
+}
+
+.game__levels,
+.game__level{
+  padding:5px 10px;
+  min-width: 70px;
+  border: 1px var(--white) solid;
+  border-radius: 3px;
+  font-family: Roboto;
+  background-color: transparent;
+  color: var(--white);
+  font-size: 16px;
+  text-align: center;
+}
+
+.game__levels{
+  background-color: #512A50;
+}
+
+.game__levels-container{
+  position: relative;
+}
+
+.levels__list{
+  position: absolute;
+  top:100%;
+  left:0;
+  height:0;
+  z-index: 3;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+  background-color: #271033;
+}
+
+.levels__list-show{
+  height: 300%;
+}
+
+.game__level-hidden{
+  display: none;
+}
+
 /* Footer */
 .footer{
   display: flex;

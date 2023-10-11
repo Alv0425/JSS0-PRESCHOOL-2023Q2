@@ -31,8 +31,8 @@ class Game {
       layers.push(tubes.map((tube) => tube[0]).sort(() => Math.random() - 0.5));
     }
     tubes = tubes.map((tube, index) =>{ 
-      tube = layers.map((layer) => layer[index]);
-      return tube
+      tube = layers.map((layer) => layer[index]).sort(() => Math.random() - 0.5);
+      return tube;
     });
     this.tubesColors = tubes;
   }
@@ -59,7 +59,7 @@ class Game {
       tubes.append(tube);
       tube.classList.add('tube-static');
     }
-    if (this.level == 2 || this.level == 3) {
+    if (this.level == 3 || this.level == 4) {
       tubes.childNodes[tubes.childNodes.length - 1].classList.add('tube-hidden');
     }
     gameContainer.append(tubes);
@@ -125,7 +125,7 @@ class Game {
                       let cloneLayers = moovingLayers.map((layer) => {
                         let clone = layer.cloneNode();
                         clone.dataColor = moovingLayers[0].dataColor;
-                        //here functio for bubbles
+                        createBubbles(clone);
                         return clone;
                       });
                       moovingLayers.forEach((layer) => {
@@ -230,6 +230,103 @@ function checkTubes(tubesList) {
   });
 }
 
+function createBubbles(layer){
+  const bubbles = document.createElement('div');
+  bubbles.className = 'bubbles';
+  for (let i = 0; i < 10; i++) {
+    let bubble = document.createElement('div');
+    bubble.style.backgroundColor = layer.dataColor;
+    bubble.className = 'bubble';
+    bubble.style.left = Math.random() * 30 + 'px';
+    bubble.style.bottom = - Math.random() * 30 + 15 + 'px' ;
+    let size = Math.random() * 5 + 'px';
+    bubble.style.width = size;
+    bubble.style.height = size;
+    bubble.style.animationDuration = 3 + Math.random() + 's';
+    bubbles.append(bubble);
+  }
+  layer.append(bubbles);
+}
+
 const newGame = new Game(2);
 newGame.generateLiquid();
 newGame.renderTubes();
+
+function renderLevelsList(){
+  switch(curLevel){
+    case 1:
+      gameLevelThree.classList.add('game__level-hidden');
+      gameLevelFive.classList.remove('game__level-hidden');
+      gameLevelSeven.classList.remove('game__level-hidden');
+      gameLevelNine.classList.remove('game__level-hidden');
+      gameLevelButton.textContent = '3 colors';
+      break;
+    case 2:
+      gameLevelThree.classList.remove('game__level-hidden');
+      gameLevelFive.classList.add('game__level-hidden');
+      gameLevelSeven.classList.remove('game__level-hidden');
+      gameLevelNine.classList.remove('game__level-hidden');
+      gameLevelButton.textContent = '5 colors';
+      break;
+    case 3:
+      gameLevelThree.classList.remove('game__level-hidden');
+      gameLevelFive.classList.remove('game__level-hidden');
+      gameLevelSeven.classList.add('game__level-hidden');
+      gameLevelNine.classList.remove('game__level-hidden');
+      gameLevelButton.textContent = '7 colors';
+      break;
+    case 4:
+      gameLevelThree.classList.remove('game__level-hidden');
+      gameLevelFive.classList.remove('game__level-hidden');
+      gameLevelSeven.classList.remove('game__level-hidden');
+      gameLevelNine.classList.add('game__level-hidden');
+      gameLevelButton.textContent = '9 colors';
+      break;
+  }
+}
+
+renderLevelsList();
+
+function playNewGame(level) {
+  const game = new Game(level);
+  game.generateLiquid();
+  game.renderTubes();
+}
+
+function openGame(level, colors){
+  const game = new Game(level);
+  game.tubesColors = colors;
+  game.renderTubes();
+}
+
+gameLevelButton.onclick = () => {
+  gameLevelList.classList.toggle('levels__list-show');
+}
+
+gameLevelThree.onclick = () => {
+  curLevel = 1;
+  playNewGame(curLevel);
+  renderLevelsList();
+  gameLevelList.classList.toggle('levels__list-show');
+}
+
+gameLevelFive.onclick = () => {
+  curLevel = 2;
+  playNewGame(curLevel);
+  renderLevelsList();
+  gameLevelList.classList.toggle('levels__list-show');
+}
+
+gameLevelSeven.onclick = () => {
+  curLevel = 3;
+  playNewGame(curLevel);
+  renderLevelsList();
+  gameLevelList.classList.toggle('levels__list-show');
+}
+
+gameLevelNine.onclick = () => {
+  curLevel = 4;
+  playNewGame(curLevel);
+  renderLevelsList();
+  gameLevelList.classList.toggle('levels__list-show');
+}

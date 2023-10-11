@@ -31,7 +31,33 @@ footerDate.textContent = 'Сreated in 2023 as part of an assignment from the Rol
 const gameContainer = document.createElement('div');
 gameContainer.className = 'game__container';
 main.append(gameContainer);
+const tubes = document.createElement('div');
+const gameSettings = document.createElement('div');
+gameSettings.className = 'game__settings';
+const gameLevel = document.createElement('div');
+gameLevel.className = 'game__levels-container';
+const gameLevelButton = document.createElement('button');
+gameLevelButton.className = 'game__levels';
+gameLevelButton.textContent = '3 colors';
+const gameLevelThree = document.createElement('button');
+gameLevelThree.className = 'game__level';
+gameLevelThree.textContent = '3 colors';
+const gameLevelFive = document.createElement('button');
+gameLevelFive.className = 'game__level';
+gameLevelFive.textContent = '5 colors';
+const gameLevelSeven = document.createElement('button');
+gameLevelSeven.className = 'game__level';
+gameLevelSeven.textContent = '7 colors';
+const gameLevelNine = document.createElement('button');
+gameLevelNine.className = 'game__level';
+gameLevelNine.textContent = '9 colors';
+const gameLevelList = document.createElement('div');
+gameLevelList.className = 'levels__list';
+gameContainer.append(gameSettings);
+gameSettings.append(gameLevel);
+gameLevel.append(gameLevelButton, gameLevelList);
+gameLevelList.append(gameLevelThree,gameLevelFive,gameLevelSeven,gameLevelNine);
+
 
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
-const tubes = document.createElement('div');
