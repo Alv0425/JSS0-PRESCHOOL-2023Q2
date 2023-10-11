@@ -424,6 +424,17 @@ main {
   pointer-events: none;
 }
 
+.jet{
+  position: fixed;
+  left:15px;
+  top:-20px;
+  width:2px;
+  height: 210px;
+  border-radius: 50% 50% 0 0 ;
+  opacity: 0.7;
+  z-index: 0;
+}
+
 /* Footer */
 .footer{
   display: flex;
@@ -528,3 +539,4 @@ main {
     filter: grayscale(0);
   }
 }
+

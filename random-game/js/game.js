@@ -119,7 +119,8 @@ class Game {
                       this.tubes[tubeA].tube.style.transform = `${angle}`;  
                       let freeSpace = 4 - this.tubes[tubeB].colors.length;
                       let moovingLayers = layerToPour(this.tubes[tubeA].colors, freeSpace);
-                      //past sound
+                      const pourSound = new Audio;
+                      pourSound.src = './sounds/pour.wav';
                       jet.classList.add(moovingLayers[0].dataColor);
                       let cloneLayers = moovingLayers.map((layer) => {
                         let clone = layer.cloneNode();
@@ -131,13 +132,16 @@ class Game {
                         layer.classList.add('color-decrease');
                         setTimeout(() => {layer.remove();}, 1000);
                       });
-                      // generate jet, play sound
+                      setTimeout(() => {
+                        gameContainer.prepend(jet);
+                        pourSound.play();
+                      },250);
                       this.tubes[tubeB].tube.prepend(...cloneLayers);
                       this.tubes.forEach((tube) => {
                         tube.tube.classList.add('tube-locked');
                       });
                       setTimeout(() => {
-                        //remove jet
+                        jet.remove();
                         resolve('Poured!');
                         this.tubes[tubeA].colors = Array.from(this.tubes[tubeA].tube.childNodes);
                         this.tubes[tubeB].colors = Array.from(this.tubes[tubeB].tube.childNodes);   
