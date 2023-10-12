@@ -75,3 +75,9 @@ gameSettings.append(plusTubeButton);
 
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
+
+const gameHistory = document.createElement('div');
+gameHistory.className = 'game-history';
+const gameHistoryList = document.createElement('ul');
+gameHistory.append(gameHistoryList);
+main.append(gameHistory);

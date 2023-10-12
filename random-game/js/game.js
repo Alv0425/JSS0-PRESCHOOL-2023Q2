@@ -100,7 +100,7 @@ class Game {
       return tubeObj;
     });
     this.disorder = calculateDisorder(this.tubes, this.level);
-    scoreLabel.textContent = `score: ${this.points}`;
+    scoreLabel.textContent = `points: ${this.points}`;
     movesLabel.textContent = `moves: ${this.steps}`;
     //add event listener for all tubes
     allTubes.forEach((tube, index) => {
@@ -186,12 +186,13 @@ class Game {
                       // this.disorder = calculateDisorder(this.tubes, this.level);
                       // console.log(this.points);
                       calculatePoints(this);
-                      scoreLabel.textContent = `score: ${this.points}`;
+                      scoreLabel.textContent = `points: ${this.points}`;
                       movesLabel.textContent = `moves: ${this.steps}`;
                       if(checkTubes(this.tubes)){
                         console.log(`Completed in ${this.steps} moves`);
                         winGame(this);
                         updateGameStat(this);
+                        updateScore();
                       }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
                       this.tubes[tubeB].tube.classList.remove('tube-locked');
@@ -295,6 +296,7 @@ if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
   currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
   currentStat.gamesList = JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList;
   curLevel = currentStat.level;
+  updateScore();
 } else {
   const gameStat = new GameStat;
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
@@ -502,3 +504,31 @@ function updateGameStat(game) {
   });
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
 }
+
+function updateScore() {
+  removeChilds(gameHistoryList);
+  let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
+  let gamesAll = gameStat.gamesList;
+  let bestGames = gamesAll.sort((gameA, gameB) => {
+    console.log((gameA.gameScore / gameA.gameMoves) - (gameB.gameScore / gameB.gameMoves));
+    return (gameB.gameScore / gameB.gameMoves) - (gameA.gameScore / gameA.gameMoves);
+  }); 
+  if (bestGames.length > 10) {
+    bestGames = bestGames.slice(0,10);
+  }
+  bestGames.forEach((gameObj) => {
+    const gameItem = document.createElement('li');
+    gameItem.onclick = () => {
+      openGame(gameObj.gameLevel, gameObj.gameColors);
+    }
+    let colorsItem = document.createElement('span');
+    colorsItem.textContent = `${gameObj.gameLevel * 2 + 1}`;
+    let movesItem = document.createElement('span');
+    movesItem.textContent = `${gameObj.gameMoves}`;
+    let pointsItem = document.createElement('span');
+    pointsItem.textContent = `${gameObj.gameScore}`;
+    gameItem.append(colorsItem,movesItem,pointsItem);
+    gameHistoryList.append(gameItem);
+  });
+}
+
