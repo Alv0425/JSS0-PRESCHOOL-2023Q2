@@ -3,7 +3,7 @@
 let gameMoveState = 'not selected';
 let tubeA;
 let tubeB;
-let curLevel = 1;
+let curLevel = 2;
 
 function removeChilds(element) {
   while (element.firstChild) {
@@ -17,6 +17,9 @@ class Game {
     this.tubesColors = [];
     this.tubes = [];
     this.steps = 0;
+    this.points = 0;
+    this.hidden = 0;
+    this.disorder = 0;
   }
 
   generateLiquid(){
@@ -61,6 +64,7 @@ class Game {
     }
     if (this.level == 3 || this.level == 4) {
       tubes.childNodes[tubes.childNodes.length - 1].classList.add('tube-hidden');
+      this.hidden = 1;
     }
     gameContainer.append(tubes);
     const allTubes = tubes.childNodes;
@@ -73,6 +77,9 @@ class Game {
       }
       return tubeObj;
     });
+    this.disorder = calculateDisorder(this.tubes, this.level);
+    scoreLabel.textContent = `Score: ${this.points}`;
+    movesLabel.textContent = `Moves: ${this.steps}`;
     //add event listener for all tubes
     allTubes.forEach((tube, index) => {
       tube.addEventListener('click', () => {
@@ -114,8 +121,11 @@ class Game {
                       let angle = locB.x < 150 ? "rotate(-50deg) translateX(23px)" : "rotate(50deg) translateX(-23px)";
                       let jet = document.createElement('div');
                       jet.className = 'jet';
-                      jet.style.left = locB.x + gameContainer.getBoundingClientRect().left + 15 + 'px';
-                      jet.style.top = locB.y + gameContainer.getBoundingClientRect().top - 18 + 'px';
+                      // jet.style.left = locB.x + gameContainer.getBoundingClientRect().left + 15 + 'px';
+                      // jet.style.top = locB.y + gameContainer.getBoundingClientRect().top - 8 + 'px';
+
+                      jet.style.left = locB.x  + 15 + 'px';
+                      jet.style.top = locB.y - 15 + 'px';
                       this.tubes[tubeA].tube.style.transform = `${angle}`;  
                       let freeSpace = 4 - this.tubes[tubeB].colors.length;
                       let moovingLayers = layerToPour(this.tubes[tubeA].colors, freeSpace);
@@ -149,6 +159,13 @@ class Game {
                     });
                     pourTubeB.then(() => {
                       this.steps +=1;
+                      // let curPoints = (this.disorder - calculateDisorder(this.tubes, this.level))*10;
+                      // this.points += curPoints > 0 ? curPoints : 0;
+                      // this.disorder = calculateDisorder(this.tubes, this.level);
+                      // console.log(this.points);
+                      calculatePoints(this);
+                      scoreLabel.textContent = `Score: ${this.points}`;
+                      movesLabel.textContent = `Moves: ${this.steps}`;
                       if(checkTubes(this.tubes)){
                         console.log(`Completed in ${this.steps} moves`);
                         //Add function for win event
@@ -248,11 +265,11 @@ function createBubbles(layer){
   layer.append(bubbles);
 }
 
-const newGame = new Game(2);
+const newGame = new Game(curLevel);
 newGame.generateLiquid();
 newGame.renderTubes();
 
-function renderLevelsList(){
+function renderLevelsList(curLevel){
   switch(curLevel){
     case 1:
       gameLevelThree.classList.add('game__level-hidden');
@@ -285,7 +302,7 @@ function renderLevelsList(){
   }
 }
 
-renderLevelsList();
+renderLevelsList(curLevel);
 
 function playNewGame(level) {
   const game = new Game(level);
@@ -306,27 +323,50 @@ gameLevelButton.onclick = () => {
 gameLevelThree.onclick = () => {
   curLevel = 1;
   playNewGame(curLevel);
-  renderLevelsList();
+  renderLevelsList(curLevel);
   gameLevelList.classList.toggle('levels__list-show');
 }
 
 gameLevelFive.onclick = () => {
   curLevel = 2;
   playNewGame(curLevel);
-  renderLevelsList();
+  renderLevelsList(curLevel);
   gameLevelList.classList.toggle('levels__list-show');
 }
 
 gameLevelSeven.onclick = () => {
   curLevel = 3;
   playNewGame(curLevel);
-  renderLevelsList();
+  renderLevelsList(curLevel);
   gameLevelList.classList.toggle('levels__list-show');
 }
 
 gameLevelNine.onclick = () => {
   curLevel = 4;
   playNewGame(curLevel);
-  renderLevelsList();
+  renderLevelsList(curLevel);
   gameLevelList.classList.toggle('levels__list-show');
+}
+
+function calculateDisorder(tubes, level){
+  let length = 2*level + 1;
+  let colors = COLORS.slice(0,length);
+  let disorder = 0;
+  colors.forEach((curColor) => {
+    tubes.forEach((tubeObj) => {
+      let arrColor = Array.from(tubeObj.colors).filter((color) => {
+        return color.dataColor == curColor;
+      });
+      disorder += arrColor.length > 0 ? 1 : 0;
+     });
+  });
+  return disorder + tubes.length - length;
+}
+
+function calculatePoints(game){
+  let mult = 10 + game.hidden * 5;
+  let curPoints = (game.disorder - calculateDisorder(game.tubes, game.level)) * mult;
+  game.points += curPoints > 0 ? curPoints : 0;
+  game.disorder = calculateDisorder(game.tubes, game.level);
+  console.log(game.points);
 }

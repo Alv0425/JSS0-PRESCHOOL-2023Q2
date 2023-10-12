@@ -38,7 +38,6 @@ const gameLevel = document.createElement('div');
 gameLevel.className = 'game__levels-container';
 const gameLevelButton = document.createElement('button');
 gameLevelButton.className = 'game__levels';
-gameLevelButton.textContent = '3 colors';
 const gameLevelThree = document.createElement('button');
 gameLevelThree.className = 'game__level';
 gameLevelThree.textContent = '3 colors';
@@ -58,6 +57,12 @@ gameSettings.append(gameLevel);
 gameLevel.append(gameLevelButton, gameLevelList);
 gameLevelList.append(gameLevelThree,gameLevelFive,gameLevelSeven,gameLevelNine);
 
+const scoreContainer = document.createElement('div');
+scoreContainer.classList = 'score_container';
+const scoreLabel = document.createElement('div');
+const movesLabel = document.createElement('div');
+scoreContainer.append(scoreLabel,movesLabel);
+gameSettings.append(scoreContainer);
 
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
