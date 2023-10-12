@@ -12,6 +12,16 @@ function removeChilds(element) {
   }
 }
 
+
+class GameStat {
+  constructor(){
+    this.level = curLevel;
+    this.gamesList = [];
+  }
+}
+
+const currentStat = new GameStat;
+
 class Game {
   constructor(level) {
     this.level = level;
@@ -181,6 +191,7 @@ class Game {
                       if(checkTubes(this.tubes)){
                         console.log(`Completed in ${this.steps} moves`);
                         winGame(this);
+                        updateGameStat(this);
                       }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
                       this.tubes[tubeB].tube.classList.remove('tube-locked');
@@ -275,6 +286,18 @@ function createBubbles(layer){
     bubbles.append(bubble);
   }
   layer.append(bubbles);
+}
+
+
+console.log(localStorage.hasOwnProperty('gamesStatWaterSortPuzzle'));
+
+if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
+  currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
+  currentStat.gamesList = JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList;
+  curLevel = currentStat.level;
+} else {
+  const gameStat = new GameStat;
+  localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
 }
 
 const newGame = new Game(curLevel);
@@ -468,4 +491,14 @@ plusTubeButton.onclick = () => {
   plusTubeButton.classList.add('button-disabled');
 }
 
-console.log(localStorage.hasOwnProperty('gamesStatWaterSortPuzzle'));
+function updateGameStat(game) {
+  let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
+  gameStat.level = curLevel;
+  gameStat.gamesList.push({
+    'gameLevel': game.level,
+    'gameColors': game.tubesColors,
+    'gameScore' : game.points,
+    'gameMoves' : game.steps
+  });
+  localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
+}
