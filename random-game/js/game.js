@@ -42,6 +42,7 @@ class Game {
   }
 
   renderTubes(){
+    gameContainer.append(gameSettings);
     curGame = this;
     removeChilds(tubes);
     tubes.className =`lvl-${this.level}`;
@@ -80,8 +81,8 @@ class Game {
       return tubeObj;
     });
     this.disorder = calculateDisorder(this.tubes, this.level);
-    scoreLabel.textContent = `Score: ${this.points}`;
-    movesLabel.textContent = `Moves: ${this.steps}`;
+    scoreLabel.textContent = `score: ${this.points}`;
+    movesLabel.textContent = `moves: ${this.steps}`;
     //add event listener for all tubes
     allTubes.forEach((tube, index) => {
       tube.addEventListener('click', () => {
@@ -166,11 +167,11 @@ class Game {
                       // this.disorder = calculateDisorder(this.tubes, this.level);
                       // console.log(this.points);
                       calculatePoints(this);
-                      scoreLabel.textContent = `Score: ${this.points}`;
-                      movesLabel.textContent = `Moves: ${this.steps}`;
+                      scoreLabel.textContent = `score: ${this.points}`;
+                      movesLabel.textContent = `moves: ${this.steps}`;
                       if(checkTubes(this.tubes)){
                         console.log(`Completed in ${this.steps} moves`);
-                        //Add function for win event
+                        winGame(this);
                       }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
                       this.tubes[tubeB].tube.classList.remove('tube-locked');
@@ -376,4 +377,75 @@ function calculatePoints(game){
 repeatButton.onclick = () => {
   const colors = curGame.tubesColors;
   openGame(curLevel,colors);
+}
+
+function generateCircle(){
+  body.append(overlay);
+  let circles = [];
+  for (let i = 0; i < 70; i++){
+    const circle = document.createElement('div');
+    circle.className = 'circle';
+    circle.style.backgroundColor = COLORS[Math.round(Math.random()*5)];
+    let x = Math.random() * 200 - 100 + 'px';
+    let y =  Math.random() * 50 - 25 + 'px';
+    circle.style.left = `calc(50% - 50px)`;
+    circle.style.top = `calc(100%)`;
+    circle.style.transform = `translateX(${x}) translateY(${y})`;
+    let size = 10 + Math.random() * 45 + 'px';
+    circle.style.transition = '1s';
+    circle.style.width = size;
+    circle.style.height = size;
+    overlay.append(circle);
+    circles.push(circle);    
+    setTimeout(() => {
+      let radius = 100 + (Math.random() * 80);
+      let alpha = 3.14 * 2 * Math.random();
+      x = Math.round(radius * Math.cos(alpha)) + 'px';
+      y = radius * Math.sin(alpha) + 'px';
+      console.log(x,y);
+      circle.style.left = `calc(50% - 20px)`;
+      circle.style.top = `calc(50% - 20px)`;
+      circle.style.transform = `translateX(${x}) translateY(${y})`;
+    },100);
+  }
+  return circles;
+}
+
+
+function winGame(game){
+  removeChilds(overlay);
+  let circles = generateCircle();
+  const sound = new Audio;
+  sound.src = './sounds/win.wav';
+  sound.play().then(() => {
+    sound.remove();
+  });
+  sound.volume = 0.3;
+  const modal = document.createElement('div');
+  modal.className = 'overlay__modal';
+  let modalTitle = document.createElement('div');
+  modalTitle.className = 'overlay__modal-title';
+  modalTitle.textContent = `Completed in ${game.steps} water moves!`;
+  let newGameButton = document.createElement('button');
+  newGameButton.className = 'overlay__modal-button';
+  newGameButton.textContent = 'new game!';
+  newGameButton.onclick = () => {
+    removeChilds(gameContainer);
+    const newGame = new Game(curLevel);
+    newGame.generateLiquid();
+    newGame.renderTubes();
+    overlay.remove(); 
+  }
+  let repeatGameButton = document.createElement('button');
+  repeatGameButton.className = 'overlay__modal-button';
+  repeatGameButton.textContent = 'repeat';
+  repeatGameButton.onclick = () => {
+    removeChilds(gameContainer);
+    const newGame = new Game(curLevel);
+    newGame.tubesColors = game.tubesColors;
+    newGame.renderTubes();
+    overlay.remove(); 
+  }
+  modal.append(modalTitle, newGameButton, repeatGameButton);
+  overlay.append(modal);  
 }

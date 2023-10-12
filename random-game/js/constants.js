@@ -52,7 +52,6 @@ gameLevelNine.className = 'game__level';
 gameLevelNine.textContent = '9 colors';
 const gameLevelList = document.createElement('div');
 gameLevelList.className = 'levels__list';
-gameContainer.append(gameSettings);
 gameSettings.append(gameLevel);
 gameLevel.append(gameLevelButton, gameLevelList);
 gameLevelList.append(gameLevelThree,gameLevelFive,gameLevelSeven,gameLevelNine);
@@ -64,11 +63,15 @@ const movesLabel = document.createElement('div');
 scoreContainer.append(scoreLabel,movesLabel);
 gameSettings.append(scoreContainer);
 
-
 const repeatButton = document.createElement('button');
 repeatButton.classList = 'repeat-button';
 repeatButton.title = 'repeat';
 gameSettings.append(repeatButton);
+
+const plusTubeButton = document.createElement('button');
+plusTubeButton.classList = 'plus-button';
+plusTubeButton.title = 'add tube';
+gameSettings.append(plusTubeButton);
 
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
