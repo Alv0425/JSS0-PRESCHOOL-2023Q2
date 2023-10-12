@@ -220,7 +220,7 @@ main {
 :root{
   --margin: 50px;
   --mlevel4: 25px;
-  --mlevel1: 25px;
+  --mlevel1: 0px;
 }
 
 .lvl-1,
@@ -314,13 +314,24 @@ main {
   top:50px;
 }
 
+
 .lvl-1 .tube-pour-5,
-.lvl-1 .tube-static:nth-child(5),
+.lvl-1 .tube-static:nth-child(5){
+  left: calc(var(--mlevel1) + var(--margin) * 5);
+  top:50px;
+}
+
 .lvl-2 .tube-pour-5,
 .lvl-2 .tube-static:nth-child(5),
 .lvl-3 .tube-pour-5,
 .lvl-3 .tube-static:nth-child(5){
   left: calc(var(--margin) * 5);
+  top:50px;
+}
+
+.lvl-1 .tube-pour-6,
+.lvl-1 .tube-static:nth-child(6){
+  left: calc(var(--margin) * 6);
   top:50px;
 }
 
@@ -438,7 +449,7 @@ main {
 .game__settings{
   display:flex;
   height:30px;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -453,10 +464,12 @@ main {
   color: var(--white);
   font-size: 16px;
   text-align: center;
+  transition: 1s;
 }
 
 .game__levels{
   background-color: #512A50;
+  filter: grayscale(1);
 }
 
 .game__levels-container{
@@ -486,16 +499,18 @@ main {
   display: none;
 }
 
+.game__levels:hover,
+.game__level:hover{
+  cursor: pointer;
+  filter: grayscale(0);
+}
+
 .repeat-button{
   height:30px;
   width:30px;
   border: 1px var(--white) solid;
   border-radius: 3px;
-  font-family: Roboto;
   background-color: #512A50;
-  color: var(--white);
-  font-size: 16px;
-  text-align: center;
   background-image: url(./assets/repeat.svg);
   background-size: 80%;
   background-repeat: no-repeat;
@@ -504,9 +519,41 @@ main {
   transition: 1s;
 }
 
-.repeat-button:hover{
- cursor: pointer;
- filter: grayscale(0.5);
+.plus-button{
+  height:30px;
+  width:30px;
+  border: 1px var(--white) solid;
+  border-radius: 3px;
+  background-color: #512A50;
+  background-image: url(./assets/plus-tube.svg);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  filter: grayscale(1);
+  transition: 1s;
+}
+
+.button-hidden{
+  display:none;
+}
+
+.button-disabled{
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.repeat-button:active,
+.plus-button:active{
+    cursor: pointer;
+    filter: grayscale(0.5);
+}   
+
+@media (pointer:fine) and (hover:hover) {
+  .repeat-button:hover,
+  .plus-button:hover{
+    cursor: pointer;
+    filter: grayscale(0.5);
+   }   
 }
 
 /* Footer */
@@ -674,6 +721,10 @@ main {
 }
 
 .overlay__modal-button{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
   padding:5px 10px;
   min-width: 100px;
   border: 1px var(--black) solid;
@@ -683,6 +734,29 @@ main {
   color: var(--black);
   font-size: 16px;
   text-align: center;
+}
+
+.overlay__modal-button::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  top:0;
+  left:0;
+  width:0;
+  background-color: rgba(167, 88, 189, 0.5);
+  transition: 0.3s;
+}
+
+.overlay__modal-button span{
+  z-index: 2;
+}
+
+.overlay__modal-button:hover::before{
+  width:100%;
+}
+
+.overlay__modal-button:hover{
+  cursor: pointer;
 }
 
 .circle{

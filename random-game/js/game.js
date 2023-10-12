@@ -65,7 +65,16 @@ class Game {
       tubes.append(tube);
       tube.classList.add('tube-static');
     }
+    plusTubeButton.classList.add('button-hidden');
+    plusTubeButton.classList.remove('button-disabled');
+    if (this.level == 1){
+      let tube = document.createElement('div');
+      tube.className = 'tube';  
+      tubes.append(tube);
+      tube.classList.add('tube-static');
+    }
     if (this.level == 3 || this.level == 4) {
+      plusTubeButton.classList.remove('button-hidden');
       tubes.childNodes[tubes.childNodes.length - 1].classList.add('tube-hidden');
       this.hidden = 1;
     }
@@ -158,7 +167,7 @@ class Game {
                         resolve('Poured!');
                         this.tubes[tubeA].colors = Array.from(this.tubes[tubeA].tube.childNodes);
                         this.tubes[tubeB].colors = Array.from(this.tubes[tubeB].tube.childNodes);   
-                      }, 1400);
+                      }, 1200);
                     });
                     pourTubeB.then(() => {
                       this.steps +=1;
@@ -411,7 +420,6 @@ function generateCircle(){
   return circles;
 }
 
-
 function winGame(game){
   removeChilds(overlay);
   let circles = generateCircle();
@@ -428,7 +436,9 @@ function winGame(game){
   modalTitle.textContent = `Completed in ${game.steps} water moves!`;
   let newGameButton = document.createElement('button');
   newGameButton.className = 'overlay__modal-button';
-  newGameButton.textContent = 'new game!';
+  let newGameButtonText = document.createElement('span');
+  newGameButton.append(newGameButtonText);
+  newGameButtonText.textContent = 'new game';
   newGameButton.onclick = () => {
     removeChilds(gameContainer);
     const newGame = new Game(curLevel);
@@ -438,7 +448,9 @@ function winGame(game){
   }
   let repeatGameButton = document.createElement('button');
   repeatGameButton.className = 'overlay__modal-button';
-  repeatGameButton.textContent = 'repeat';
+  let repeatGameButtonText = document.createElement('span');
+  repeatGameButton.append(repeatGameButtonText);
+  repeatGameButtonText.textContent = 'repeat';
   repeatGameButton.onclick = () => {
     removeChilds(gameContainer);
     const newGame = new Game(curLevel);
@@ -449,3 +461,11 @@ function winGame(game){
   modal.append(modalTitle, newGameButton, repeatGameButton);
   overlay.append(modal);  
 }
+
+plusTubeButton.onclick = () => {
+  curGame.tubes[curGame.tubes.length - 1].tube.classList.remove('tube-hidden');
+  curGame.hidden = 0;
+  plusTubeButton.classList.add('button-disabled');
+}
+
+console.log(localStorage.hasOwnProperty('gamesStatWaterSortPuzzle'));
