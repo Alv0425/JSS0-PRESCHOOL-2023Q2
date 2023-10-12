@@ -64,5 +64,11 @@ const movesLabel = document.createElement('div');
 scoreContainer.append(scoreLabel,movesLabel);
 gameSettings.append(scoreContainer);
 
+
+const repeatButton = document.createElement('button');
+repeatButton.classList = 'repeat-button';
+repeatButton.title = 'repeat';
+gameSettings.append(repeatButton);
+
 const overlay = document.createElement('div');
 overlay.className = 'overlay';

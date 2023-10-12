@@ -3,6 +3,7 @@
 let gameMoveState = 'not selected';
 let tubeA;
 let tubeB;
+let curGame;
 let curLevel = 2;
 
 function removeChilds(element) {
@@ -41,6 +42,7 @@ class Game {
   }
 
   renderTubes(){
+    curGame = this;
     removeChilds(tubes);
     tubes.className =`lvl-${this.level}`;
     this.tubesColors.forEach((portion) => {
@@ -369,4 +371,9 @@ function calculatePoints(game){
   game.points += curPoints > 0 ? curPoints : 0;
   game.disorder = calculateDisorder(game.tubes, game.level);
   console.log(game.points);
+}
+
+repeatButton.onclick = () => {
+  const colors = curGame.tubesColors;
+  openGame(curLevel,colors);
 }

@@ -486,6 +486,29 @@ main {
   display: none;
 }
 
+.repeat-button{
+  height:30px;
+  width:30px;
+  border: 1px var(--white) solid;
+  border-radius: 3px;
+  font-family: Roboto;
+  background-color: #512A50;
+  color: var(--white);
+  font-size: 16px;
+  text-align: center;
+  background-image: url(./assets/repeat.svg);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  filter: grayscale(1);
+  transition: 1s;
+}
+
+.repeat-button:hover{
+ cursor: pointer;
+ filter: grayscale(0.5);
+}
+
 /* Footer */
 .footer{
   display: flex;
