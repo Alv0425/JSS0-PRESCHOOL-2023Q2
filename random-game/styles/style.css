@@ -107,7 +107,7 @@ main {
   left:-2px;
   width:34px;
   height: 200px;
-  background-image: url(./assets/glass.svg);
+  background-image: url(../assets/glass.svg);
 }
 
 .tube::before{
@@ -512,7 +512,7 @@ main {
   border: 1px var(--white) solid;
   border-radius: 3px;
   background-color: #512A50;
-  background-image: url(./assets/repeat.svg);
+  background-image: url(../assets/repeat.svg);
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -526,7 +526,7 @@ main {
   border: 1px var(--white) solid;
   border-radius: 3px;
   background-color: #512A50;
-  background-image: url(./assets/plus-tube.svg);
+  background-image: url(../assets/plus-tube.svg);
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -584,7 +584,7 @@ main {
   width: 120px;
   height: 47px;
   margin: auto 0px;
-  background-image: url(./assets/rss.svg);
+  background-image: url(../assets/rss.svg);
   background-repeat: no-repeat;
   background-size: contain;
   filter: grayscale(100) brightness(3);
@@ -618,7 +618,7 @@ main {
   left: calc(100% + 10px);
   width: 26px;
   height: 26px;
-  background-image: url(./assets/github.svg);
+  background-image: url(../assets/github.svg);
   filter: grayscale(100) brightness(3);
   transition: 1s;
 }
@@ -788,7 +788,7 @@ main {
   height: 30px;
   left:-30px;
   top:5px;
-  background-image: url(./assets/tube.svg);
+  background-image: url(../assets/tube.svg);
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -816,14 +816,14 @@ main {
 }
 
 .game-history ul li span:nth-child(1)::after{
-  background-image: url(./assets/colors.svg);
+  background-image: url(../assets/colors.svg);
 }
 .game-history ul li span:nth-child(1){
   width: 45px;
 }
 
 .game-history ul li span:nth-child(2)::after{
-  background-image: url(./assets/moves.svg);
+  background-image: url(../assets/moves.svg);
 }
 .game-history ul li span:nth-child(2){
   width: 60px;
@@ -831,7 +831,7 @@ main {
 
 .game-history ul li span:nth-child(3)::after{
   background-size: 90%;
-  background-image: url(./assets/star.svg);
+  background-image: url(../assets/star.svg);
 }
 .game-history ul li span:nth-child(3){
   width: 70px;
