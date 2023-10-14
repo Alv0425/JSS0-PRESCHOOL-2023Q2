@@ -73,6 +73,11 @@ plusTubeButton.classList = 'plus-button';
 plusTubeButton.title = 'add tube';
 gameSettings.append(plusTubeButton);
 
+const showHistory = document.createElement('button');
+showHistory.classList = 'history-button';
+showHistory.title = 'show score';
+gameSettings.append(showHistory);
+
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
 

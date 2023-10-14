@@ -234,6 +234,9 @@ main {
   height: 100%;
 }
 
+.tube-pour{
+  transition:0.7s;
+}
 
 .lvl-1 .tube-pour-1,
 .lvl-1 .tube-static:nth-child(1){
@@ -534,6 +537,33 @@ main {
   transition: 1s;
 }
 
+.history-button{
+  display: none;
+}
+
+@media (width < 768px){
+  .history-button{
+    display: block;
+    height:30px;
+    width:30px;
+    border: 1px var(--white) solid;
+    border-radius: 3px;
+    background-color: #512A50;
+    background-image: url(../assets/star.svg);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    filter: grayscale(1);
+    transition: 1s;
+  }
+  @media (pointer:fine) and (hover:hover) {
+    .history-button:hover{
+      cursor: pointer;
+      filter: grayscale(0.5);
+     }   
+  }
+}
+
 .button-hidden{
   display:none;
 }
@@ -767,29 +797,48 @@ main {
 }
 
 .game-history{
+  position: relative;
+  display: flex;
+  justify-content: center;
   height: 450px;
   width:300px;
-  border: 1px #fff solid;
+  padding: 5px;
+  border: 1px #3D234A solid;
+  background-color: #371A45;
   margin-right: auto;
   border-radius: 10px;
 }
 
+.game-history ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:0;
+  width: 100%;
+}
+
 .game-history ul li {
   position: relative;
-  padding:7.5px;
+  width: 270px;
+  padding:7px;
   display: flex;
-  gap:20px;
+  justify-content: end;
+  align-items: center;
+  gap:10px;
+  font-family: Roboto;
+  font-size:12px;
+  line-height: 16px;
 }
 
 .game-history ul li::before{
   content: '';
   position: absolute;
-  width:25px;
+  width:20px;
   height: 30px;
-  left:-30px;
+  left: 0px;
   top:5px;
-  background-image: url(../assets/tube.svg);
-  background-size: contain;
+  background-image: url(../assets/play.svg);
+  background-size: 60%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
 }
@@ -797,9 +846,9 @@ main {
 .game-history ul li span {
   position: relative;
   display: block;
-  padding:2px 5px;
+  padding:5px;
   width: 70px;
-  border: 1px #fff solid;
+  border: 1px #3D234A solid;
   border-radius: 10px;
 }
 
@@ -807,9 +856,9 @@ main {
   content: '';
   position: absolute;
   width:20px;
-  height: 20px;
+  height: 16px;
   right:5px;
-  top:2px;
+  top:5px;
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -830,7 +879,7 @@ main {
 }
 
 .game-history ul li span:nth-child(3)::after{
-  background-size: 90%;
+  background-size: 80%;
   background-image: url(../assets/star.svg);
 }
 .game-history ul li span:nth-child(3){
@@ -845,11 +894,30 @@ main {
   background-color: rgba(167, 88, 189, 0.5);
 }
 
+.game-history__label-top{
+  position: absolute;
+  top: 30px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.game-history__label-bottom{
+  position: absolute;
+  bottom: -12px;
+  font-size: 10px;
+  line-height: 12px;
+}
+
 @media (width < 750px) {
   .game-history{
     position: fixed;
     right:0;
-    top:50px;
+    top:150px;
     transform: translateX(100%);
+    transition: 1s;
+  }
+
+  .game-history-show{
+    transform: translateX(0%);
   }
 }

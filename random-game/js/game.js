@@ -31,6 +31,7 @@ class Game {
     this.points = 0;
     this.hidden = 0;
     this.disorder = 0;
+    this.time = '';
   }
 
   generateLiquid(){
@@ -53,6 +54,11 @@ class Game {
 
   renderTubes(){
     gameContainer.append(gameSettings);
+    let start = new Date();
+    const timerFunction = () => {
+      this.time = getTime(start);
+    }
+    let newInterval = setInterval(timerFunction, 1000);
     curGame = this;
     removeChilds(tubes);
     tubes.className =`lvl-${this.level}`;
@@ -129,6 +135,7 @@ class Game {
                   const moveToTubeB = new Promise((resolve) => {
                     this.tubes[tubeA].tube.classList.add('tube-locked');
                     this.tubes[tubeB].tube.classList.add('tube-locked');
+                    this.tubes[tubeA].tube.classList.add('tube-pour');
                     this.tubes[tubeA].tube.classList.add(`tube-pour-${tubeB + 1}`);
                     this.tubes[tubeA].tube.classList.remove('tube-static');
                     setTimeout(() => {
@@ -143,9 +150,6 @@ class Game {
                       let angle = locB.x < 150 ? "rotate(-50deg) translateX(23px)" : "rotate(50deg) translateX(-23px)";
                       let jet = document.createElement('div');
                       jet.className = 'jet';
-                      // jet.style.left = locB.x + gameContainer.getBoundingClientRect().left + 15 + 'px';
-                      // jet.style.top = locB.y + gameContainer.getBoundingClientRect().top - 8 + 'px';
-
                       jet.style.left = locB.x  + 15 + 'px';
                       jet.style.top = locB.y - 15 + 'px';
                       this.tubes[tubeA].tube.style.transform = `${angle}`;  
@@ -167,7 +171,7 @@ class Game {
                       setTimeout(() => {
                         gameContainer.prepend(jet);
                         pourSound.play();
-                      },250);
+                      },450);
                       this.tubes[tubeB].tube.prepend(...cloneLayers);
                       this.tubes.forEach((tube) => {
                         tube.tube.classList.add('tube-locked');
@@ -181,10 +185,6 @@ class Game {
                     });
                     pourTubeB.then(() => {
                       this.steps +=1;
-                      // let curPoints = (this.disorder - calculateDisorder(this.tubes, this.level))*10;
-                      // this.points += curPoints > 0 ? curPoints : 0;
-                      // this.disorder = calculateDisorder(this.tubes, this.level);
-                      // console.log(this.points);
                       calculatePoints(this);
                       scoreLabel.textContent = `points: ${this.points}`;
                       movesLabel.textContent = `moves: ${this.steps}`;
@@ -193,10 +193,12 @@ class Game {
                         winGame(this);
                         updateGameStat(this);
                         updateScore();
+                        clearInterval(newInterval);
                       }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
                       this.tubes[tubeB].tube.classList.remove('tube-locked');
                       this.tubes[tubeA].tube.classList.remove(`tube-pour-${tubeB + 1}`);
+                      this.tubes[tubeA].tube.classList.remove('tube-pour');
                       this.tubes[tubeA].tube.classList.add(`tube-static`);
                       this.tubes[tubeA].tube.style.removeProperty('transform-origin');
                       this.tubes[tubeA].tube.style.removeProperty('transform');
@@ -288,9 +290,6 @@ function createBubbles(layer){
   }
   layer.append(bubbles);
 }
-
-
-console.log(localStorage.hasOwnProperty('gamesStatWaterSortPuzzle'));
 
 if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
   currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
@@ -405,7 +404,6 @@ function calculatePoints(game){
   let curPoints = (game.disorder - calculateDisorder(game.tubes, game.level)) * mult;
   game.points += curPoints > 0 ? curPoints : 0;
   game.disorder = calculateDisorder(game.tubes, game.level);
-  console.log(game.points);
 }
 
 repeatButton.onclick = () => {
@@ -436,7 +434,6 @@ function generateCircle(){
       let alpha = 3.14 * 2 * Math.random();
       x = Math.round(radius * Math.cos(alpha)) + 'px';
       y = radius * Math.sin(alpha) + 'px';
-      console.log(x,y);
       circle.style.left = `calc(50% - 20px)`;
       circle.style.top = `calc(50% - 20px)`;
       circle.style.transform = `translateX(${x}) translateY(${y})`;
@@ -500,7 +497,8 @@ function updateGameStat(game) {
     'gameLevel': game.level,
     'gameColors': game.tubesColors,
     'gameScore' : game.points,
-    'gameMoves' : game.steps
+    'gameMoves' : game.steps,
+    'gameTime' : game.time
   });
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
 }
@@ -510,7 +508,6 @@ function updateScore() {
   let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
   let gamesAll = gameStat.gamesList;
   let bestGames = gamesAll.sort((gameA, gameB) => {
-    console.log((gameA.gameScore / gameA.gameMoves) - (gameB.gameScore / gameB.gameMoves));
     return (gameB.gameScore / gameB.gameMoves) - (gameA.gameScore / gameA.gameMoves);
   }); 
   if (bestGames.length > 10) {
@@ -520,15 +517,46 @@ function updateScore() {
     const gameItem = document.createElement('li');
     gameItem.onclick = () => {
       openGame(gameObj.gameLevel, gameObj.gameColors);
+      gameHistory.classList.remove('game-history-show');
     }
     let colorsItem = document.createElement('span');
     colorsItem.textContent = `${gameObj.gameLevel * 2 + 1}`;
+    colorsItem.title = 'colors';
     let movesItem = document.createElement('span');
     movesItem.textContent = `${gameObj.gameMoves}`;
+    movesItem.title = 'moves';
     let pointsItem = document.createElement('span');
     pointsItem.textContent = `${gameObj.gameScore}`;
-    gameItem.append(colorsItem,movesItem,pointsItem);
+    pointsItem.title = 'points';
+    gameItem.append(gameObj.gameTime,colorsItem,movesItem,pointsItem);
     gameHistoryList.append(gameItem);
   });
 }
 
+function getTime(start){
+  const finish = new Date();
+  let time = finish.getHours() * 60 * 60 + finish.getMinutes() * 60 + finish.getSeconds() - start.getHours() * 60 * 60 - start.getMinutes() * 60 - start.getSeconds();
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  if (time >= 60 * 60) {
+  	hours = Math.floor(time / (60 * 60));
+    time = time - hours * (60 * 60);
+  }
+  if (time >= 60) {
+  	minutes = Math.floor(time/60);
+    time = time - minutes * 60;
+  }
+  seconds = time;  
+  return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
+}
+
+showHistory.onclick = () => {
+  gameHistory.classList.toggle('game-history-show');
+}
+
+document.addEventListener('click', (event) => {
+  if (!gameHistory.contains(event.target) && !showHistory.contains(event.target)) {
+    gameHistory.classList.remove('game-history-show');
+  }
+})
