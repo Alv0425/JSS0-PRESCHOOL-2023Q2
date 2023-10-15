@@ -713,11 +713,9 @@ main {
 
 @keyframes fade-out {
   0%{
-    /* transform: translateY(100%); */
     opacity: 0;
   }
   100%{
-    /* transform: translateY(0); */
     opacity: 1;
   }
 }
@@ -732,6 +730,7 @@ main {
   offset: 0 0;
   animation: fade-out 0.5s ease;
   background-color: rgba(222,222,222,0.3);
+  z-index: 10;
 }
 
 @keyframes up {
@@ -909,10 +908,30 @@ main {
   border-radius: 10px;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f033e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #44055a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e0554;
+}
+
 .game-rules{
   padding: 10px;
   font-size: 14px;
   max-width: 500px;
+  max-height: 290px;
+  overflow-y: auto;
+  scrollbar-color: #000;
+  scrollbar-width:thin;
 }
 
 .game-rules p {
@@ -960,6 +979,7 @@ main {
   width: 70px;
   border: 1px #3D234A solid;
   border-radius: 10px;
+  transition: 0.5s;
 }
 
 .game-history ul li span::after{
