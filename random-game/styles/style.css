@@ -768,6 +768,14 @@ main {
   text-align: center;
 }
 
+.overlay__modal-note{
+  font-family: Roboto;
+  color: var(--black);
+  max-width: 200px;
+  font-size: 14px;
+  text-align: center;
+}
+
 .overlay__modal-button{
   position: relative;
   display: flex;
@@ -1026,9 +1034,12 @@ main {
 
 .game-history__label-top{
   position: absolute;
-  top: 30px;
+  top: 0;
+  left: calc(50% - 50px);
   font-size: 20px;
   line-height: 30px;
+  font-size: 14px;
+  font-family: Montserrat;
 }
 
 .game-history__label-bottom{
@@ -1039,10 +1050,20 @@ main {
 }
 
 @media (width < 750px) {
+  .header__logo{
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  main{
+    margin: 10px 0;
+  }
+
   .game-history{
     position: fixed;
+    z-index: 5;
     right:0;
-    top:150px;
+    top:90px;
     transform: translateX(100%);
     transition: 1s;
   }
