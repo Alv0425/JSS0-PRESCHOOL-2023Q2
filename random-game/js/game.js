@@ -1,5 +1,4 @@
 'use strict';
-
 let gameMoveState = 'not selected';
 let tubeA;
 let tubeB;
@@ -193,7 +192,6 @@ class Game {
                       scoreLabel.textContent = `points: ${this.points}`;
                       movesLabel.textContent = `moves: ${this.steps}`;
                       if(checkTubes(this.tubes)){
-                        console.log(`Completed in ${this.steps} moves`);
                         winGame(this);
                         updateGameStat(this);
                         updateScore();
@@ -299,7 +297,6 @@ if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
   currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
   currentStat.gamesList = JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList;
   curLevel = currentStat.level;
-  console.log(JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length);
   updateScore();
 } else {
   const gameStat = new GameStat;
@@ -462,6 +459,9 @@ function winGame(game){
   let modalTitle = document.createElement('div');
   modalTitle.className = 'overlay__modal-title';
   modalTitle.textContent = `Completed in ${game.steps} water moves!`;
+  let modalNote = document.createElement('div');
+  modalNote.className = 'overlay__modal-note';
+  modalNote.textContent = `points: ${game.points}, time: ${game.time}`;
   let newGameButton = document.createElement('button');
   newGameButton.className = 'overlay__modal-button';
   let newGameButtonText = document.createElement('span');
@@ -486,7 +486,7 @@ function winGame(game){
     newGame.renderTubes();
     overlay.remove(); 
   }
-  modal.append(modalTitle, newGameButton, repeatGameButton);
+  modal.append(modalTitle, modalNote, newGameButton, repeatGameButton);
   overlay.append(modal);  
 }
 
@@ -513,7 +513,6 @@ function updateScore() {
   gameRules.remove();
   if (JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length == 0) {
     gameHistory.prepend(gameRules);
-    console.log('showed');
   }
   removeChilds(gameHistoryList);
   let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
@@ -524,6 +523,7 @@ function updateScore() {
   if (bestGames.length > 10) {
     bestGames = bestGames.slice(0,10);
   }
+  gameTopLabel.textContent = `Total Score: ${totalScore()}`;
   bestGames.forEach((gameObj) => {
     const gameItem = document.createElement('li');
     gameItem.onclick = () => {
@@ -588,3 +588,11 @@ resetBlockButton.onclick = () => {
   window.location.reload();
 }
 
+function totalScore(){
+  let gamesStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
+  let gamescore = 0;
+  gamesStat.gamesList.forEach((gameObj) => {
+    gamescore += gameObj.gameScore;
+  });
+  return gamescore;
+}

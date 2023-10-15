@@ -91,6 +91,12 @@ gameHistory.className = 'game-history';
 const gameHistoryList = document.createElement('ul');
 gameHistory.append(gameHistoryList);
 
+const gameTopLabel = document.createElement('div');
+gameTopLabel.className = 'game-history__label-top';
+const gameBottomLabel = document.createElement('div');
+gameBottomLabel.className = 'game-history__label-bottom';
+gameHistory.append(gameTopLabel);
+
 const gameRules = document.createElement('div');
 gameRules.className = 'game-rules';
 gameRules.innerHTML = `
@@ -124,3 +130,4 @@ const resetBlockButton = document.createElement('button');
 resetBlockButton.textContent = 'RESET';
 resetBlock.append(resetBlockLabel, resetBlockButton);
 infoModal.append(infoModalHeader, infoModalClose, gameInfo, resetBlock);
+
