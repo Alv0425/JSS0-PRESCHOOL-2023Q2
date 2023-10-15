@@ -48,6 +48,8 @@ header{
   font-family: Montserrat;
   font-weight: 900;
   font-size: 40px;
+  line-height: 70px;
+  margin:0px;
   letter-spacing: 2px;
   text-align: center;
 }
@@ -57,7 +59,7 @@ main {
   display:flex;
   align-items: center;
   max-width: 700px;
-  margin: 10px 0;
+  margin: 25px 0;
 }
 
 .game__container{
@@ -537,6 +539,21 @@ main {
   transition: 1s;
 }
 
+.info-button{
+  height:30px;
+  width:30px;
+  border: 1px var(--white) solid;
+  border-radius: 3px;
+  background-color: #512A50;
+  background-image: url(../assets/info.svg);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  filter: grayscale(1);
+  transition: 1s;
+}
+
+
 .history-button{
   display: none;
 }
@@ -581,7 +598,8 @@ main {
 
 @media (pointer:fine) and (hover:hover) {
   .repeat-button:hover,
-  .plus-button:hover{
+  .plus-button:hover,
+  .info-button:hover{
     cursor: pointer;
     filter: grayscale(0.5);
    }   
@@ -712,7 +730,7 @@ main {
   width: 100%;
   height: 100%;
   offset: 0 0;
-  animation: fade-out 2s ease;
+  animation: fade-out 0.5s ease;
   background-color: rgba(222,222,222,0.3);
 }
 
@@ -796,10 +814,53 @@ main {
   opacity: 0.7;
 }
 
+.info-modal{
+  position: relative;
+  margin: auto auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width:calc(100% - 20px);
+  max-width: 600px;
+  max-height: 600px;
+  padding:0 20px 20px 20px;
+  background-color: #371A45;
+}
+
+.info-modal__header{
+  font-family: Montserrat;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 50px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.info-modal__close{
+  position: absolute;
+  right:0;
+  top:0;
+  border:none;
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+  background-image: url(../assets/xmark-solid.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 30px 30px;
+}
+
+@media (pointer:fine) and (hover:hover) {
+  .info-modal__close:hover{
+    cursor: pointer;
+  }
+}
+
 .game-history{
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   height: 450px;
   width:300px;
   padding: 5px;
@@ -807,6 +868,16 @@ main {
   background-color: #371A45;
   margin-right: auto;
   border-radius: 10px;
+}
+
+.game-rules{
+  padding: 10px;
+  font-size: 14px;
+  max-width: 500px;
+}
+
+.game-rules p {
+  line-height: 25px;
 }
 
 .game-history ul{

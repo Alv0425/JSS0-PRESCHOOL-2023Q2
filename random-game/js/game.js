@@ -105,6 +105,10 @@ class Game {
       }
       return tubeObj;
     });
+    if (checkTubes(this.tubes)) {
+      this.generateLiquid();
+      this.renderTubes();
+    }
     this.disorder = calculateDisorder(this.tubes, this.level);
     scoreLabel.textContent = `points: ${this.points}`;
     movesLabel.textContent = `moves: ${this.steps}`;
@@ -295,10 +299,12 @@ if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
   currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
   currentStat.gamesList = JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList;
   curLevel = currentStat.level;
+  console.log(JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length);
   updateScore();
 } else {
   const gameStat = new GameStat;
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
+  gameHistory.append(gameRules);
 }
 
 const newGame = new Game(curLevel);
@@ -504,6 +510,11 @@ function updateGameStat(game) {
 }
 
 function updateScore() {
+  gameRules.remove();
+  if (JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length == 0) {
+    gameHistory.prepend(gameRules);
+    console.log('showed');
+  }
   removeChilds(gameHistoryList);
   let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
   let gamesAll = gameStat.gamesList;
@@ -544,7 +555,7 @@ function getTime(start){
     time = time - hours * (60 * 60);
   }
   if (time >= 60) {
-  	minutes = Math.floor(time/60);
+  	minutes = Math.floor(time / 60);
     time = time - minutes * 60;
   }
   seconds = time;  
@@ -559,4 +570,16 @@ document.addEventListener('click', (event) => {
   if (!gameHistory.contains(event.target) && !showHistory.contains(event.target)) {
     gameHistory.classList.remove('game-history-show');
   }
-})
+});
+
+showInfo.onclick = () => {
+  removeChilds(overlay);
+  body.append(overlay);
+  overlay.append(infoModal);
+}
+
+infoModalClose.onclick = () => {
+  infoModal.remove();
+  overlay.remove();
+}
+
