@@ -583,3 +583,8 @@ infoModalClose.onclick = () => {
   overlay.remove();
 }
 
+resetBlockButton.onclick = () => {
+  localStorage.removeItem('gamesStatWaterSortPuzzle');
+  window.location.reload();
+}
+

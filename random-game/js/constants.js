@@ -115,4 +115,12 @@ gameInfo.innerHTML = `
 <p>HOW TO PLAY: Tap any test tube, next tap another one to pour liquid in.</p>
 <p>RULES: You can only merge the liquids if they are same-colored and there're enough space in the test tube.</p>
 ` ;
-infoModal.append(infoModalHeader, infoModalClose, gameInfo);
+
+const resetBlock = document.createElement('div');
+resetBlock.className = 'reset-history';
+const resetBlockLabel = document.createElement('p');
+resetBlockLabel.textContent = 'To reset games history and clear localStorage press this button:'
+const resetBlockButton = document.createElement('button');
+resetBlockButton.textContent = 'RESET';
+resetBlock.append(resetBlockLabel, resetBlockButton);
+infoModal.append(infoModalHeader, infoModalClose, gameInfo, resetBlock);
