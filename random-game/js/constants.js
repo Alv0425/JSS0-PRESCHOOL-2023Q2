@@ -73,6 +73,16 @@ plusTubeButton.classList = 'plus-button';
 plusTubeButton.title = 'add tube';
 gameSettings.append(plusTubeButton);
 
+const showInfo = document.createElement('button');
+showInfo.classList = 'info-button';
+showInfo.title = 'show score';
+gameSettings.append(showInfo);
+
+const showHistory = document.createElement('button');
+showHistory.classList = 'history-button';
+showHistory.title = 'show score';
+gameSettings.append(showHistory);
+
 const overlay = document.createElement('div');
 overlay.className = 'overlay';
 
@@ -80,4 +90,37 @@ const gameHistory = document.createElement('div');
 gameHistory.className = 'game-history';
 const gameHistoryList = document.createElement('ul');
 gameHistory.append(gameHistoryList);
+
+const gameRules = document.createElement('div');
+gameRules.className = 'game-rules';
+gameRules.innerHTML = `
+<p>Try to sort the colored liquids in the tubes until all colors in the same tube.</p>
+<p>HOW TO PLAY: Tap any test tube, next tap another one to pour liquid in.</p>
+<p>You can only merge the liquids if they are same-colored and there're enough space in the test tube.</p>
+` 
 main.append(gameHistory);
+
+const infoModal = document.createElement('div');
+infoModal.className = 'info-modal';
+const infoModalHeader = document.createElement('div');
+infoModalHeader.className = 'info-modal__header';
+const infoModalClose = document.createElement('button');
+infoModalClose.className = 'info-modal__close';
+infoModalHeader.textContent = 'Water Sort Puzzle';
+const gameInfo = document.createElement('div');
+gameInfo.className = 'game-rules';
+gameInfo.innerHTML = `
+<p><b>Water Sort Puzzle</b> is a popular logic puzzle consisting of several test tubes 
+(or glasses) containing liquids of multiple colors. Each container works like a stack. A layer of colored liquid has to follow the last-in first-out order. The player has to sort the liquids by color such that each test tube contains only liquids of a same color. </p>
+<p>HOW TO PLAY: Tap any test tube, next tap another one to pour liquid in.</p>
+<p>RULES: You can only merge the liquids if they are same-colored and there're enough space in the test tube.</p>
+` ;
+
+const resetBlock = document.createElement('div');
+resetBlock.className = 'reset-history';
+const resetBlockLabel = document.createElement('p');
+resetBlockLabel.textContent = 'To reset games history and clear localStorage press this button:'
+const resetBlockButton = document.createElement('button');
+resetBlockButton.textContent = 'RESET';
+resetBlock.append(resetBlockLabel, resetBlockButton);
+infoModal.append(infoModalHeader, infoModalClose, gameInfo, resetBlock);

@@ -48,6 +48,8 @@ header{
   font-family: Montserrat;
   font-weight: 900;
   font-size: 40px;
+  line-height: 70px;
+  margin:0px;
   letter-spacing: 2px;
   text-align: center;
 }
@@ -57,7 +59,7 @@ main {
   display:flex;
   align-items: center;
   max-width: 700px;
-  margin: 10px 0;
+  margin: 25px 0;
 }
 
 .game__container{
@@ -234,6 +236,9 @@ main {
   height: 100%;
 }
 
+.tube-pour{
+  transition:0.7s;
+}
 
 .lvl-1 .tube-pour-1,
 .lvl-1 .tube-static:nth-child(1){
@@ -534,6 +539,48 @@ main {
   transition: 1s;
 }
 
+.info-button{
+  height:30px;
+  width:30px;
+  border: 1px var(--white) solid;
+  border-radius: 3px;
+  background-color: #512A50;
+  background-image: url(../assets/info.svg);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  filter: grayscale(1);
+  transition: 1s;
+}
+
+
+.history-button{
+  display: none;
+}
+
+@media (width < 768px){
+  .history-button{
+    display: block;
+    height:30px;
+    width:30px;
+    border: 1px var(--white) solid;
+    border-radius: 3px;
+    background-color: #512A50;
+    background-image: url(../assets/star.svg);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    filter: grayscale(1);
+    transition: 1s;
+  }
+  @media (pointer:fine) and (hover:hover) {
+    .history-button:hover{
+      cursor: pointer;
+      filter: grayscale(0.5);
+     }   
+  }
+}
+
 .button-hidden{
   display:none;
 }
@@ -551,7 +598,8 @@ main {
 
 @media (pointer:fine) and (hover:hover) {
   .repeat-button:hover,
-  .plus-button:hover{
+  .plus-button:hover,
+  .info-button:hover{
     cursor: pointer;
     filter: grayscale(0.5);
    }   
@@ -665,11 +713,9 @@ main {
 
 @keyframes fade-out {
   0%{
-    /* transform: translateY(100%); */
     opacity: 0;
   }
   100%{
-    /* transform: translateY(0); */
     opacity: 1;
   }
 }
@@ -682,8 +728,9 @@ main {
   width: 100%;
   height: 100%;
   offset: 0 0;
-  animation: fade-out 2s ease;
+  animation: fade-out 0.5s ease;
   background-color: rgba(222,222,222,0.3);
+  z-index: 10;
 }
 
 @keyframes up {
@@ -766,30 +813,161 @@ main {
   opacity: 0.7;
 }
 
+.info-modal{
+  position: relative;
+  margin: auto auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width:calc(100% - 20px);
+  max-width: 600px;
+  max-height: 600px;
+  padding:0 20px 20px 20px;
+  background-color: #371A45;
+}
+
+.info-modal__header{
+  font-family: Montserrat;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 50px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.info-modal__close{
+  position: absolute;
+  right:0;
+  top:0;
+  border:none;
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+  background-image: url(../assets/xmark-solid.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 30px 30px;
+}
+
+@media (pointer:fine) and (hover:hover) {
+  .info-modal__close:hover{
+    cursor: pointer;
+  }
+}
+
+.reset-history{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
+  max-width: 500px;
+  padding:20px 10px;
+  border-top: 1px #fff solid;
+}
+
+.reset-history p {
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.reset-history button {
+  position: relative;
+  height: 25px;
+  width:70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 25px;
+  background-color: transparent;
+  border-radius: 10px;
+  font-family: Roboto;
+  font-size: 12px;
+  color: #fff;
+  border: 1px #fff solid;
+  transition: 1s;
+}
+
+.reset-history button:hover{
+  cursor: pointer;
+  background-color: #fff;
+  color:#271033;
+}
+
 .game-history{
+  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 450px;
   width:300px;
-  border: 1px #fff solid;
+  padding: 5px;
+  border: 1px #3D234A solid;
+  background-color: #371A45;
   margin-right: auto;
   border-radius: 10px;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f033e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #44055a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e0554;
+}
+
+.game-rules{
+  padding: 10px;
+  font-size: 14px;
+  max-width: 500px;
+  max-height: 290px;
+  overflow-y: auto;
+  scrollbar-color: #000;
+  scrollbar-width:thin;
+}
+
+.game-rules p {
+  line-height: 25px;
+}
+
+.game-history ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:0;
+  width: 100%;
+}
+
 .game-history ul li {
   position: relative;
-  padding:7.5px;
+  width: 270px;
+  padding:7px;
   display: flex;
-  gap:20px;
+  justify-content: end;
+  align-items: center;
+  gap:10px;
+  font-family: Roboto;
+  font-size:12px;
+  line-height: 16px;
 }
 
 .game-history ul li::before{
   content: '';
   position: absolute;
-  width:25px;
+  width:20px;
   height: 30px;
-  left:-30px;
+  left: 0px;
   top:5px;
-  background-image: url(../assets/tube.svg);
-  background-size: contain;
+  background-image: url(../assets/play.svg);
+  background-size: 60%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
 }
@@ -797,19 +975,20 @@ main {
 .game-history ul li span {
   position: relative;
   display: block;
-  padding:2px 5px;
+  padding:5px;
   width: 70px;
-  border: 1px #fff solid;
+  border: 1px #3D234A solid;
   border-radius: 10px;
+  transition: 0.5s;
 }
 
 .game-history ul li span::after{
   content: '';
   position: absolute;
   width:20px;
-  height: 20px;
+  height: 16px;
   right:5px;
-  top:2px;
+  top:5px;
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -830,7 +1009,7 @@ main {
 }
 
 .game-history ul li span:nth-child(3)::after{
-  background-size: 90%;
+  background-size: 80%;
   background-image: url(../assets/star.svg);
 }
 .game-history ul li span:nth-child(3){
@@ -845,11 +1024,30 @@ main {
   background-color: rgba(167, 88, 189, 0.5);
 }
 
+.game-history__label-top{
+  position: absolute;
+  top: 30px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.game-history__label-bottom{
+  position: absolute;
+  bottom: -12px;
+  font-size: 10px;
+  line-height: 12px;
+}
+
 @media (width < 750px) {
   .game-history{
     position: fixed;
     right:0;
-    top:50px;
+    top:150px;
     transform: translateX(100%);
+    transition: 1s;
+  }
+
+  .game-history-show{
+    transform: translateX(0%);
   }
 }
