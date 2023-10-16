@@ -54,8 +54,10 @@ class Game {
   renderTubes(){
     gameContainer.append(gameSettings);
     let start = new Date();
+    let timer = 0;
     const timerFunction = () => {
-      this.time = getTime(start);
+      timer +=1;
+      this.time = convertTime(timer);
     }
     let newInterval = setInterval(timerFunction, 1000);
     curGame = this;
@@ -544,9 +546,7 @@ function updateScore() {
   });
 }
 
-function getTime(start){
-  const finish = new Date();
-  let time = finish.getHours() * 60 * 60 + finish.getMinutes() * 60 + finish.getSeconds() - start.getHours() * 60 * 60 - start.getMinutes() * 60 - start.getSeconds();
+function convertTime(time){
   let hours = 0;
   let minutes = 0;
   let seconds = 0;
