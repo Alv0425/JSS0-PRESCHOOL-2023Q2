@@ -954,7 +954,30 @@ main {
   width: 100%;
 }
 
+.game-history table{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:0;
+  margin-top:17px;
+  width: 300px;
+  border-spacing: 0;
+}
+
 .game-history ul li {
+  position: relative;
+  width: 270px;
+  padding:7px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap:10px;
+  font-family: Roboto;
+  font-size:12px;
+  line-height: 16px;
+}
+
+.game-history table tr {
   position: relative;
   width: 270px;
   padding:7px;
@@ -980,7 +1003,31 @@ main {
   background-repeat: no-repeat;
 }
 
+.game-history table tr::before{
+  content: '';
+  position: absolute;
+  width:20px;
+  height: 30px;
+  left: 0px;
+  top:5px;
+  background-image: url(../assets/play.svg);
+  background-size: 60%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+
 .game-history ul li span {
+  position: relative;
+  display: block;
+  padding:5px;
+  width: 70px;
+  border: 1px #3D234A solid;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.game-history table tr td {
   position: relative;
   display: block;
   padding:5px;
@@ -1002,20 +1049,51 @@ main {
   background-repeat: no-repeat;
 }
 
+
+.game-history table tr td::after{
+  content: '';
+  position: absolute;
+  width:20px;
+  height: 16px;
+  right:5px;
+  top:5px;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.game-history table tr td:nth-child(1)::after{
+  background-image: url(../assets/colors.svg);
+}
+.game-history table tr td:nth-child(1){
+  width: 45px;
+}
+.game-history table tr td:nth-child(2)::after{
+  background-image: url(../assets/moves.svg);
+}
+.game-history table tr td:nth-child(2){
+  width: 60px;
+}
+.game-history table tr td:nth-child(3)::after{
+  background-size: 80%;
+  background-image: url(../assets/star.svg);
+}
+.game-history table tr td:nth-child(3){
+  width: 70px;
+}
+
 .game-history ul li span:nth-child(1)::after{
   background-image: url(../assets/colors.svg);
 }
 .game-history ul li span:nth-child(1){
   width: 45px;
 }
-
 .game-history ul li span:nth-child(2)::after{
   background-image: url(../assets/moves.svg);
 }
 .game-history ul li span:nth-child(2){
   width: 60px;
 }
-
 .game-history ul li span:nth-child(3)::after{
   background-size: 80%;
   background-image: url(../assets/star.svg);
@@ -1028,7 +1106,15 @@ main {
   cursor: pointer;
 }
 
+.game-history table tr:hover{
+  cursor: pointer;
+}
+
 .game-history ul li:hover span{
+  background-color: rgba(167, 88, 189, 0.5);
+}
+
+.game-history table tr:hover td{
   background-color: rgba(167, 88, 189, 0.5);
 }
 
