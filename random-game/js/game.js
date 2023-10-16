@@ -196,7 +196,7 @@ class Game {
                       if(checkTubes(this.tubes)){
                         winGame(this);
                         updateGameStat(this);
-                        updateScore();
+                        updateScoreTable();
                         clearInterval(newInterval);
                       }
                       this.tubes[tubeA].tube.classList.remove('tube-locked');
@@ -299,7 +299,7 @@ if (localStorage.hasOwnProperty('gamesStatWaterSortPuzzle')){
   currentStat.level = JSON.parse(localStorage.gamesStatWaterSortPuzzle).level;
   currentStat.gamesList = JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList;
   curLevel = currentStat.level;
-  updateScore();
+  updateScoreTable();
 } else {
   const gameStat = new GameStat;
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
@@ -511,7 +511,7 @@ function updateGameStat(game) {
   localStorage.gamesStatWaterSortPuzzle = JSON.stringify(gameStat);
 }
 
-function updateScore() {
+function updateScoreTable() {
   gameRules.remove();
   if (JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length == 0) {
     gameHistory.prepend(gameRules);
@@ -595,4 +595,39 @@ function totalScore(){
     gamescore += gameObj.gameScore;
   });
   return gamescore;
+}
+
+function updateScoreTable() {
+  gameRules.remove();
+  if (JSON.parse(localStorage.gamesStatWaterSortPuzzle).gamesList.length == 0) {
+    gameHistory.prepend(gameRules);
+  }
+  removeChilds(gameHistoryTable);
+  let gameStat = JSON.parse(localStorage.gamesStatWaterSortPuzzle);
+  let gamesAll = gameStat.gamesList;
+  let bestGames = gamesAll.sort((gameA, gameB) => {
+    return (gameB.gameScore / gameB.gameMoves) - (gameA.gameScore / gameA.gameMoves);
+  }); 
+  if (bestGames.length > 10) {
+    bestGames = bestGames.slice(0,10);
+  }
+  gameTopLabel.textContent = `Total Score: ${totalScore()}`;
+  bestGames.forEach((gameObj) => {
+    const gameItem = document.createElement('tr');
+    gameItem.onclick = () => {
+      openGame(gameObj.gameLevel, gameObj.gameColors);
+      gameHistory.classList.remove('game-history-show');
+    }
+    let colorsItem = document.createElement('td');
+    colorsItem.textContent = `${gameObj.gameLevel * 2 + 1}`;
+    colorsItem.title = 'colors';
+    let movesItem = document.createElement('td');
+    movesItem.textContent = `${gameObj.gameMoves}`;
+    movesItem.title = 'moves';
+    let pointsItem = document.createElement('td');
+    pointsItem.textContent = `${gameObj.gameScore}`;
+    pointsItem.title = 'points';
+    gameItem.append(gameObj.gameTime,colorsItem,movesItem,pointsItem);
+    gameHistoryTable.append(gameItem);
+  });
 }

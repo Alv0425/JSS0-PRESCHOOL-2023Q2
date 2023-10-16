@@ -89,7 +89,8 @@ overlay.className = 'overlay';
 const gameHistory = document.createElement('div');
 gameHistory.className = 'game-history';
 const gameHistoryList = document.createElement('ul');
-gameHistory.append(gameHistoryList);
+const gameHistoryTable = document.createElement('table');
+gameHistory.append(gameHistoryTable);
 
 const gameTopLabel = document.createElement('div');
 gameTopLabel.className = 'game-history__label-top';
